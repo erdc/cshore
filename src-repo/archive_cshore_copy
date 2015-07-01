@@ -1,0 +1,9 @@
+#!/bin/sh
+# 
+dum1=`date +"%Y-%m-%d-%H-%M.f"`
+dum2="CSHORE_USACE-ver2014-"$dum1
+echo Saving current code to $dum2
+
+# cp /home/johnson/wes/cshore/code/fortran/CSHORE_USACE/CSHORE_USACE.f \
+#  /home/johnson/wes/cshore/code/fortran/CSHORE_USACE/legacy_code/$dum2
+cp CSHORE_USACE.f  ./old_code_archive/$dum2

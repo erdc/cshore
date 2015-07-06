@@ -54,7 +54,8 @@ end
 in.timebc_surg = in.timebc_wave;
 in.nwave = length(in.timebc_wave); in.nsurg = in.nwave;dum = ones(1,in.nwave);
 in.Tp= 8*dum;        % constant spectral peak period in seconds
-in.Hrms = 2+.1*cumsum(dum); in.Hrms(2:4)=0;
+in.Hrms = 2+.1*cumsum(dum); 
+in.Hrms(2:4)=0;
 in.Wsetup = 0*dum;   % wave setup at seaward boundary in meters
 in.swlbc = 0+1*sin((2*pi/(12*3600))*in.timebc_surg); % water level at seaward boundary in meters
 in.angle = 0*dum;    % constant incident wave angle at seaward boundary in

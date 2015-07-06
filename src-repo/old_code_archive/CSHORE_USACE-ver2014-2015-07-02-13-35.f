@@ -205,8 +205,7 @@ C     MAXITE = 20 for maximum number of iteration
 C     
 C     Store the first line of this CSHORE program on ODOC output file
 C     ------------------------------------------------------------------
-      VER = 'CSHORE USACE version, 2014 last edit 2015-07-06' !bdj 
-C      VER = 'CSHORE USACE version, last edit 2015-03-23   ' !bdj
+      VER = 'CSHORE USACE version, last edit 2015-03-23   ' !bdj
 C      VER = 'CSHORE USACE version 2014, merged on 2015-03-12  ' !bdj
 C      VER = 'CSHORE USACE version 2011, last edit 2012-08-15 ' !bdj
 C      VER = '2014 CSHORE: Rolando ; 2014 February 12'
@@ -3598,20 +3597,12 @@ C end BDJ 2011->2014 on 2014-10-02
         SIGRUN=(Z2RUN-Z1RUN)/2.D0
         ERMEAN=(Z1RUN+ETARUN+Z2RUN)/3.D0
         SLPRUN=(Z2RUN-Z1RUN)/(X2RUN-X1RUN)
-
 C bdj 2015-03-11  added catch for negative slopes
         SIGRUN=max(0.D0,SIGRUN)
         ERMEAN=max(z1run,ERMEAN)
         SLPRUN=max(0.D0,SLPRUN)
 C end bdj 2015-03-11 added catch for negative slopes
-C bdj 2015-07-06  added catch for cases where waves are very small
-        IF(JR.LT.NINT(JSWL(L)/2.)) THEN
-           SIGRUN=0.D0
-           ERMEAN=SWLBC(ITIME)
-           SLPRUN=0.D0
-        ENDIF
-C end bdj 2015-07-06  added catch for cases where waves are very small
-C
+C     
 C     R13=significant runup height above Z=0.0
 C     R2P=two percent runup height above Z=0.0
 C     RKAPPA=Kappa for runup probability distribution

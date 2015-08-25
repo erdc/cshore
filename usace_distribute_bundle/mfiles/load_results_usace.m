@@ -1,4 +1,4 @@
-function out = load_results_2014(flg)
+function out = load_results_usace(flg)
 % function out = load_results_usace(flg)
 
 fid = fopen('ODOC');
@@ -153,6 +153,13 @@ dum = cell2mat(tot(row_ind));
 col_ind = strfind(dum,'-');
 out.params.iover = str2num(dum(1:col_ind-1));
 
+% find iveg 
+dum =strfind(tot,'IVEG');
+row_ind = ~cellfun('isempty',dum);
+dum = cell2mat(tot(row_ind));
+col_ind = strfind(dum,'-');
+out.params.iveg = str2num(dum(1:col_ind-1));
+
 % find effB and effF and blp
 if out.params.iprofl
   dum =strfind(tot,'EFFB');
@@ -196,7 +203,12 @@ while 1
     N = tline(1);
     tme=tline(2);
   end
-  [tot]=fscanf(fid,'%f %f \n',[2,N])';
+  if out.params.iveg&cnt>1
+      [tot]=fscanf(fid,'%f %f %f\n',[3,N])';
+  out.morpho(cnt).ivegitated = tot(:,3);
+  else
+      [tot]=fscanf(fid,'%f %f \n',[2,N])';
+  end
   out.morpho(cnt).time = tme;
   out.morpho(cnt).x = tot(:,1);
   out.morpho(cnt).zb = tot(:,2);

@@ -1,4 +1,4 @@
-function makeinfile_2014(in)
+function makeinfile_usace(in)
 % function makeinfile_usace(in)
 
 %First check for NaN
@@ -68,13 +68,17 @@ else
   end
 
 end
-%end
 fprintf(fid,'%-8i                             ->NBINP \n',length(in.x));
-% if isfield(in,'xp')
-% fprintf(fid,'%-8i                             ->NPINP \n',length(in.xp));
-% else
-%   fprintf(fid,'0                                    ->NPINP \n');
-% end
 dum = [in.x(:) in.zb(:) in.fw(:)];
 fprintf(fid,'%11.4f%11.4f%11.4f\n',dum');
+if in.iveg==1
+    fprintf(fid,'%5.3f        \n',in.veg_Cd );
+    dum = zeros(length(in.x(:)),4);
+    ind = find(in.x>=max(in.x)*in.veg_extent(1)&in.x<=max(in.x)*in.veg_extent(2));
+    dum(ind,:) = repmat([in.veg_n in.veg_dia in.veg_ht in.veg_rod],length(ind),1);
+    fprintf(fid,'%11.4f%11.4f%11.4f%11.4f\n',dum');
+end
+
 fclose(fid);
+
+%disp('Finished writing the infile')

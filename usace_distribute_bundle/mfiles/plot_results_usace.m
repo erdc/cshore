@@ -83,8 +83,17 @@ if exist('iplotmorpho')
       cnt = cnt+1;
       hh(cnt)=plot(results.morpho(i).x,results.morpho(i).zb,'linewidth',2);hold all
       hlabs{cnt} = [num2str(results.morpho(i).time), ' s'];
+      if results.params.iveg
+          if ~isempty(results.morpho(i).ivegitated)
+              ind = find(results.morpho(i).ivegitated);
+              %              fill([results.morpho(i).x(ind); flipud(results.morpho(i).x(ind))], ...
+              %    [results.morpho(i).zb(ind)+1; flipud(results.morpho(i).zb(ind))],[1 1 .8])
+              plot(results.morpho(i).x(ind),results.morpho(i).zb(ind),'+','linewidth',4);hold all
+          end
+      end
     end
-    legend(hh,hlabs,2)
+    
+    legend(hh,hlabs,'Location','Northwest')
     title('Bottom Position','fontname','times','fontsize',14,'fontangle','italic')
     ylabel('z[m]','fontname','times','fontsize',14,'fontangle','italic')
     xlabel('x[m]','fontname','times','fontsize',14,'fontangle','italic')
@@ -141,7 +150,7 @@ if iplotrunup
       end
     end
     if exist('hh')
-      legend(hh,hlabs,2);
+    legend(hh,hlabs,'Location','Northwest')
     end
     title(vertcat('Runup Position',dumtitle),'fontname','times','fontsize',14,'fontangle','italic','interpreter','none')
     ylabel('z_{b}[m]','fontname','times','fontsize',14,'fontangle','italic')

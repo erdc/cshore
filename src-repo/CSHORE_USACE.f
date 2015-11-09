@@ -3887,7 +3887,7 @@ C     Put "C" in front of the next line for no adjustment
             BQ=BLD*(1.D0+BQCOEFF*QBREAK(J))
           ENDIF
 C     BDJ added 2012-10-23 
-            DECAYL = MIN(JSWL(L)/4.D0,2.D0*TP*CP(1)) ! The decay length
+            DECAYL = MIN(XB(JSWL(L))/4.D0,2.D0*TP*CP(1)) ! The decay length
             JDECAY = NINT(DECAYL/DX)! index of decay intrusion length
 C     end BDJ added 2012-10-23             
           QBX(J) = BQ*PB(J)*GSLOPE(J)*USTD(J)**3
@@ -4283,7 +4283,7 @@ C     Put "C" in front of the next line for no adjustment
             BQ=BLD*(1.D0+BQCOEFF*QBREAK(J))
           ENDIF
 C     BDJ added 2012-10-23 
-            DECAYL = MIN(JSWL(L)/4.D0,2.D0*TP*CP(1)) ! The decay length
+            DECAYL = MIN(XB(JSWL(L))/4.D0,2.D0*TP*CP(1)) ! The decay length
             JDECAY = NINT(DECAYL/DX)! index of decay intrusion length
 C     end BDJ added 2012-10-23             
           DUM = BQ*PB(J)*(USTD(J)*USTD(J) + VSTD(J)*VSTD(J))**1.5D0

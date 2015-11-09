@@ -28,6 +28,13 @@ dum =strfind(tot,'IMPERMEABLE');
 row_ind = find(~cellfun('isempty',dum));
 out.params.iperm=isempty(row_ind);
 
+% find NBINP
+dum =strfind(tot,'NBINP');
+row_ind = find(~cellfun('isempty',dum));
+row=cell2mat(tot(row_ind));
+col_ind = find(row=='=');
+out.params.nbinp=str2num(row(col_ind(end)+1:end));
+
 % find GAMMA (all GAMMA)
 dum =strfind(tot,'Gamma')';
 row_ind = find(~cellfun('isempty',dum));
@@ -100,6 +107,51 @@ if ~isempty(dum)
       jdry(ii)=NaN;
     end
     out.hydro(ii).jdry = jdry(ii);
+  end
+end
+
+% find  SWL at sea boundary
+dum   = strfind(tot,' SWL=');row_ind = ~cellfun('isempty',dum);  dum = cell2mat(tot(row_ind));
+if ~isempty(dum)
+  for ii = 1:size(dum,1)
+    col_ind = strfind(dum(ii,:),'SWL=');
+    dum2 =    str2num(dum(ii,col_ind+5:end));
+    if ~isempty(dum2)
+      swl(ii)=dum2;
+    else
+      swl(ii)=NaN;
+    end
+    out.hydro(ii).swl = swl(ii);
+  end
+end
+
+% find  node number of SWL 
+dum   = strfind(tot,' JSWL=');row_ind = ~cellfun('isempty',dum);  dum = cell2mat(tot(row_ind));
+if ~isempty(dum)
+  for ii = 1:size(dum,1)
+    col_ind = strfind(dum(ii,:),'JSWL=');
+    dum2 =    str2num(dum(ii,col_ind+5:end));
+    if ~isempty(dum2)
+      jswl(ii)=dum2;
+    else
+      jswl(ii)=NaN;
+    end
+    out.hydro(ii).jswl = jswl(ii);
+  end
+end
+
+% find  jr
+dum   = strfind(tot,'JR=');row_ind = ~cellfun('isempty',dum);dum = cell2mat(tot(row_ind));
+if ~isempty(dum)
+  for ii = 1:size(dum,1)
+    col_ind = strfind(dum(ii,:),'JR=');
+    dum2 =    str2num(dum(ii,col_ind+5:end));
+    if ~isempty(dum2)
+      jr(ii)=dum2;
+    else
+      jr(ii)=NaN;
+    end
+    out.hydro(ii).jr = jr(ii);
   end
 end
 
@@ -187,6 +239,20 @@ if out.params.iprofl
   col_ind = strfind(dum,'-');
   out.params.ilab = str2num(dum(1:col_ind-1));
 end
+% find vegitation extent
+if out.params.iveg
+  dum =strfind(tot,'VEGCD');
+  row_ind = find(~cellfun('isempty',dum));
+  dum = tot(row_ind+1:row_ind+out.params.nbinp);
+  dum=cell2mat(cellfun(@str2num,dum,'UniformOutput',false));
+  out.veg.n=dum(:,1);
+  out.veg.dia=dum(:,2);
+  out.veg.ht=dum(:,3);
+  out.veg.rod=dum(:,4);
+end
+
+
+
 fclose(fid);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 fid=fopen('OBPROF');
@@ -204,10 +270,10 @@ while 1
     tme=tline(2);
   end
   if out.params.iveg&cnt>1
-      [tot]=fscanf(fid,'%f %f %f\n',[3,N])';
-  out.morpho(cnt).ivegitated = tot(:,3);
+    [tot]=fscanf(fid,'%f %f %f\n',[3,N])';
+    out.morpho(cnt).ivegitated = tot(:,3);
   else
-      [tot]=fscanf(fid,'%f %f \n',[2,N])';
+    [tot]=fscanf(fid,'%f %f \n',[2,N])';
   end
   out.morpho(cnt).time = tme;
   out.morpho(cnt).x = tot(:,1);
@@ -261,7 +327,7 @@ for i = 1:num_output
   if ~ischar(tline), break, end
   tline = str2num(tline);
   [tot]=fscanf(fid,'%f %f %f %f\n',[4,tline(2)])';
-  if ~isempty(tot)
+  if ~isempty(tot)&size(tot,1)>10
     out.hydro(i).x_yvelo = [tot(:,1); NaN(length(out.morpho(1).x)-size(tot,1),1)];
     out.hydro(i).stheta = [tot(:,2); NaN(length(out.morpho(1).x)-size(tot,1),1)];
     out.hydro(i).vmean = [tot(:,3); NaN(length(out.morpho(1).x)-size(tot,1),1)];

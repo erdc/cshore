@@ -77,6 +77,12 @@ if exist('iplotmorpho')
   if iplotmorpho
     clear hh hlabs
     figure;
+    if results.params.iveg
+      ind= find(results.veg.n>1);
+      hh123=fill([results.morpho(1).x(ind); flipud(results.morpho(1).x(ind))], ...
+                 [results.morpho(1).zb(ind); flipud(results.morpho(1).zb(ind))+3],[.8 1 .8]);hold on
+    end
+    
     cnt = 0;
     for j= 1:length(inds_morph)
       i = inds_morph(j);
@@ -84,12 +90,12 @@ if exist('iplotmorpho')
       hh(cnt)=plot(results.morpho(i).x,results.morpho(i).zb,'linewidth',2);hold all
       hlabs{cnt} = [num2str(results.morpho(i).time), ' s'];
       if results.params.iveg
-          if ~isempty(results.morpho(i).ivegitated)
-              ind = find(results.morpho(i).ivegitated);
-              %              fill([results.morpho(i).x(ind); flipud(results.morpho(i).x(ind))], ...
-              %    [results.morpho(i).zb(ind)+1; flipud(results.morpho(i).zb(ind))],[1 1 .8])
-              plot(results.morpho(i).x(ind),results.morpho(i).zb(ind),'+','linewidth',4);hold all
+          if isfield(results.morpho,'ivegitated')
+            if ~isempty(results.morpho(i).ivegitated)
+            ind = find(results.morpho(i).ivegitated);
+            plot(results.morpho(i).x(ind),results.morpho(i).zb(ind),'+','linewidth',4,'color',get(hh(cnt),'Color'));
           end
+        end
       end
     end
     
@@ -114,7 +120,7 @@ if iplothydro
   end
   legend(hh,hlabs,1)
   title(vertcat('Root-mean-square wave height',dumtitle),...
-      'fontname','times','fontsize',14,'fontangle','italic','interpreter','none')
+        'fontname','times','fontsize',14,'fontangle','italic','interpreter','none')
   ylabel('H_{rms}[m]','fontname','times','fontsize',14,'fontangle','italic')
   xlabel('x[m]','fontname','times','fontsize',14,'fontangle','italic')
 end
@@ -144,13 +150,13 @@ if iplotrunup
 	xrunup = interp1(z0(crosspt-1:crosspt+1),x(crosspt-1:crosspt+1),0);
 	hh(cnt)=plot(x,zb);hold all
 	plot(xrunup,results.hydro(i).runup_2_percent,'ko',...
-	    'markerfacecolor',get(hh(cnt),'color'))
+             'markerfacecolor',get(hh(cnt),'color'))
 	hlabs{cnt} = [num2str(t(i)),' to ' num2str(t(i+1)),...
-	      ' s, R_{2%} = ',sprintf('%3.2f',results.hydro(i).runup_2_percent),' m'];
+                      ' s, R_{2%} = ',sprintf('%3.2f',results.hydro(i).runup_2_percent),' m'];
       end
     end
     if exist('hh')
-    legend(hh,hlabs,'Location','Northwest')
+      legend(hh,hlabs,'Location','Northwest')
     end
     title(vertcat('Runup Position',dumtitle),'fontname','times','fontsize',14,'fontangle','italic','interpreter','none')
     ylabel('z_{b}[m]','fontname','times','fontsize',14,'fontangle','italic')

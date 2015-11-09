@@ -6,7 +6,7 @@ addpath('../mfiles')
 iplotbc     = 0;                  % 1 to plot the applied boundary conditions
 iplotmorpho = 1;                  % 1 to plot the computed morphology results
 iplothydro  = 1;                  % 1 to plot the computed hydrodynamic results
-iplotrunup  = 1;                  % 1 to plot the computed runup position
+iplotrunup  = 0;                  % 1 to plot the computed runup position
 isave       = 0;                  % 1 to save the computed results
 
 % CSHORE execution and physical params
@@ -26,12 +26,12 @@ in.iwcint = 0;          % 0 = no W & C interaction , 1 = include W & C interacti
 in.iroll  = 0;          % 0 = no roller, 1 = roller
 in.iwind  = 0;          % 0 = no wind effect
 in.itide  = 0;          % 0 = no tidal effect on currents
-in.iveg   = 1;          % vegitation effect
-in.veg_Cd = 1.9;        % vegitation drag coeff
-in.veg_n  = 1250;       % vegitation density
+in.iveg   = 0;          % vegitation effect
+in.veg_Cd = 1;          % vegitation drag coeff
+in.veg_n  = 100;       % vegitation density
 in.veg_dia= .01;        % vegitation diam
-in.veg_ht = .1;         % vegitation height
-in.veg_rod= .05;        % vegitation erosion limit below sand for failure
+in.veg_ht = .20;        % vegitation height
+in.veg_rod= .1;         % vegitation erosion limit below sand for failure
 in.veg_extent = [.7 1]; % vegitation coverage as fraction of total domain length
 in.dx     = 1;          % constant dx 
 in.gamma  = .8;         % shallow water ratio of wave height to water depth
@@ -50,7 +50,7 @@ in.ilab = 0;            % controls the boundary condition timing. Don't change
 in.fric_fac = .015;     % bottom friction factor
 
 % boundary conditions and timing
-ftime = 5*3600;      % [sec] final time, dictates model duration
+ftime = 3*3600;      % [sec] final time, dictates model duration
 dt = 1*3600;         % time interval in seconds for wave and water level conditions
 if in.ilab==1;
   in.timebc_wave = [dt/2:dt:ftime];
@@ -66,17 +66,16 @@ in.swlbc = 0+1*sin((2*pi/(12*3600))*in.timebc_surg); % water level at seaward bo
 in.angle = 0*dum;    % constant incident wave angle at seaward boundary in
 
 % Idealized numerical tank
-Lx = 300;            % length of domain
-zb_off = -8;         % offshore bottom position (should be negative)
-zb_on = 8;           % onshore bottom position (should be pos)
-flat_length = 100;     % length of flat portion at seaward end of
-                     % numerical tank
-x = [0 flat_length Lx]; % x points
+Lx = 300;              % length of domain
+zb_off = -8;           % offshore bottom position (should be negative)
+zb_on = 8;             % onshore bottom position (should be pos)
+flat_length = 100;     % length of flat portion at seaward end of numerical tank
+x = [0 flat_length Lx];% x points
 zb = [zb_off zb_off zb_on]; % zb points
 in.x = 0:in.dx:Lx;
 [j1 j2] = unique(x); 
 in.zb = interp1(x(j2),zb(j2),in.x);
-in.zb = in.zb + 0 + 0*min(3,exp((in.x-.65*Lx)/20));
+in.zb = in.zb + 5*exp(-(in.x-.85*Lx).^2/15^2);
 in.fw = in.fric_fac*ones(size(in.zb)); % cross-shore values of bot fric
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%run cshore%%%%%%%%%%%%%%%%%%%%

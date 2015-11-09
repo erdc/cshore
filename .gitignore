@@ -15,3 +15,6 @@ data*txt
 install_*
 config_*
 ./junk
+./junk/*
+./do_not_git
+./do_not_git/*

@@ -18,3 +18,5 @@ config_*
 ./junk/*
 ./do_not_git
 ./do_not_git/*
+do_not_git
+junk

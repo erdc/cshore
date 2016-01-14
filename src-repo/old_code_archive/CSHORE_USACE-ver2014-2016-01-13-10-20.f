@@ -205,8 +205,7 @@ C     MAXITE = 20 for maximum number of iteration
 C     
 C     Store the first line of this CSHORE program on ODOC output file
 C     ------------------------------------------------------------------
-      VER = 'CSHORE USACE version, 2014 last edit 2016-01-14' !bdj 
-C      VER = 'CSHORE USACE version, 2014 last edit 2015-07-06' !bdj 
+      VER = 'CSHORE USACE version, 2014 last edit 2015-07-06' !bdj 
 C      VER = 'CSHORE USACE version, last edit 2015-03-23   ' !bdj
 C      VER = 'CSHORE USACE version 2014, merged on 2015-03-12  ' !bdj
 C      VER = 'CSHORE USACE version 2011, last edit 2012-08-15 ' !bdj
@@ -486,13 +485,8 @@ C
         SXXSTA(JP1) = FSX*SIGITE**2.D0
         IF(IROLL.EQ.1) SXXSTA(JP1) = SXXSTA(JP1) + RX(J)*RQ(J)
         IF(IWCINT.EQ.1) SXXSTA(JP1)=SXXSTA(JP1)+QWX*QWX/GRAV/H(J)
-c begin bdj 2016-01-12 
-        STREAMSTRESSSTA = FSX*DFSTA(J)/(WN(J)*CP(J))
         WSETUP(JP1) = WSETUP(J)-(SXXSTA(JP1)-SXXSTA(J)+
-     +   (TBXSTA(J)+STREAMSTRESSSTA-TWXSTA(ITIME))*DX)/H(J)
-c        WSETUP(JP1) = WSETUP(J)-(SXXSTA(JP1)-SXXSTA(J)+
-c     +   (TBXSTA(J)-TWXSTA(ITIME))*DX)/H(J)
-c end bdj 2016-01-12 
+     +   (TBXSTA(J)-TWXSTA(ITIME))*DX)/H(J)
         HITE = WSETUP(JP1) + SWLDEP(JP1,L)
 C     
         IF(HITE.LT.EPS1) THEN
@@ -625,17 +619,9 @@ C
           SXXSTA(JP1) = FSX*SIGMA(JP1)**2.D0
           IF(IROLL.EQ.1) SXXSTA(JP1)=SXXSTA(JP1)+RX(JP1)*RQITE
           IF(IWCINT.EQ.1) SXXSTA(JP1)=SXXSTA(JP1)+QWX*QWX/GRAV/HITE
-c bdj begin 2016-01-12 
-          STREAMSTRESSSTA = FSX*(DFSTA(JP1) + DFSTA(J))/
-     +         (WN(JP1)*CP(JP1) + WN(J)*CP(J))
           WSETUP(JP1) = WSETUP(J) - (2.D0* (SXXSTA(JP1)-SXXSTA(J)) +
-     +         DX*(TBXSTA(JP1)+TBXSTA(J)
-     +         + 2.D0*STREAMSTRESSSTA -2.D0*TWXSTA(ITIME)))/
-     +         (HITE+H(J))
-c          WSETUP(JP1) = WSETUP(J) - (2.D0* (SXXSTA(JP1)-SXXSTA(J)) +
-c     +       DX*(TBXSTA(JP1)+TBXSTA(J)-2.D0*TWXSTA(ITIME)))/
-c     +       (HITE+H(J))
-c bdj end 2016-01-12 
+     +       DX*(TBXSTA(JP1)+TBXSTA(J)-2.D0*TWXSTA(ITIME)))/
+     +       (HITE+H(J))
           H(JP1) = WSETUP(JP1) + SWLDEP(JP1,L)
           SIGSTA(JP1) = SIGMA(JP1)/H(JP1)
           IF(SIGSTA(JP1).GT.SISMAX) SIGSTA(JP1)=SISMAX

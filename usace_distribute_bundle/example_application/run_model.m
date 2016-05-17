@@ -26,9 +26,9 @@ in.iwcint = 0;          % 0 = no W & C interaction , 1 = include W & C interacti
 in.iroll  = 0;          % 0 = no roller, 1 = roller
 in.iwind  = 0;          % 0 = no wind effect
 in.itide  = 0;          % 0 = no tidal effect on currents
-in.iveg   = 0;          % vegitation effect
+in.iveg   = 1;          % vegitation effect
 in.veg_Cd = 1;          % vegitation drag coeff
-in.veg_n  = 100;       % vegitation density
+in.veg_n  = 100;        % vegitation density
 in.veg_dia= .01;        % vegitation diam
 in.veg_ht = .20;        % vegitation height
 in.veg_rod= .1;         % vegitation erosion limit below sand for failure

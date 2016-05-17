@@ -885,8 +885,7 @@ C
           IF(ITIDE.EQ.1.AND.ILAB.EQ.0) QWX=QWX+QTIDE(I)
           UMEAN(I) = UMEAN(I) + QWX/H(I)
           IF(SIGT.GT.1.D-10) THEN !bdj
-             USTA(I)=UMEAN(I)/SIGT
-             USTA(I) = min(USTA(I),1.D0)
+            USTA(I)=UMEAN(I)/SIGT
           ELSE
             USTA(I)=0.D0
           ENDIF
@@ -3187,11 +3186,8 @@ C     Longshore (Suspended Sediment plus Bedload) Transport Rate
         WRITE(20,1470) QLONG,CERCK,STHETA(JB)
       ENDIF
  1470 FORMAT('LONGSHORE SUSPENDED AND BEDLOAD SAND TRANSPORT RATE'/
-     +'Transport Rate (m**3/s) =',F16.8/'CERC Formula K=',F11.3/
+     +'Transport Rate (m**3/s) =',E14.5/'CERC Formula K=',F11.3/
      +'sin(breaker angle)=',F11.5/)
-C 1470 FORMAT('LONGSHORE SUSPENDED AND BEDLOAD SAND TRANSPORT RATE'/
-C     +'Transport Rate (m**3/s) =',E14.5/'CERC Formula K=',F11.3/
-C     +'sin(breaker angle)=',F11.5/)
 C     
 C     Damage (normalized eroded area) of stone structure
 C     EDMAX = normalized maximum vertical erosion depth
@@ -4339,11 +4335,6 @@ C     end BDJ added 2012-10-23
           QRAW(J) = (QBX(J) + QSX(J))/SPORO1
  190      CONTINUE
 C     
-C     BDJ added on 2012-10-24         
-        QSX(1:JDECAY) = QSX(JDECAY)
-        QBX(1:JDECAY) = QBX(JDECAY)
-        QRAW(1:JDECAY) = QRAW(JDECAY)
-C     end BDJ added on 2012-10-24         
 C     Scarping extrapolation is included for oblique waves as well
         IF(IOVER.EQ.0.OR.JDRY.LE.JR) THEN
           JR1 = JR+1

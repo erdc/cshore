@@ -90,11 +90,16 @@ if exist('iplotmorpho')
       hh(cnt)=plot(results.morpho(i).x,results.morpho(i).zb,'linewidth',2);hold all
       hlabs{cnt} = [num2str(results.morpho(i).time), ' s'];
       if results.params.iveg
-          if isfield(results.morpho,'ivegitated')
-            if ~isempty(results.morpho(i).ivegitated)
+        if isfield(results.morpho,'ivegitated')
+          if ~isempty(results.morpho(i).ivegitated)
             ind = find(results.morpho(i).ivegitated);
             plot(results.morpho(i).x(ind),results.morpho(i).zb(ind),'+','linewidth',4,'color',get(hh(cnt),'Color'));
           end
+        end
+      end
+      if results.params.isedav==1
+        if isfield(results.morpho,'zb_p')
+          plot(results.morpho(i).x,results.morpho(i).zb_p,'linewidth',3,'color',[ .8  .5  .0])
         end
       end
     end

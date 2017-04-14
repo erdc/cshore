@@ -23,6 +23,19 @@ row = tot{row_ind};
 col_ind = find(row=='=');
 out.params.iprofl=str2num(row(col_ind+1:end));
 
+% find ISEDAV 
+dum =strfind(tot,'ISEDAV');
+row_ind = find(~cellfun('isempty',dum));
+if ~isempty(row_ind)
+  row = tot{row_ind};
+  col_ind = find(row=='=');
+  out.params.isedav=str2num(row(col_ind+1:col_ind+3));
+else
+  out.params.isedav=0;
+end
+
+
+
 % find IPERM
 dum =strfind(tot,'IMPERMEABLE');
 row_ind = find(~cellfun('isempty',dum));
@@ -269,9 +282,12 @@ while 1
     N = tline(1);
     tme=tline(2);
   end
-  if out.params.iveg&cnt>1
+  if (out.params.iveg&cnt>1)&out.params.isedav==0
     [tot]=fscanf(fid,'%f %f %f\n',[3,N])';
     out.morpho(cnt).ivegitated = tot(:,3);
+  elseif out.params.isedav==1
+    [tot]=fscanf(fid,'%f %f %f\n',[3,N])';
+    out.morpho(cnt).zb_p = tot(:,3);
   else
     [tot]=fscanf(fid,'%f %f \n',[2,N])';
   end

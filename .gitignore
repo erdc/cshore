@@ -2,7 +2,7 @@
 *~
 data*txt
 *.log
-*.out
+#*.out
 *.dat
 *.cmd
 *.ele

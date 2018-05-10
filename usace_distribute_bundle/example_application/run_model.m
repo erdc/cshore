@@ -26,7 +26,7 @@ in.iwcint = 0;          % 0 = no W & C interaction , 1 = include W & C interacti
 in.iroll  = 0;          % 0 = no roller, 1 = roller
 in.iwind  = 0;          % 0 = no wind effect
 in.itide  = 0;          % 0 = no tidal effect on currents
-in.iveg   = 1;          % vegitation effect
+in.iveg   = 0;          % vegitation effect
 in.veg_Cd = 1;          % vegitation drag coeff
 in.veg_n  = 100;        % vegitation density
 in.veg_dia= .01;        % vegitation diam
@@ -46,7 +46,7 @@ in.slpot  = .1;         % overtopping suspended load parameter
 in.tanphi = .630;       % tangent (sediment friction angle)        
 in.blp    = 0.001;      % bedload parameter                        
 in.rwh = .02;           % numerical rununp wire height 
-in.ilab = 0;            % controls the boundary condition timing. Don't change
+in.ilab = 1;            % controls the boundary condition timing. Don't change
 in.fric_fac = .015;     % bottom friction factor
 
 % boundary conditions and timing

@@ -14,7 +14,7 @@ for i = 1:length(in.header)
 end
 fprintf(fid,'%-8i                                  ->ILINE\n',in.iline);
 fprintf(fid,'%-8i                                  ->IPROFL\n',in.iprofl);
-if in.iprofl==1
+if floor(in.iprofl)==1
   fprintf(fid,'%-8i                                  ->ISEDAV\n',in.isedav);
 end
 fprintf(fid,'%-8i                                  ->IPERM\n',in.iperm);
@@ -25,7 +25,7 @@ if in.iover
     fprintf(fid,'%-8i                                  ->IPOND\n',in.ipond);
   end
 end
-if in.iover==1&in.iperm==0&in.iprofl==1
+if in.iover==1&in.iperm==0&floor(in.iprofl)==1
   fprintf(fid,'%-8i                                  ->INFILT\n',in.infilt);
 end
 fprintf(fid,'%-8i                                  ->IWCINT\n',in.iwcint);
@@ -38,7 +38,7 @@ if in.isedav==1&in.iperm==0&in.iveg==0
 end
 fprintf(fid,'%11.4f                                ->DXC\n',in.dx);
 fprintf(fid,'%11.4f                                ->GAMMA \n',in.gamma);
-if in.iprofl==1;
+if floor(in.iprofl)==1;
   fprintf(fid,'%11.4f%11.4f%11.4f         ->D50 WF SG\n',[in.d50, in.wf, in.sg]);
   fprintf(fid,'%11.4f%11.4f%11.4f%11.4f              ->EFFB EFFF SLP\n',...
           [in.effb, in.efff, in.slp, in.slpot]);

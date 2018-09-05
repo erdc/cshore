@@ -94,12 +94,15 @@ C
 C     NN=maximum number of cross-shore nodes
 C     NB=maximum number of offshore wave and water level data
 C     NL=maximum number of cross-shore lines
-C     
-      PARAMETER (NN=5000, NB=30000, NL=100)
+c     lzhu added a new parameter NFR
+C     NFR=maximum number of frequency beams for JONSWAP spectrum
+      
+      PARAMETER (NN=5000, NB=30000, NL=100,NURM=1408,NSPECTRUM=5000)
+      REAL YVAL
       CHARACTER FINMIN*100, VER*70, BASENAME*90 !bdj
       DIMENSION DUMVEC(NN),QTIDE(NB),SMDEDY(NB)
 C     
-C     ... COMMONs
+C    ... COMMONs
 C     
 C     Name    Contents
 C     ----------------------------------------------------------------
@@ -141,10 +144,11 @@ C     /SOCLAY/  Variables and input for ICLAY=1 (sand on clay)
 C     
       COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
      + ISEDAV,IWTRAN,IVWALL(NL),ILAB,INFILT,IPOND,ITIDE,ILINE,IQYDY,
-     + IVEG,ICLAY,ISMOOTH
-      COMMON /PERIOD/ TP,WKPO,ANGLE,WT(NN)
+     + IVEG,ICLAY,IDISS,IFV,IWEIBULL
+      COMMON /PERIOD/ TP,WKPO,ANGLE,WT(NN),FREQMIN,FREQMAX,FREQNUM
       COMMON /SEAWAV/ TIMEBC(NB),TPBC(NB),HRMSBC(NB),WSETBC(NB),
-     + SWLBC(NB),WANGBC(NB),NWAVE,NSURG,NWIND,NTIME
+     + SWLBC(NB),WANGBC(NB),NWAVE,NSURG,NWIND,NTIME,FREQMINBC(NB),
+     + FREQMAXBC(NB),FREQNUMBC(NB)
       COMMON /PREDIC/ HRMS(NN),SIGMA(NN),H(NN),WSETUP(NN),SIGSTA(NN)
       COMMON /BINPUT/ XBINP(NN,NL),ZBINP(NN,NL),FBINP(NN,NL),XS(NL),
      + YLINE(NL),DYLINE(NL),AGLINE(NL),NBINP(NL)
@@ -155,6 +159,7 @@ C
      + FSX,FSY,FE,QWX,QWY
       COMMON /FRICTN/ GBX(NN),GBY(NN),GF(NN)
       COMMON /WBREAK/ GAMMA,QBREAK(NN),DBSTA(NN),SISMAX,ABREAK(NN)
+      COMMON /VEGDISS/ DVEGSTA(NN)
       COMMON /CRSMOM/ SXXSTA(NN),TBXSTA(NN)
       COMMON /LOGMOM/ SXYSTA(NN),TBYSTA(NN)
       COMMON /ENERGY/ EFSTA(NN),DFSTA(NN)
@@ -185,7 +190,7 @@ C
       COMMON /RRPOND/ZW,QD,QM,JXW,JX2,NOPOND
       COMMON /TIDALC/DETADY(NB),DSWLDT(NB)
       COMMON /SERIES/TSQO(NL),TSQBX(NL),TSQSX(NL)
-      COMMON /VEGETA/VEGCD,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
+      COMMON /VEGETA/VEGCD,VEGCDM,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
      + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
       COMMON /DIKERO/EDIKE(NN,NL),ZB0(NN,NL),DSTA(NN),DSUM(NN),
@@ -196,7 +201,14 @@ C
      + VDSAND(NN),CPSTON,ISTSAN
       COMMON /SOCLAY/EPCLAY(NN,NL),ZP0(NN,NL),RCINP(NN,NL),
      + FCINP(NN,NL),RCLAY(NN,NL),FCLAY(NN,NL)
-C     
+      COMMON /DIKELOC/ DIKETOE, TZ, RUNUPKAPPA, RUNUPPHI
+      COMMON /MEASUREDSPEC/ VMEASOMEG(NSPECTRUM), 
+     + VMEASSE(NSPECTRUM), VMEASWNUM(NSPECTRUM),NMEASSPEC
+C
+c      DOUBLE PRECISION  UR(NURM),MMOD(NURM),UREME(NURM),MMODEME(NURM)
+      DOUBLE PRECISION  KC, WKZ, WKMEAN, TMEAN
+      DOUBLE PRECISION URSELL,HS2H,HV2H,HV2HTOM
+
 C     For iteration convergence 
 C     EPS1 = 0.001 for depth (m), height (m) and velocity (m/s)
 C     EPS2 = 0.000001 for roller volume flux (m*m/s)
@@ -205,8 +217,7 @@ C     MAXITE = 20 for maximum number of iteration
 C     
 C     Store the first line of this CSHORE program on ODOC output file
 C     ------------------------------------------------------------------
-      VER = 'CSHORE USACE version, 2014 last edit 2018-08-28 ' !bdj 
-C      VER = 'CSHORE USACE version, 2014 last edit 2016-01-14' !bdj 
+      VER = 'CSHORE USACE version, 2014 last edit 2016-01-14' !bdj 
 C      VER = 'CSHORE USACE version, 2014 last edit 2015-07-06' !bdj 
 C      VER = 'CSHORE USACE version, last edit 2015-03-23   ' !bdj
 C      VER = 'CSHORE USACE version 2014, merged on 2015-03-12  ' !bdj
@@ -236,6 +247,20 @@ C     end bdj 2015-03-23
 C     Subr. 2 INPUT gets input wave and bathymetry information
 C     from  the input file, FINMIN.
       CALL INPUT (VER)
+
+c     lzhu added:
+c     IF IDISS = 3: read the measured wave spectrum
+      IF(IDISS.EQ.3) THEN 
+          OPEN(UNIT=1129,FILE='Jadhav_Omeg_Se.txt',
+     +         STATUS='OLD',ACCESS='SEQUENTIAL')
+     
+          DO 1152 IROW = 1,3
+           READ (1129, *, IOSTAT=N) (VMEASOMEG(INUM), INUM=1,NMEASSPEC)
+           READ (1129, *, IOSTAT=N) (VMEASSE(INUM), INUM=1,NMEASSPEC)
+           READ (1129, *, IOSTAT=N) (VMEASWNUM(INUM), INUM=1,NMEASSPEC)
+1152     CONTINUE
+      ENDIF
+
 C     
 C     Subr. 3 BOTTOM computes initial bathymetry at each node.
       CALL BOTTOM
@@ -447,8 +472,9 @@ C     If bottom friction coefficient is positive,
             DUM=VEGH(1,L)
             IF(DUM.GT.H(1)) DUM=H(1)
             VEGCV=1.D0+DUM*VEGFB(1,L)
-            TBXSTA(1)=VEGCV*TBXSTA(1)
-            DFSTA(1)=VEGCV*DFSTA(1) 
+c            lzhu commented these two lines
+C            TBXSTA(1)=VEGCV*TBXSTA(1) 
+C            DFSTA(1)=VEGCV*DFSTA(1) 
           ENDIF
         ELSE
           TBXSTA(1) = 0.D0
@@ -458,6 +484,9 @@ C
 C     Subr.7 DBREAK computes the fraction of breaking waves and
 C     the associated wave energy dissipation and returns DBSTA(1).
         CALL DBREAK(1, L, HRMS(1), H(1))
+c       lzhu added on Nov. 2016
+c       the energy dissipation due to veg is computed in DVEG()
+        CALL DVEG  (1, L, HRMS(1), H(1))
 C     
 C     ------------ LANDWARD MARCHING COMPUTATION -----------------------
 C     
@@ -468,7 +497,8 @@ C     Compute unknown variables at node JP1=(J+1) along line L.
         JP1 = J + 1
         ITE=0
 C     
-        DUM=DFSTA(J)+DBSTA(J)
+c       the energy dissipation rate due to veg is added here
+        DUM=DFSTA(J)+DBSTA(J)+DVEGSTA(J)
         IF(IPERM.EQ.1) DUM=DUM+DPSTA(J)
         DUM=DUM*WT(J)
         DUM=(EFSTA(J)-DX*DUM)/FE
@@ -487,13 +517,34 @@ C
         SXXSTA(JP1) = FSX*SIGITE**2.D0
         IF(IROLL.EQ.1) SXXSTA(JP1) = SXXSTA(JP1) + RX(J)*RQ(J)
         IF(IWCINT.EQ.1) SXXSTA(JP1)=SXXSTA(JP1)+QWX*QWX/GRAV/H(J)
+
+c begin lzhu changed 2017-09-20
+c The phase-averagaed depth-integrated drag (STREAMSTRESSSTA) is applied in the cross-shore momentum equation.
 c begin bdj 2016-01-12 
-        STREAMSTRESSSTA = FSX*DFSTA(J)/(WN(J)*CP(J))
-        WSETUP(JP1) = WSETUP(J)-(SXXSTA(JP1)-SXXSTA(J)+
-     +   (TBXSTA(J)+STREAMSTRESSSTA-TWXSTA(ITIME))*DX)/H(J)
+C        STREAMSTRESSSTA = FSX*DFSTA(J)/(WN(J)*CP(J))
 c        WSETUP(JP1) = WSETUP(J)-(SXXSTA(JP1)-SXXSTA(J)+
-c     +   (TBXSTA(J)-TWXSTA(ITIME))*DX)/H(J)
+c     +   (TBXSTA(J)+STREAMSTRESSSTA-TWXSTA(ITIME))*DX)/H(J)   
 c end bdj 2016-01-12 
+        STREAMSTRESSSTA = 0.0D0
+        FVCWLWT         = 0.0D0
+        IF (VEGN(J,L).GT.0.0D0) THEN
+           CALL PHASEAVEFV(J,L,HRMS(J),H(J),STREAMSTRESSSTA, FVCWLWT)
+        ENDIF
+
+        IF(IVEG.GE.1) THEN
+           WSETUP(JP1) = WSETUP(J)-(SXXSTA(JP1)-SXXSTA(J)+
+     +   ((1.D0+VEGCDM/VEGCD*MIN(VEGH(J,L),H(J))*VEGFB(J,L))*TBXSTA(J)+
+     +   STREAMSTRESSSTA-TWXSTA(ITIME))*DX)/H(J)
+c        WSETUP(JP1) = WSETUP(J)-(SXXSTA(JP1)-SXXSTA(J)+
+c     +   (FVCWLWT + 
+c     +   STREAMSTRESSSTA-TWXSTA(ITIME))*DX)/H(J)
+        ELSE
+           WSETUP(JP1) = WSETUP(J)-(SXXSTA(JP1)-SXXSTA(J)+
+     +     (TBXSTA(J)+
+     +     STREAMSTRESSSTA-TWXSTA(ITIME))*DX)/H(J)
+        ENDIF
+c end lzhu change 2017-09-20
+
         HITE = WSETUP(JP1) + SWLDEP(JP1,L)
 C     
         IF(HITE.LT.EPS1) THEN
@@ -504,7 +555,7 @@ C
  2902   FORMAT(/'END OF LANDWARD MARCHING: '/
      +   'Water depth is less than EPS1 at node ',I6,'Line=',I3 /
      +   ' TIME =',F13.3,' ITEQO =',I2,' QO =',F13.9)
-C     
+C
         QWX=QO(L)
         IF(IPERM.EQ.1) QWX=QO(L)-QP(J)
         IF(ITIDE.EQ.1.AND.ILAB.EQ.0) QWX=QWX+QTIDE(JP1)
@@ -564,6 +615,9 @@ C
           HRMITE = SIGITE*SQR8
 C     
           CALL DBREAK(JP1,L,HRMITE, HITE)
+c         lzhu added: compute energy dissipation rate due to veg using DVEG()
+          CALL DVEG  (JP1,L,HRMITE, HITE)
+
           SIGSTA(JP1) = SIGITE/HITE
           IF(SIGSTA(JP1).GT.SISMAX) SIGSTA(JP1) = SISMAX
 C     
@@ -602,15 +656,18 @@ C
               DUM=VEGH(JP1,L)
               IF(DUM.GT.HITE) DUM=HITE
               VEGCV=1.D0+DUM*VEGFB(JP1,L)
-              TBXSTA(JP1)=VEGCV*TBXSTA(JP1)
-              DFSTA(JP1)=VEGCV*DFSTA(JP1)
+c             lzhu commented these two lines
+C              TBXSTA(JP1)=VEGCV*TBXSTA(JP1)
+C              DFSTA(JP1)=VEGCV*DFSTA(JP1)
             ENDIF
           ELSE
             TBXSTA(JP1) = 0.D0
             DFSTA(JP1) = 0.D0
           ENDIF
 C     
-          DUMD = DFSTA(JP1) + DFSTA(J) + DBSTA(JP1) + DBSTA(J)
+c         lzhu added energy dissipation rate due to veg
+          DUMD = DFSTA(JP1) + DFSTA(J) + DBSTA(JP1) + DBSTA(J) + 
+     +           DVEGSTA(JP1) + DVEGSTA(J) 
           IF(IPERM.EQ.1) DUMD=DPSTA(JP1)+DPSTA(J)+DUMD
           DUMD = DUMD*(WT(J)+WT(JP1))/2.D0
           DUM = (EFSTA(J) - DXD2*DUMD)/FE
@@ -626,17 +683,50 @@ C
           SXXSTA(JP1) = FSX*SIGMA(JP1)**2.D0
           IF(IROLL.EQ.1) SXXSTA(JP1)=SXXSTA(JP1)+RX(JP1)*RQITE
           IF(IWCINT.EQ.1) SXXSTA(JP1)=SXXSTA(JP1)+QWX*QWX/GRAV/HITE
+
+c begin lzhu changed 2017-09-21
+c The phase-averaged depth-integrated drag due to veg (STREAMSTRESSSTA) is computed 
+c  and applied to the cross-shore momentum equation
+
 c bdj begin 2016-01-12 
-          STREAMSTRESSSTA = FSX*(DFSTA(JP1) + DFSTA(J))/
-     +         (WN(JP1)*CP(JP1) + WN(J)*CP(J))
+c          STREAMSTRESSSTA = FSX*(DFSTA(JP1) + DFSTA(J))/
+c     +         (WN(JP1)*CP(JP1) + WN(J)*CP(J))
+c          WSETUP(JP1) = WSETUP(J) - (2.D0* (SXXSTA(JP1)-SXXSTA(J)) +
+c     +                  DX*(TBXSTA(JP1)+TBXSTA(J)
+c     +                  +2.D0*STREAMSTRESSSTA -2.D0*TWXSTA(ITIME)))/
+c     +                  (HITE+H(J))
+c bdj end 2016-01-12 
+
+       STREAMSTRESSSTA = 0.0D0
+       FVCWLWT         = 0.0D0 
+       IF (VEGN(J,L).GT.0.0D0) THEN
+         CALL PHASEAVEFV(J,L,HRMS(J),H(J),STREAMSTRESSSTATMP1,
+     +                   FVCWLWTTMP1)
+         CALL PHASEAVEFV(JP1,L,HRMITE,HITE,STREAMSTRESSSTATMP2,
+     +                   FVCWLWTTMP2)
+         STREAMSTRESSSTA=0.5*(STREAMSTRESSSTATMP1+STREAMSTRESSSTATMP2)
+         FVCWLWT        = 0.5D0*(FVCWLWTTMP1+FVCWLWTTMP2)
+       ENDIF
+ 
+       IF(IVEG.GE.1) THEN
           WSETUP(JP1) = WSETUP(J) - (2.D0* (SXXSTA(JP1)-SXXSTA(J)) +
-     +         DX*(TBXSTA(JP1)+TBXSTA(J)
-     +         + 2.D0*STREAMSTRESSSTA -2.D0*TWXSTA(ITIME)))/
+     +       DX*((1.D0+VEGCDM/VEGCD*MIN(VEGH(JP1,L),HITE)*VEGFB(JP1,L))
+     +                                                   *TBXSTA(JP1)+
+     +      (1.D0+VEGCDM/VEGCD*MIN(VEGH(J,L),H(J))*VEGFB(J,L))*TBXSTA(J)
+     +        + 2.D0*STREAMSTRESSSTA -2.D0*TWXSTA(ITIME)))/
      +         (HITE+H(J))
 c          WSETUP(JP1) = WSETUP(J) - (2.D0* (SXXSTA(JP1)-SXXSTA(J)) +
-c     +       DX*(TBXSTA(JP1)+TBXSTA(J)-2.D0*TWXSTA(ITIME)))/
-c     +       (HITE+H(J))
-c bdj end 2016-01-12 
+c     +                  DX*(2.0*FVCWLWT +
+c     +                  2.D0*STREAMSTRESSSTA -2.D0*TWXSTA(ITIME)))/
+c     +                  (HITE+H(J))
+        ELSE
+          WSETUP(JP1) = WSETUP(J) - (2.D0* (SXXSTA(JP1)-SXXSTA(J)) +
+     +                  DX*(TBXSTA(JP1)+TBXSTA(J)
+     +                  +2.D0*STREAMSTRESSSTA -2.D0*TWXSTA(ITIME)))/
+     +                  (HITE+H(J))
+        ENDIF
+c end lzhu change 2017-09-21
+
           H(JP1) = WSETUP(JP1) + SWLDEP(JP1,L)
           SIGSTA(JP1) = SIGMA(JP1)/H(JP1)
           IF(SIGSTA(JP1).GT.SISMAX) SIGSTA(JP1)=SISMAX
@@ -755,6 +845,9 @@ C
 C     
         CALL LWAVE(JP1, L, H(JP1), QDISP)
         CALL DBREAK(JP1, L, HRMS(JP1), H(JP1))
+c       lzhu added: energy dissipation rate due to veg is computed
+        CALL DVEG  (JP1, L, HRMS(JP1), H(JP1))
+
         SIGSTA(JP1) = SIGMA(JP1)/H(JP1)
         IF(SIGSTA(JP1).GT.SISMAX) SIGSTA(JP1) = SISMAX
         SIGT = SIGSTA(JP1)*CP(JP1)
@@ -793,8 +886,9 @@ C
             DUM=VEGH(JP1,L)
             IF(DUM.GT.H(JP1)) DUM=H(JP1)
             VEGCV=1.0D0+DUM*VEGFB(JP1,L)
-            TBXSTA(JP1)=VEGCV*TBXSTA(JP1)
-            DFSTA(JP1)=VEGCV*DFSTA(JP1)
+c           lzhu commented these two lines
+C            TBXSTA(JP1)=VEGCV*TBXSTA(JP1)
+C            DFSTA(JP1)=VEGCV*DFSTA(JP1)
           ENDIF
         ELSE
           TBXSTA(JP1) = 0.D0
@@ -824,6 +918,30 @@ C     If IWTRAN=1 and IOFLOW=1, overflow occurs on submerged crest
         IF(IWTRAN.EQ.1.AND.IOFLOW.EQ.1) JDUM=JCREST(L)
         IF(H(JP1).LT.EPS1.OR.JP1.EQ.JDUM) GOTO 400
 C      
+c     lzhu added on April 29, 2018
+c     The runup code is still under developing
+        IF (XBINP(J, L).LE.DIKETOE.AND.XBINP(J+1, L).GT.DIKETOE) THEN
+           IF (IVEG.GE.1) THEN
+              TZ = TP/(1.30301D0-0.01698D0*3.3D0+0.12102D0/3.3D0)
+              CALL DISPERSION(H(J), TZ, WKZ)
+              IF (IWEIBULL.EQ.1.AND.VEGB(J,L).LT.0.000001) 
+     +           WRITE(*,*) 'no veg at the toe of dike and KC=NAN!!!!'
+              KC         = PI*(HRMS(J)*DSQRT(2.0D0)) / DSINH(WKZ*H(J)) 
+     +                    / VEGB(J,L) 
+              RUNUPM     = 0.0044D0*(HRMS(J)/H(J))**(-1.11D0)
+              RUNUPKAPPA = 0.83D0*DEXP(-RUNUPM*KC)
+              RUNUPPHI   = 1.0D0 - 1.2D0*RUNUPKAPPA
+           ELSE
+              BEACHSLOPE =(ZB(J-20,L)-ZB(J-21,L))/DX
+              SSF        = BEACHSLOPE/DSQRT(HRMS(J)/
+     +              (GRAV*TP**2.0D0/2.0D0/PI))
+              RUNUPKAPPA = (HRMS(J)/H(J))**2.5D0 * 
+     +              (4.7D0-20.8D0*SSF+26.2D0*SSF**2.0D0) !1.33D0
+              RUNUPPHI   = (1.0D0-RUNUPKAPPA**0.944D0)**1.187D0!1.0D0 - 1.2D0*RUNUPKAPPA
+           ENDIF
+        ENDIF
+
+c      end of lzhu changes
         GOTO 100
 C     
 C----------------End of LANDWARD MARCHING COMPUTATION -------------
@@ -928,7 +1046,7 @@ C     DBSTA(J),RQ(J), VMEAN(J), VSTD(J) and VSTA(J) using Subr. 14 SMOOTH
         CALL SMOOTH(JDRY,DUMVEC,SIGMA)
         DUMVEC = USTD
         CALL SMOOTH(JDRY,DUMVEC,USTD)
-        DUMVEC = UMEAN	
+        DUMVEC = UMEAN
         CALL SMOOTH(JDRY,DUMVEC,UMEAN)
         DUMVEC = USTA
         CALL SMOOTH(JR,DUMVEC,USTA)
@@ -1176,6 +1294,11 @@ C     ITIME if ITIME is less than NTIME and L=ILINE.
           ITIME1=ITIME+1
           TP=TPBC(ITIME1)
           HRMS(1)=HRMSBC(ITIME1)
+c         lzhu added
+          FREQMIN=FREQMINBC(ITIME1)
+          FREQMAX=FREQMAXBC(ITIME1)
+          FREQNUM=FREQNUMBC(ITIME1)
+
 C     NPT=integer used in Subr.14 SMOOTH
 C     NPE=integer used in Subr.15 EXTRAPO
           NPT=1+NINT(HRMS(1)/DX)
@@ -1266,18 +1389,19 @@ C
       SUBROUTINE INPUT(VER)
 C     
       IMPLICIT  DOUBLE PRECISION (A-H,O-Z)
-      PARAMETER (NN=5000, NB=30000, NL=100)
+      PARAMETER (NN=5000, NB=30000, NL=100,NSPECTRUM=5000)
       CHARACTER COMMEN*70, VER*70 !bdj
       DIMENSION TWAVE(NB),TPIN(NB),HRMSIN(NB),WANGIN(NB),TSURG(NB),
      +     SWLIN(NB),TWIND(NB),WIND10(NB),WINDAN(NB),TSLAND(NB),
-     +     SLANIN(NB),TTIDE(NB),DEDYIN(NB),DSDTIN(NB)
-C     
+     +     SLANIN(NB),TTIDE(NB),DEDYIN(NB),DSDTIN(NB),
+     +     FREQMININ(NB),FREQMAXIN(NB),FREQNUMIN(NB)
       COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
      +  ISEDAV,IWTRAN,IVWALL(NL),ILAB,INFILT,IPOND,ITIDE,ILINE,IQYDY,
-     +  IVEG,ICLAY,ISMOOTH
-      COMMON /PERIOD/ TP, WKPO,ANGLE,WT(NN)
+     +  IVEG,ICLAY,IDISS,IFV,IWEIBULL
+      COMMON /PERIOD/ TP, WKPO,ANGLE,WT(NN),FREQMIN,FREQMAX,FREQNUM
       COMMON /SEAWAV/ TIMEBC(NB),TPBC(NB),HRMSBC(NB),WSETBC(NB),
-     +  SWLBC(NB),WANGBC(NB),NWAVE,NSURG,NWIND,NTIME
+     +  SWLBC(NB),WANGBC(NB),NWAVE,NSURG,NWIND,NTIME,FREQMINBC(NB),
+     +  FREQMAXBC(NB),FREQNUMBC(NB)
       COMMON /CONSTA/ GRAV, SQR2, SRQ8,PI,TWOPI,SQRG1,SQRG2
       COMMON /PREDIC/ HRMS(NN),SIGMA(NN),H(NN),WSETUP(NN),SIGSTA(NN)
       COMMON /BINPUT/ XBINP(NN,NL),ZBINP(NN,NL),FBINP(NN,NL),XS(NL),
@@ -1285,6 +1409,7 @@ C
       COMMON /BPROFL/ DXD2,DXDX,DX2,DX,XB(NN),ZB(NN,NL),FB2(NN,NL),
      +  SWLDEP(NN,NL),BSLOPE(NN,NL),JMAX(NL),JSWL(NL)
       COMMON /WBREAK/ GAMMA,QBREAK(NN),DBSTA(NN),SISMAX,ABREAK(NN)
+      COMMON /VEGDISS/ DVEGSTA(NN)
       COMMON /SEDINP/ WF,SG,SPORO1,WFSGM1,GSGM1,TANPHI,BSLOP1,BSLOP2,
      +  EFFB,EFFF,D50,SHIELD,GSD50S,BLP,SLP,BLD,BEDLM,CSTABN,CSEDIA
       COMMON /ROLLER/ RBZERO,RBETA(NN),RQ(NN),RX(NN),RY(NN),RE(NN)
@@ -1298,7 +1423,7 @@ C
       COMMON /COMPAR/ HWDMIN,NPT,NPE
       COMMON /RRPOND/ ZW,QD,QM,JXW,JX2,NOPOND
       COMMON /TIDALC/ DETADY(NB),DSWLDT(NB)
-      COMMON /VEGETA/VEGCD,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
+      COMMON /VEGETA/VEGCD,VEGCDM,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
      + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
       COMMON /DIKERO/EDIKE(NN,NL),ZB0(NN,NL),DSTA(NN),DSUM(NN),
@@ -1309,6 +1434,9 @@ C
      + VDSAND(NN),CPSTON,ISTSAN
       COMMON /SOCLAY/EPCLAY(NN,NL),ZP0(NN,NL),RCINP(NN,NL),
      + FCINP(NN,NL),RCLAY(NN,NL),FCLAY(NN,NL)
+      COMMON /MEASUREDSPEC/ VMEASOMEG(NSPECTRUM), 
+     + VMEASSE(NSPECTRUM), VMEASWNUM(NSPECTRUM),NMEASSPEC
+      COMMON /DIKELOC/ DIKETOE, TZ, RUNUPKAPPA, RUNUPPHI
 C     
 C     Gravitational acceleration GRAV = 9.81 (m/s/s)
       GRAV=9.81D0
@@ -1352,7 +1480,6 @@ C     IF(ILINE.GT.2) READ(11,1110) IQYDY
 C     
 C     IPROFL=0 for fixed bottom profile(no input for ISEDAV=0)
 C     IPROFL=1 for profile evolution computation(input ISEDAV)
-C     IPROFL=1.1 for IPROFL=1 and no initial bottom smoothing
 C     IPROFL=2 for dike erosion computation (ISEDAV=0)
 C     ISEDAV=0 for unlimited bottom sediment
 C     ISEDAV=1 for sediment availability limited by hard bottom
@@ -1361,19 +1488,12 @@ C     For IPROFL=0 and 2, IQYDY=0 is imposed
 C     
 C     READ(11,1110) IPROFL
       READ(11,*) DUM      !bdj
-c     bdj 2018-08-28 to input ismooth
-      tmp = nint(10.*(dum-nint(dum)))
-      ismooth=1
-      if(tmp.eq.1) then
-         ismooth=0
-      endif
-c     end bdj 2018-08-28 to input ismooth
-      IPROFL = NINT(DUM)   !bdj
+      IPROFL = NINT(DUM)  !bdj
       IF(IPROFL.EQ.0.OR.IPROFL.EQ.2) IQYDY=0
       ISEDAV=0
 C     IF(IPROFL.EQ.1) READ(11,1110) ISEDAV
       IF(IPROFL.EQ.1) THEN
-        READ(11,*) DUM         !bdj
+        READ(11,*) DUM     !bdj
         ISEDAV = NINT(DUM) !bdj
       ENDIF
 C     
@@ -1470,7 +1590,14 @@ C
 C     READ(11,1110) IVEG
       READ(11,*) DUM 
       IVEG = NINT(DUM)
-C      
+
+C........... INPUT COMPUTATION OPTION
+      READ(11,*) DUM 
+      IDISS = NINT(DUM)
+
+      READ(11,*) DUM
+      IFV = NINT(DUM)
+
 C........... INPUT COMPUTATION OPTION 
 C     ISTSAN=0 except for fixed stone structure on sand bottom
 C     ISTSAN=1 for stone structure (IPERM=1) on deforming bottom
@@ -1506,6 +1633,14 @@ C........... BREAKER RATIO PARAMETER GAMMA=0.5-1.0
 C     READ(11,1130) GAMMA
       READ(11,*) GAMMA !bdj
 C     
+c........... lzhu added on April 29, 2018 .........
+c This parameter DIKETOE is added to specify the location of the toe of the dike.
+c After the location is read in, the corresponding KC value is computed for the 
+c purpose of finding out the kappa and runup.
+      READ(11,*) DUM
+      IWEIBULL = NINT(DUM)
+      IF (IWEIBULL.EQ.1) READ(11,*) DIKETOE !lzhu
+c........... end of lzhu changes on April 29, 2018 .........
 C........... SEDIMENT CHARACTERISTICS IF IPROFL=1
 C     WF    = sediment fall velocity (m/s)
 C     SG    = sediment specific gravity
@@ -1650,8 +1785,18 @@ C mg
         DO 120 I = 1,NTIME
 C         READ(11,1160) TIMEBC(I+1),TPBC(I),HRMSBC(I),WSETBC(I),
 C    +       SWLBC(I),WANGBC(I)
-          READ(11,*) TIMEBC(I+1),TPBC(I),HRMSBC(I),WSETBC(I), !bdj
-     +       SWLBC(I),WANGBC(I)                             !bdj
+          IF (IDISS.EQ.1) THEN
+             READ(11,*) TIMEBC(I+1),TPBC(I),HRMSBC(I),WSETBC(I), !bdj
+     +                  SWLBC(I),WANGBC(I)                       !bdj
+          ELSEIF (IDISS.EQ.2) THEN
+             READ(11,*) TIMEBC(I+1),TPBC(I),HRMSBC(I),WSETBC(I), !lzhu
+     +                  SWLBC(I),WANGBC(I),FREQMINBC(I),FREQMAXBC(I), !lzhu
+     +                  FREQNUMBC(I)
+          ELSEIF (IDISS.EQ.3) THEN
+             READ(11,*) TIMEBC(I+1),TPBC(I),HRMSBC(I),WSETBC(I), !lzhu
+     +                  SWLBC(I),WANGBC(I),FREQMINBC(I),FREQMAXBC(I),
+     +                  NMEASSPEC
+          ENDIF
 C         IF(WANGBC(I).LT.-80.D0.OR.WANGBC(I).GT.80.D0) THEN
 C           WRITE (*,2800) WANGBC(I)
 C 2800      FORMAT(/'Incident Wave Angle=',D11.4,
@@ -1670,7 +1815,14 @@ C     Choose number of step changes to approximate time series
         NWAVE1=NWAVE+1
         DO 130 I=1,NWAVE1
 C         READ(11,1170) TWAVE(I),TPIN(I),HRMSIN(I),WANGIN(I)
-          READ(11,*) TWAVE(I),TPIN(I),HRMSIN(I),WANGIN(I) !bdj
+          IF (IDISS.EQ.1) THEN
+             READ(11,*) TWAVE(I),TPIN(I),HRMSIN(I),WANGIN(I) !bdj
+          ELSEIF (IDISS.EQ.2) THEN
+             READ(11,*) TWAVE(I),TPIN(I),HRMSIN(I),WANGIN(I), !lzhu
+     +                   FREQMININ(I),FREQMAXIN(I),FREQNUMIN(I)
+          ELSEIF (IDISS.EQ.3) THEN
+             READ(11,*) TWAVE(I),TPIN(I),HRMSIN(I),WANGIN(I) !lzhu
+          ENDIF
           IF(NWAVE.EQ.NTIME) TIMEBC(I)=TWAVE(I)
  130    CONTINUE
  1170   FORMAT(D11.1,3D11.4)
@@ -1704,6 +1856,11 @@ C     for the case of NWAVE=NSURG
         CALL TSINTP(NWAVE,TWAVE,HRMSIN,NTIME,TIMEBC,HRMSBC)
         CALL TSINTP(NWAVE,TWAVE,WANGIN,NTIME,TIMEBC,WANGBC)
         CALL TSINTP(NSURG,TSURG,SWLIN,NTIME,TIMEBC,SWLBC)
+C     lzhu add the following
+        CALL TSINTP(NWAVE,TWAVE,FREQMININ,NTIME,TIMEBC,FREQMINBC)
+        CALL TSINTP(NWAVE,TWAVE,FREQMAXIN,NTIME,TIMEBC,FREQMAXBC)
+        CALL TSINTP(NWAVE,TWAVE,FREQNUMIN,NTIME,TIMEBC,FREQNUMBC)
+
 C     Wave setup at x=0 is assumed to be zero
         WSETBC(1:NTIME)=0.D0
 C       DO 132 I=1,NTIME
@@ -1722,6 +1879,10 @@ C     IF IPOND=1, ponded water level ZW=SWL at time=0
       HRMS(1) = HRMSBC(1)
       WSETUP(1) = WSETBC(1)
       ANGLE= WANGBC(1)
+      FREQMIN=FREQMINBC(1)
+      FREQMAX=FREQMAXBC(1)
+      FREQNUM=FREQNUMBC(1)
+
       IF(IPOND.EQ.1) ZW=SWLBC(1)
 C     
 C     ......... BOTTOM GEOMETRY and POROUS LAYER BOTTOM if IPERM=1
@@ -1836,6 +1997,7 @@ C     (input only for IVEG=1) where VEGRD(J,L)=0.0 if no vegetation
       IF(IVEG.GE.1) THEN
 C     READ(11,1130) VEGCD
       READ(11,*) VEGCD
+      READ(11,*) VEGCDM
       JDUM=NBINP(L)-1
       DO 170 J=1,JDUM
         IF(IVEG.EQ.1) THEN
@@ -1915,7 +2077,7 @@ C         READ(11,1190) TWIND(I),WIND10(I),WINDAN(I)
         CALL TSINTP(NWIND,TWIND,WIND10,NTIME,TIMEBC,W10)
         CALL TSINTP(NWIND,TWIND,WINDAN,NTIME,TIMEBC,WANGLE)
         RATIO = 837.D0
-        CONVRT = 3.14159D0/180.D0
+        CONVRT = 3.1415926D0/180.D0
         DO 200 I=1,NTIME
           IF(W10(I).GT.25.D0) WRITE(*,2910)
           IF(W10(I).LT.11.D0) THEN
@@ -2054,9 +2216,10 @@ C
 C     
       COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
      + ISEDAV,IWTRAN,IVWALL(NL),ILAB,INFILT,IPOND,ITIDE,ILINE,IQYDY,
-     + IVEG,ICLAY,ISMOOTH
+     + IVEG,ICLAY,IDISS,IFV,IWEIBULL
       COMMON /SEAWAV/ TIMEBC(NB),TPBC(NB),HRMSBC(NB),WSETBC(NB),
-     + SWLBC(NB),WANGBC(NB),NWAVE,NSURG,NWIND,NTIME
+     + SWLBC(NB),WANGBC(NB),NWAVE,NSURG,NWIND,NTIME,FREQMINBC(NB),
+     + FREQMAXBC(NB),FREQNUMBC(NB)
       COMMON /PREDIC/ HRMS(NN),SIGMA(NN),H(NN),WSETUP(NN),SIGSTA(NN)
       COMMON /BINPUT/ XBINP(NN,NL), ZBINP(NN,NL), FBINP(NN,NL),XS(NL),
      + YLINE(NL),DYLINE(NL),AGLINE(NL),NBINP(NL)
@@ -2072,7 +2235,7 @@ C
      + UPSTD(NN),DPSTA(NN),QP(NN),UPMWD(NN),NPINP(NL)
       COMMON /OVERTF/ RWH,RCREST(NL),QO(NL),QOTF,SPRATE,SLPOT,JCREST(NL)
       COMMON /COMPAR/ HWDMIN,NPT,NPE
-      COMMON /VEGETA/ VEGCD,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
+      COMMON /VEGETA/ VEGCD,VEGCDM,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
      + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
       COMMON /DIKERO/EDIKE(NN,NL),ZB0(NN,NL),DSTA(NN),DSUM(NN),
@@ -2253,9 +2416,6 @@ C     Smooth ZBRAW(J) and ZPRAW(J) J=1-JMAX(L) using Subr.14 SMOOTH
       IF(IPERM.EQ.1.OR.ISEDAV.GE.1) CALL SMOOTH(JMAXL,ZPRAW,PSLOPE)
       DO 149 J=1,JMAX(L)
         ZB(J,L)=SLOPE(J)
-c bdj 2018-08-28  added to defeat the bottom smoothing for EMRRP model
-        if(ismooth.eq.0)        ZB(J,L)=ZBRAW(J)
-c end bdj 2018-08-28  added to defeat the bottom smoothing for EMRRP model
         IF(IPROFL.GE.1) ZB0(J,L)=ZB(J,L)
         IF(IPERM.EQ.1.OR.ISEDAV.GE.1) ZP(J,L)=PSLOPE(J)
         IF(ICLAY.EQ.1) ZP0(J,L)=ZP(J,L)
@@ -2331,8 +2491,8 @@ C
 C     
       COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
      +   ISEDAV,IWTRAN,IVWALL(NL),ILAB,INFILT,IPOND,ITIDE,ILINE,IQYDY,
-     +   IVEG,ICLAY,ISMOOTH
-      COMMON /PERIOD/ TP, WKPO, ANGLE, WT(NN)
+     +   IVEG,ICLAY,IDISS,IFV,IWEIBULL
+      COMMON /PERIOD/ TP, WKPO, ANGLE, WT(NN),FREQMIN,FREQMAX,FREQNUM
       COMMON /CONSTA/ GRAV, SQR2, SQR8, PI, TWOPI, SQRG1, SQRG2
       COMMON /SEDINP/ WF,SG,SPORO1,WFSGM1,GSGM1,TANPHI,BSLOP1,BSLOP2,
      +   EFFB,EFFF,D50,SHIELD,GSD50S,BLP,SLP,BLD,BEDLM,CSTABN,CSEDIA
@@ -2353,7 +2513,7 @@ C     SQRG1   = Sqrt(2/PI)
 C     SQRG2   = 2*Sqrt(2/PI)
 C     WKPO    = deep water wave number for the representative period
 C     
-      PI = 3.14159D0
+      PI = 3.1415926D0
       TWOPI = 2.D0*PI
       SQR2 = DSQRT(2.D0)
       SQR8 = DSQRT(8.D0)
@@ -2430,8 +2590,8 @@ C
 C     
       COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
      +   ISEDAV,IWTRAN,IVWALL(NL),ILAB,INFILT,IPOND,ITIDE,ILINE,IQYDY,
-     +   IVEG,ICLAY,ISMOOTH 
-      COMMON /PERIOD/ TP, WKPO, ANGLE, WT(NN)
+     +   IVEG,ICLAY,IDISS,IFV,IWEIBULL
+      COMMON /PERIOD/ TP, WKPO, ANGLE, WT(NN),FREQMIN,FREQMAX,FREQNUM
       COMMON /BINPUT/ XBINP(NN,NL), ZBINP(NN,NL), FBINP(NN,NL),XS(NL),
      +   YLINE(NL),DYLINE(NL),AGLINE(NL),NBINP(NL)
       COMMON /BPROFL/ DXD2,DXDX,DX2,DX,XB(NN),ZB(NN,NL),FB2(NN,NL),
@@ -2505,7 +2665,7 @@ C     If IANGLE=0, normally incident waves
       ENDIF
 C     
 C     Otherwise, compute wave angle THETA in radians at node J using
-C     Snells Law where ANGLE = incident wave angle in degrees at
+C     Snell's Law where ANGLE = incident wave angle in degrees at
 C     node J=1, AGLINE(L) = angle of cross-shore line L, and WKPSIN = constant
 C     Wave angle from shorenormal is limited to range of -180 to 180 degrees
 C     before imposing range of -80 and 80 degrees
@@ -2564,7 +2724,7 @@ C
       PARAMETER(NL=100)
       COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
      +   ISEDAV,IWTRAN,IVWALL(NL),ILAB,INFILT,IPOND,ITIDE,ILINE,IQYDY,
-     +   IVEG,ICLAY,ISMOOTH
+     +   IVEG,ICLAY,IDISS,IFV,IWEIBULL
       COMMON /CONSTA/ GRAV,SQR2, SQR8, PI, TWOPI,SQRG1, SQRG2
 C     
 C     For obliquelly incident waves, use approximate equations
@@ -2636,6 +2796,211 @@ C     ********************************************************************
       END
 C     *********************************************************************
 C     -06------------  END OF SUBROUTINES GBXAGF and VSTGBY  --------------
+
+
+C     #VEG07#####################  SUBROUTINE DVEG  ########################
+C     
+C     This subroutine calculates DVEG due to vegetation
+C     using Mendez and Losada (2004), Chen and Zhao (2012)
+C     
+      SUBROUTINE DVEG(J, L, WHRMS, D)
+C     
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      PARAMETER (NN=5000,NL=100,NFR=500,NNZ=50,NSPECTRUM=5000)
+C     NFR=maximum number of frequency beams for JONSWAP spectrum
+
+      DIMENSION FREQ(NFR),WNUM(NFR),EJONSPEC(NFR),SDSCZ(NFR)
+      DIMENSION ZCZ(NNZ),URMSCZ(NNZ)
+      COMMON /PERIOD/ TP, WKPO, ANGLE, WT(NN),FREQMIN,FREQMAX,FREQNUM
+      COMMON /CONSTA/ GRAV, SQR2, SRQ8,PI,TWOPI,SQRG1,SQRG2
+      COMMON /LINEAR/ WKP,CP(NN),WN(NN),WKPSIN,STHETA(NN),CTHETA(NN),
+     +   FSX, FSY, FE, QWX, QWY
+      COMMON /VEGETA/VEGCD,VEGCDM,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
+     + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
+     + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
+      COMMON /VEGDISS/ DVEGSTA(NN)
+      COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
+     +  ISEDAV,IWTRAN,IVWALL(NL),ILAB,INFILT,IPOND,ITIDE,ILINE,IQYDY,
+     +  IVEG,ICLAY,IDISS,IFV,IWEIBULL
+      COMMON /MEASUREDSPEC/ VMEASOMEG(NSPECTRUM), 
+     + VMEASSE(NSPECTRUM), VMEASWNUM(NSPECTRUM), NMEASSPEC
+
+C     D = water depth
+C     WHRMS = RMS wave height
+
+C     submerged vegetation 
+      EFFVEGH = VEGD(J,L)
+C     emergent vegetation
+      IF(EFFVEGH.GT.D) EFFVEGH=D
+
+C     IVEG=0 for no vegetation or vegetation represented by increased
+C     IVEG=1 for vegataion whose density, width, height and root depth
+C     IVEG=2 for vegatation whose constant density, width and height
+
+C     IDISS=1: Mendez and Losada (2004)
+C     IDISS=2: Chen and Zhao (2012) with JONSWAP spectrum
+C     IDISS=3: Chen and Zhao (2012) with measured Se
+
+      IF(IDISS.EQ.1) THEN
+        DVEGSTA(J) = (0.5/DSQRT(PI)/GRAV)*VEGCD*VEGB(J,L)*VEGN(J,L)* 
+     +            (0.25*WKP*GRAV*WT(J)/PI)**3 *
+     +            (DSINH(WKP*EFFVEGH)**3.0 + 3.0*DSINH(WKP*EFFVEGH)) *
+     +            WHRMS**3 /
+     +            (3.0*WKP*DCOSH(WKP*D)**3.0) 
+      ELSEIF(IDISS.EQ.2) THEN
+C       Get jonswap spectrum
+        GAM = 3.3
+        SA = 0.07  
+        SB = 0.09 
+        NFREQ = NINT(FREQNUM)
+
+        FREQPEAK = TWOPI/WT(J) 
+        DFREQ = (FREQMAX-FREQMIN)/NFREQ
+
+        DO 516 IC = 1, NFREQ
+          FREQ(IC) = FREQMIN + 0.5*DFREQ + (IC-1)*DFREQ
+         
+          PERWAVE    = 2.0*PI/FREQ(IC)
+          SEGMA      = FREQ(IC)
+          CELERITY   = DSQRT(GRAV*D)
+          WAVELENGTH = CELERITY*PERWAVE
+          WAVENUM    = TWOPI/WAVELENGTH
+
+76        FK = GRAV*WAVENUM*DTANH(WAVENUM*D)-SEGMA**2.0
+
+          IF (DABS(FK).GT.1.0e-7) THEN
+            FKDIF = GRAV*WAVENUM*D*(1.0-DTANH(WAVENUM*D)**2.0)+ 
+     +              GRAV*DTANH(WAVENUM*D)
+            WAVENUM = WAVENUM-FK/FKDIF
+            GOTO 76
+          ENDIF
+
+          WNUM(IC) = WAVENUM 
+
+          IF(FREQ(IC).LT.FREQPEAK) THEN
+            EJONSPEC(IC) = GRAV**2.0/FREQ(IC)**5.0*
+     +                  DEXP(-1.25*(FREQPEAK/FREQ(IC))**4.0)* 
+     +                  GAM**DEXP(-0.5*(FREQ(IC)/FREQPEAK-1.0)**2.0/
+     +                            SA**2.0)
+          ELSE
+            EJONSPEC(IC) = GRAV**2.0/FREQ(IC)**5.0*
+     +                   DEXP(-1.25*(FREQPEAK/FREQ(IC))**4.D0)*  
+     +                   GAM**DEXP(-0.5*(FREQ(IC)/FREQPEAK-1.D0)**2.D0/
+     +                             SB**2.D0)
+          ENDIF
+
+C         For TMA Spectrum
+C         EJONSPEC(IC) = EJONSPEC(IC)*DTANH(WNUM(IC)*D)**2.0/  
+C     +            (1.0+2.0*WNUM(IC)*D/DSINH(2.*WNUM(IC)*D))
+516     CONTINUE
+
+C       For Rayleigh distribution, Hrms^2 = 8sigma^2=8m0, Hm0^2=16m0
+C       (Hm0^2=16m0, Hm0^2 = 2Hrms^2, Hm0 = sqrt(2)Hrms)
+        HM0=DSQRT(2.D0)*WHRMS 
+      
+C       Get normalization factor AJON, to make sure that 
+C       m0=Hm0**2/16=int S(f)df
+        SUMINT = 0.0
+        DO 526 IIFR = 1,NFREQ
+          SUMINT = SUMINT+EJONSPEC(IIFR)*DFREQ
+526     CONTINUE      
+
+        AJON = HM0**2.0/16.0/SUMINT
+
+C       Normalize EJONSPEC with AJON
+        DO 536 IIFR = 1,NFREQ
+           EJONSPEC(IIFR) = EJONSPEC(IIFR)*AJON
+536     CONTINUE
+ 
+C       Compute Urms(z)
+C       Get Z distribution first
+        DZCZ = EFFVEGH/(NNZ*1.D0)
+        DO 546 IZ = 1,NNZ
+           ZCZ(IZ)   =  -D + 0.5*DZCZ + (IZ-1)*DZCZ
+           SUMINT = 0.0
+           DO 556 IIFR = 1,NFREQ
+              TMP1      = DCOSH(WNUM(IIFR)*(D+ZCZ(IZ)))**2.0
+              TMP2      = DSINH(WNUM(IIFR)*D)**2.0
+              ETMP      = FREQ(IIFR)**2.0*TMP1*
+     +                    EJONSPEC(IIFR) / TMP2
+              SUMINT    = SUMINT + ETMP*DFREQ
+556        CONTINUE 
+           URMSCZ(IZ)   = DSQRT(2.0*SUMINT) 
+546     CONTINUE
+        
+C       Get Sdx: spectral distribution of dissipation 
+C       i.e. Eq. (11) in Chen and Zhao (2012)
+        DO 566 IIFR = 1,NFREQ
+C          Get int(Urms*coshh^2(k(h+z))) in terms of z first
+           SUMINT = 0.0 
+           DO 576 IZ = 1,NNZ
+              TMP1   = DCOSH(WNUM(IIFR)*(D+ZCZ(IZ)))**2.0
+              SUMINT = SUMINT + URMSCZ(IZ)*TMP1*DZCZ
+576        CONTINUE
+         
+           SDSCZ(IIFR) =(0.5*VEGCD*VEGB(J,L)*VEGN(J,L)/GRAV) * 
+     +                  (FREQ(IIFR)/DSINH(WNUM(IIFR)*D))**2.0 * 
+     +                  SUMINT * EJONSPEC(IIFR)
+566     CONTINUE
+ 
+        SUMINT = 0.0 
+        DO 586 IIFR = 1,NFREQ
+           SUMINT = SUMINT + SDSCZ(IIFR)*DFREQ
+586     CONTINUE
+        DVEGSTA(J) = SUMINT
+
+
+      ELSEIF(IDISS.EQ.3) THEN
+        DFREQ = VMEASOMEG(2) - VMEASOMEG(1)
+        NFREQ = NMEASSPEC
+C       Compute Urms(z)
+        DZCZ = EFFVEGH/(NNZ*1.D0)
+        DO 5461 IZ = 1,NNZ
+           ZCZ(IZ)   =  -D + 0.5*DZCZ + (IZ-1)*DZCZ
+
+           SUMINT = 0.0
+           DO 5561 IIFR = 1,NFREQ
+              TMP1      = DCOSH(VMEASWNUM(IIFR)*(D+ZCZ(IZ)))**2.0
+              TMP2      = DSINH(VMEASWNUM(IIFR)*D)**2.0
+              ETMP      = VMEASOMEG(IIFR)**2.0*TMP1*
+     +                    VMEASSE(IIFR) / TMP2
+              IF (IIFR.EQ.1.OR.IIFR.EQ.NFREQ) THEN
+                 SUMINT    = SUMINT + ETMP*DFREQ*0.5
+              ELSE
+                 SUMINT    = SUMINT + ETMP*DFREQ
+              ENDIF
+5561      CONTINUE
+          URMSCZ(IZ)   = DSQRT(2.0*SUMINT)
+5461    CONTINUE
+
+C       Get Sdx: spectral distribution of dissipation 
+C       i.e. Eq. (11) in Chen and Zhao (2012)
+        DO 5661 IIFR = 1,NFREQ
+C          Get int(Urms*coshh^2(k(h+z))) in terms of z first
+           SUMINT = 0.0
+           DO 5761 IZ = 1,NNZ
+              TMP1   = DCOSH(VMEASWNUM(IIFR)*(D+ZCZ(IZ)))**2.0
+              SUMINT = SUMINT + URMSCZ(IZ)*TMP1*DZCZ
+5761        CONTINUE
+
+           SDSCZ(IIFR) =(0.5*VEGCD*VEGB(J,L)*VEGN(J,L)/GRAV) *
+     +             (VMEASOMEG(IIFR)/DSINH(VMEASWNUM(IIFR)*D))**2.0 *
+     +             SUMINT * VMEASSE(IIFR)
+5661    CONTINUE
+
+        SUMINT = 0.0
+        DO 5861 IIFR = 1,NFREQ
+           SUMINT = SUMINT + SDSCZ(IIFR)*DFREQ
+5861     CONTINUE
+        DVEGSTA(J) = SUMINT
+
+       ENDIF
+
+      RETURN
+      END 
+
+C     -VEG07-----------------  END OF SUBROUTINE DVEG  ---------------------
+
 C     #07#####################  SUBROUTINE DBREAK  ########################
 C     
 C     This subroutine calculates QBREAK and DBSTA for wave breaking 
@@ -2645,7 +3010,7 @@ C
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       PARAMETER (NN=5000,NL=100)
 C     
-      COMMON /PERIOD/ TP, WKPO, ANGLE, WT(NN)
+      COMMON /PERIOD/ TP, WKPO, ANGLE, WT(NN),FREQMIN,FREQMAX,FREQNUM
       COMMON /CONSTA/ GRAV, SQR2, SQR8, PI, TWOPI, SQRG1, SQRG2
       COMMON /LINEAR/ WKP,CP(NN),WN(NN),WKPSIN,STHETA(NN),CTHETA(NN),
      +   FSX, FSY, FE, QWX, QWY
@@ -2726,11 +3091,11 @@ C
 C     
       COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
      +  ISEDAV,IWTRAN,IVWALL(NL),ILAB,INFILT,IPOND,ITIDE,ILINE,IQYDY,
-     +  IVEG,ICLAY,ISMOOTH
-      COMMON /PERIOD/ TP, WKPO, ANGLE, WT(NN)
+     +  IVEG,ICLAY,IDISS,IFV,IWEIBULL
+      COMMON /PERIOD/ TP, WKPO, ANGLE, WT(NN),FREQMIN,FREQMAX,FREQNUM
       COMMON /SEAWAV/ TIMEBC(NB), TPBC(NB), HRMSBC(NB),
      +  WSETBC(NB), SWLBC(NB), WANGBC(NB), NWAVE, NSURG,
-     +  NWIND, NTIME 
+     +  NWIND, NTIME,FREQMINBC(NB),FREQMAXBC(NB),FREQNUMBC(NB)
       COMMON /PREDIC/ HRMS(NN), SIGMA(NN), H(NN), WSETUP(NN), SIGSTA(NN)
       COMMON /BINPUT/ XBINP(NN,NL),ZBINP(NN,NL),FBINP(NN,NL),XS(NL),
      +  YLINE(NL),DYLINE(NL),AGLINE(NL),NBINP(NL)
@@ -2769,7 +3134,7 @@ C
       COMMON /RRPOND/ ZW,QD,QM,JXW,JX2,NOPOND
       COMMON /TIDALC/ DETADY(NB),DSWLDT(NB)
       COMMON /SERIES/TSQO(NL),TSQBX(NL),TSQSX(NL)
-      COMMON /VEGETA/VEGCD,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
+      COMMON /VEGETA/VEGCD,VEGCDM,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
      + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
       COMMON /DIKERO/EDIKE(NN,NL),ZB0(NN,NL),DSTA(NN),DSUM(NN),
@@ -3417,7 +3782,7 @@ C
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
       PARAMETER(NN=5000, NL=100)
 C     
-      COMMON /PERIOD/ TP,WKPO,ANGLE,WT(NN)
+      COMMON /PERIOD/ TP,WKPO,ANGLE,WT(NN),FREQMIN,FREQMAX,FREQNUM
       COMMON /CONSTA/ GRAV,SQR2,SQR8,PI,TWOPI,SQRG1,SQRG2
       COMMON /LINEAR/ WKP,CP(NN),WN(NN),WKPSIN,STHETA(NN),
      +   CTHETA(NN),FSX,FSY,FE,QWX,QWY
@@ -3467,9 +3832,10 @@ C
 C     
       COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
      +   ISEDAV,IWTRAN,IVWALL(NL),ILAB,INFILT,IPOND,ITIDE,ILINE,IQYDY,
-     +   IVEG,ICLAY,ISMOOTH
-      COMMON /SEAWAV/	TIMEBC(NB),TPBC(NB),HRMSBC(NB),WSETBC(NB),
-     +   SWLBC(NB),WANGBC(NB),NWAVE,NSURG,NWIND,NTIME
+     +   IVEG,ICLAY,IDISS,IFV,IWEIBULL
+      COMMON /SEAWAV/ TIMEBC(NB),TPBC(NB),HRMSBC(NB),WSETBC(NB),
+     +   SWLBC(NB),WANGBC(NB),NWAVE,NSURG,NWIND,NTIME,FREQMINBC(NB),
+     +   FREQMAXBC(NB),FREQNUMBC(NB)
       COMMON /PREDIC/ HRMS(NN),SIGMA(NN),H(NN),WSETUP(NN),SIGSTA(NN)
       COMMON /BINPUT/ XBINP(NN,NL),ZBINP(NN,NL),FBINP(NN,NL),XS(NL),
      +   YLINE(NL),DYLINE(NL),AGLINE(NL),NBINP(NL)
@@ -3486,7 +3852,7 @@ C
       COMMON /POROUS/ XPINP(NN,NL),ZPINP(NN,NL),ZP(NN,NL),HP(NN,NL),
      +   WNU,SNP,SDP,ALPHA,BETA1,BETA2,ALSTA,BESTA1,BESTA2,UPMEAN(NN),
      +   UPSTD(NN),DPSTA(NN),QP(NN),UPMWD(NN),NPINP(NL)
-      COMMON /OVERTF/	RWH,RCREST(NL),QO(NL),QOTF,SPRATE,SLPOT,JCREST(NL)
+      COMMON /OVERTF/ RWH,RCREST(NL),QO(NL),QOTF,SPRATE,SLPOT,JCREST(NL)
       COMMON /SWASHP/ AWD,WDN,EWD,CWD,AQWD,BWD,AGWD,AUWD,WPM,ALSTA2,
      +   BE2,BE4
       COMMON /SWASHY/ PWET(NN),USWD(NN),HWD(NN),SIGWD(NN),UMEAWD(NN),
@@ -3494,6 +3860,7 @@ C
      +   H1,JWD,JDRY
       COMMON /WATRAN/ SWLAND(NB),ISWLSL,JSL,JSL1,IOFLOW
       COMMON /RRPOND/ ZW,QD,QM,JXW,JX2,NOPOND
+      COMMON /DIKELOC/ DIKETOE, TZ, RUNUPKAPPA, RUNUPPHI
       DIMENSION       WSET(NN),ZRW(NN),SIGPT(NN)
 C     
 C     Find overtopping, overflow and seepage rates during ICALL=0
@@ -3658,9 +4025,22 @@ C end BDJ 2011->2014 on 2014-10-02
           R13=(ERMEAN-SWLBC(ITIME)+2.D0*SIGRUN)*(1.D0+DUM)+SWLBC(ITIME)
           RKAPPA=2.0D0
         ENDIF
+
         IF(RCREST(L).GT.ERMEAN) THEN
           R2P=ERMEAN+(R13-ERMEAN)*1.4D0**(2.D0/RKAPPA)
           R1P=ERMEAN+(R13-ERMEAN)*1.52D0**(2.D0/RKAPPA)
+c lzhu change here on April 23, 2018
+c The runup code is still under developing
+          WRITE(*,*) 'Rayleigh is on with coeff=',1.4D0**(2.D0/RKAPPA)
+          IF (IWEIBULL.EQ.1) THEN
+             WRITE(*,*) 'Weibull is on'
+             DUMC = DSQRT(DLOG(50.0D0))/RUNUPPHI
+             DUMK = DUMC / DSQRT(2.0D0) / (1+RUNUPKAPPA*DUMC)
+             WRITE(*,*) 'DUMK=', DUMK
+             R2P=ERMEAN+(R13-ERMEAN)*DUMK
+          ENDIF
+
+c end of lzhu changes
         ELSE
           RKAPPA=1000.D0
           R2P=R13
@@ -3769,8 +4149,8 @@ C
 C     
       COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
      +   ISEDAV,IWTRAN,IVWALL(NL),ILAB,INFILT,IPOND,ITIDE,ILINE,IQYDY,
-     +   IVEG,ICLAY,ISMOOTH
-      COMMON /PERIOD/ TP,WKPO,ANGLE,WT(NN)
+     +   IVEG,ICLAY,IDISS,IFV,IWEIBULL
+      COMMON /PERIOD/ TP,WKPO,ANGLE,WT(NN),FREQMIN,FREQMAX,FREQNUM
       COMMON /PREDIC/ HRMS(NN), SIGMA(NN), H(NN), WSETUP(NN), SIGSTA(NN)
       COMMON /BPROFL/ DXD2,DXDX,DX2,DX,XB(NN),ZB(NN,NL),FB2(NN,NL),
      +   SWLDEP(NN,NL),BSLOPE(NN,NL),JMAX(NL),JSWL(NL)
@@ -3800,7 +4180,7 @@ C
       COMMON /WATRAN/ SWLAND(NB),ISWLSL,JSL,JSL1,IOFLOW
       COMMON /COMPAR/ HWDMIN,NPT,NPE
       COMMON /RRPOND/ ZW,QD,QM,JXW,JX2,NOPOND
-      COMMON /VEGETA/ VEGCD,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
+      COMMON /VEGETA/ VEGCD,VEGCDM,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
      + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
       COMMON /WIMESH/WMINP(NN,NL),WMNODE(NN,NL),ZMESH(NN,NL)
@@ -4429,9 +4809,10 @@ C
 C     
       COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
      +   ISEDAV,IWTRAN,IVWALL(NL),ILAB,INFILT,IPOND,ITIDE,ILINE,IQYDY,
-     +   IVEG,ICLAY,ISMOOTH
+     +   IVEG,ICLAY,IDISS,IFV,IWEIBULL
       COMMON /SEAWAV/ TIMEBC(NB),TPBC(NB),HRMSBC(NB),WSETBC(NB),
-     +   SWLBC(NB),WANGBC(NB),NWAVE,NSURG,NWIND,NTIME
+     +   SWLBC(NB),WANGBC(NB),NWAVE,NSURG,NWIND,NTIME,FREQMINBC(NB),
+     +   FREQMAXBC(NB),FREQNUMBC(NB)
       COMMON /BINPUT/ XBINP(NN,NL),ZBINP(NN,NL),FBINP(NN,NL),XS(NL),
      +   YLINE(NL),DYLINE(NL),AGLINE(NL),NBINP(NL)
       COMMON /BPROFL/ DXD2,DXDX,DX2,DX,XB(NN),ZB(NN,NL),FB2(NN,NL),
@@ -4776,10 +5157,11 @@ C
 C     
       COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
      +   ISEDAV,IWTRAN,IVWALL(NL),ILAB,INFILT,IPOND,ITIDE,ILINE,IQYDY,
-     +   IVEG,ICLAY,ISMOOTH
+     +   IVEG,ICLAY,IDISS,IFV,IWEIBULL
       COMMON /PREDIC/ HRMS(NN),SIGMA(NN),H(NN),WSETUP(NN),SIGSTA(NN)
       COMMON /SEAWAV/ TIMEBC(NB),TPBC(NB),HRMSBC(NB),WSETBC(NB),
-     +   SWLBC(NB),WANGBC(NB),NWAVE,NSURG,NWIND,NTIME
+     +   SWLBC(NB),WANGBC(NB),NWAVE,NSURG,NWIND,NTIME,FREQMINBC(NB),
+     +   FREQMAXBC(NB),FREQNUMBC(NB)
       COMMON /BPROFL/ DXD2,DXDX,DX2,DX,XB(NN),ZB(NN,NL),FB2(NN,NL),
      +   SWLDEP(NN,NL),BSLOPE(NN,NL),JMAX(NL),JSWL(NL)
       COMMON /CONSTA/ GRAV,SQR2,SQR8,PI,TWOPI,SQRG1,SQRG2
@@ -4799,7 +5181,7 @@ C
       COMMON /WATRAN/ SWLAND(NB),ISWLSL,JSL,JSL1,IOFLOW
       COMMON /COMPAR/ HWDMIN,NPT,NPE
       COMMON /RRPOND/ ZW,QD,QM,JXW,JX2,NOPOND
-      COMMON /VEGETA/ VEGCD,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
+      COMMON /VEGETA/ VEGCD,VEGCDM,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
      + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
 C     
@@ -5482,7 +5864,7 @@ C
 C     
       COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
      +   ISEDAV,IWTRAN,IVWALL(NL),ILAB,INFILT,IPOND,ITIDE,ILINE,IQYDY,
-     +   IVEG,ICLAY,ISMOOTH
+     +   IVEG,ICLAY,IDISS,IFV,IWEIBULL
       COMMON /BPROFL/ DXD2,DXDX,DX2,DX,XB(NN),ZB(NN,NL),FB2(NN,NL),
      +   SWLDEP(NN,NL),BSLOPE(NN,NL),JMAX(NL),JSWL(NL)
       COMMON /PROCOM/ DELT,DELZB(NN,NL)
@@ -5596,7 +5978,7 @@ C
 C     
       COMMON/OPTION/TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
      +   ISEDAV,IWTRAN,IVWALL(NL),ILAB,INFILT,IPOND,ITIDE,ILINE,IQYDY,
-     +   IVEG,ICLAY,ISMOOTH
+     +   IVEG,ICLAY,IDISS,IFV,IWEIBULL
       COMMON/PREDIC/HRMS(NN),SIGMA(NN),H(NN),WSETUP(NN),SIGSTA(NN)
       COMMON/BPROFL/DXD2,DXDX,DX2,DX,XB(NN),ZB(NN,NL),FB2(NN,NL),
      +   SWLDEP(NN,NL),BSLOPE(NN,NL),JMAX(NL),JSWL(NL)
@@ -5719,9 +6101,10 @@ C
 C     
       COMMON/OPTION/TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
      +   ISEDAV,IWTRAN,IVWALL(NL),ILAB,INFILT,IPOND,ITIDE,ILINE,IQYDY,
-     +   IVEG,ICLAY,ISMOOTH
+     +   IVEG,ICLAY,IDISS,IFV,IWEIBULL
       COMMON /SEAWAV/ TIMEBC(NB),TPBC(NB),HRMSBC(NB),WSETBC(NB),
-     +   SWLBC(NB),WANGBC(NB),NWAVE,NSURG,NWIND,NTIME
+     +   SWLBC(NB),WANGBC(NB),NWAVE,NSURG,NWIND,NTIME,FREQMINBC(NB),
+     +   FREQMAXBC(NB),FREQNUMBC(NB)
       COMMON /PREDIC/ HRMS(NN),SIGMA(NN),H(NN),WSETUP(NN),SIGSTA(NN)
       COMMON /BPROFL/ DXD2,DXDX,DX2,DX,XB(NN),ZB(NN,NL),FB2(NN,NL),
      +   SWLDEP(NN,NL),BSLOPE(NN,NL),JMAX(NL),JSWL(NL)
@@ -5919,7 +6302,7 @@ C
       IMPLICIT DOUBLE PRECISION(A-H,O-Z)
       PARAMETER(NN=5000, NL=100)
 C     
-      COMMON /PERIOD/ TP,WKPO,ANGLE,WT(NN)      
+      COMMON /PERIOD/ TP,WKPO,ANGLE,WT(NN),FREQMIN,FREQMAX,FREQNUM
       COMMON /BPROFL/ DXD2,DXDX,DX2,DX,XB(NN),ZB(NN,NL),FB2(NN,NL),
      + SWLDEP(NN,NL),BSLOPE(NN,NL),JMAX(NL),JSWL(NL)
       COMMON /CONSTA/ GRAV,SQR2,SQR8,PI,TWOPI,SQRG1,SQRG2
@@ -5944,3 +6327,360 @@ C      R2P = SQR2*HRMSO*1.86D0*SSP**0.71D0
       END
 C     
 C     -23------------------------- END OF SUBROUTINE SRFSP -----------------------
+
+
+C     #24##################### SUBROUTINE INTERP1 ##############################
+C     
+C     This subroutine interpolates
+c      REAL FUNCTION INTERP1(NINTERP, XDATA, YDATA, XVAL)
+      SUBROUTINE INTERP1(NINTERP, XDATA, YDATA, XVAL, YVAL)
+
+      DOUBLE PRECISION XDATA(NINTERP), YDATA(NINTERP)
+      DOUBLE PRECISION XVAL, YVAL
+      INTEGER IX, NINTERP
+      
+    
+      DO 112 IX = 1,NINTERP-1
+         IF (XVAL.GE.XDATA(IX).AND.XVAL.LE.XDATA(IX+1)) THEN
+            YVAL = YDATA(IX) + 
+     +             (XVAL-XDATA(IX)) * 
+     +             (YDATA(IX+1)-YDATA(IX))/(XDATA(IX+1)-XDATA(IX))
+         ENDIF
+         
+         IF (XVAL.GT.XDATA(NINTERP)) THEN
+            YVAL = YDATA(NINTERP-1) +
+     +             (XVAL-XDATA(NINTERP-1)) *
+     +             (YDATA(NINTERP)-YDATA(NINTERP-1))
+     +             /(XDATA(NINTERP)-XDATA(NINTERP-1))
+         ENDIF
+
+         IF (XVAL.LT.XDATA(1)) THEN
+            YVAL = YDATA(1) +
+     +             (XVAL-XDATA(1)) *
+     +             (YDATA(2)-YDATA(1))/(XDATA(2)-XDATA(1)) 
+         ENDIF
+
+112   CONTINUE
+
+      END
+
+
+cc     #25##################### SUBROUTINE FINDHV2HTOM ##############################
+c
+c      SUBROUTINE FINDHV2HTOM(URSELL,H2H,HV2H,HV2HTOM,
+c     +                       NINTERP,URALL,MMODALL)
+c
+c      DOUBLE PRECISION URALL (NINTERP), MMODALL(NINTERP)
+c      DOUBLE PRECISION URSELL, H2H, HV2H, MMOD, HV2HTOM
+c      INTEGER NINTERP
+c      DOUBLE PRECISION HV2HALL(9), FAC1S(9), FAC2S(9)
+c      DOUBLE PRECISION FAC1, FAC2
+c      DATA HV2HALL/0.1D0,0.2D0,0.3D0,0.4D0,0.5D0,0.6D0,
+c     +            0.7D0,0.8D0,0.9D0/
+c      DATA FAC1S/1.09D0,1.09D0,1.08D0,1.07D0,1.06D0,1.05D0,
+c     +            1.04D0,1.03D0,1.03D0/
+c      DATA FAC2S/0.75D0,0.855D0,0.955D0,1.062D0,1.173D0,
+c     +            1.295D0,1.423D0,1.559D0,1.716D0/
+c
+c      IF (URSELL.LT.URALL(1)) THEN
+c         MMOD=MMODALL(1)*URSELL/URALL(1) 
+c      ELSEIF (URSELL.GT.URALL(NINTERP)) THEN
+c         MMOD=MMODALL(NINTERP)
+c      ELSE
+c         CALL INTERP1(NINTERP, URALL, MMODALL, URSELL, MMOD)
+c      ENDIF
+c      
+c      CALL INTERP1 (9, HV2HALL, FAC1S, HV2H, FAC1)
+c      CALL INTERP1 (9, HV2HALL, FAC2S, HV2H, FAC2)
+c
+c      HV2HTOM = MMOD*(FAC1/DSINH(H2H*1.0D0)-1.0D0) /
+c     +               (FAC2/DSINH(HV2H*1.0D0)-1.0D0) 
+c
+c      END
+
+c     #26##################### SUBROUTINE FINDHV2HTOMEME ##############################
+
+      SUBROUTINE FINDHV2HTOMEME(URSELL,H2H,HV2H,HV2HTOMEME)
+
+      DOUBLE PRECISION URSELL, H2H, HV2H, MMOD, HV2HTOMEME
+      
+c     For emergent veg, use hv/h = 0.99 for now. 
+      HV2HMODIFIED = MIN(HV2H, 0.90D0);
+      
+c      IF (URSELL.LT.URALL(1)) THEN
+c         MMOD=1.0D0+(MMODALL(1)-1)*URSELL/URALL(1) 
+c      ELSEIF (URSELL.GT.URALL(NINTERP)) THEN
+c         MMOD=MMODALL(NINTERP)
+c      ELSE
+c         CALL INTERP1(NINTERP, URALL, MMODALL, URSELL, MMOD)
+c      ENDIF
+c
+c      HV2HTOMEME1=(MMOD-1.0D0)*(0.75D0/DSINH(H2H*1.0D0)-1.0D0) + 1.0D0 
+ 
+CC Try Zhu and Chen (2018) JGR
+      F1 = 3.58963D0 - 2.5823D0/(1.0D0+(URSELL/25.63303D0)**73.8627D0)
+     +                        **(8.7748D0*0.0001D0)
+CC  Note here that as a first try, hv/h is set as 0.95 for emergent vegetation
+      IF (HV2HMODIFIED.LE.0.8D0) THEN    
+          F2 = 0.19242D0*(HV2HMODIFIED)**3.0D0 + 
+     +         0.07618D0*(HV2HMODIFIED)**2.0D0 + 
+     +         1.0054D0*(HV2HMODIFIED) + 0.64848D0
+      ELSEIF (HV2HMODIFIED.GT.0.8D0.AND.HV2HMODIFIED.LT.1.0D0) THEN
+          F2 = (29.8D0*HV2HMODIFIED**3.0D0-
+     +      77.289D0*HV2HMODIFIED**2.0D0+68.249D0*HV2HMODIFIED
+     +      -18.793D0)*MIN(1.0D0, 
+     +      1.0D0+(1.0D0/(2.0D0-DCOSH(HV2HMODIFIED-0.7D0)**2.8D0)-
+     +       1.0D0)*
+     +      ((EXP(H2H-0.2)-1.0D0) / (EXP(0.4D0) -1.0D0)))
+      ENDIF
+
+      A0 = 0.0D0
+      A1 = 0.0D0 
+      A2 = 0.0D0
+      A3 = 0.0D0 
+      A4 = 0.0D0 
+      A5 = 0.0D0
+      MU = 0.0D0
+      GAM = 1.0D0
+      IF (URSELL.LE.1.0D0) THEN
+         A0 = -1.2604E-3
+         A1 = 7.0547E-3
+         A2 = 1.9004E-3
+         A3 = 0.0D0
+         A4 = 0.0D0 
+         A5 = 0.0D0
+         MU = 0.0D0
+         GAM= 1.0D0
+      ELSEIF (URSELL.GT.1.0D0.AND.URSELL.LE.11.0D0) THEN
+         A0 = 2.7124E-3
+         A1 = 6.1698E-4
+         A2 = 4.2423E-3
+         A3 = 7.6494E-4
+         A4 = 6.3251E-5
+         A5 = -1.9486E-6
+         MU = 0.0D0
+         GAM = 1.0D0
+      ELSEIF (URSELL.GT.11.0D0.AND.URSELL.LE.50.0D0) THEN
+         A0 = 3.1646E-1
+         A1 = 7.30E-2
+         A2 = -1.9153E-2
+         A3 = 3.7518E-3
+         A4 = 7.7545E-4
+         A5 = -5.8145E-4
+         MU = 30.75
+         GAM= 11.33
+      ELSEIF (URSELL.GT.50.0D0.AND.URSELL.LE.90.0D0) THEN
+         A0 = 4.4339E-1
+         A1 = 1.4262E-2
+         A2 = -4.1255E-3
+         A3 = 1.5321E-3
+         A4 = 2.791E-5
+         A5 = -2.1287E-4
+         MU = 70.25
+         GAM= 11.619
+      ELSEIF (URSELL.GT.90.0D0.AND.URSELL.LE.112.0D0) THEN
+         A0 = 4.6412E-1
+         A1 = 6.4872E-4
+         A2 = -2.469E-4
+         A3 = 3.6116E-4
+         A4 = -5.6746E-5
+         A5 = -4.683E-5
+         MU = 101.25
+         GAM= 6.4226
+      ELSEIF (URSELL.GT.112.0D0.AND.URSELL.LE.140.0D0) THEN
+         A0 = 4.6412E-1
+         A1 = -1.2267E-3
+         A2 = -2.2371E-4
+         A3 = 1.5531E-4
+         A4 = -1.0501E-5
+         A5 = -2.6202E-5
+         MU = 126.25
+         GAM= 8.1548
+      ELSEIF (URSELL.GT.140.0D0.AND.URSELL.LE.200.0D0) THEN
+         A0 = 4.5158E-1
+         A1 = -6.6412E-3
+         A2 = -1.1636E-4
+         A3 = 3.9872E-4
+         A4 = -6.0734E-5
+         A5 = -1.0259E-4
+         MU = 170.25
+         GAM= 17.393
+      ELSEIF (URSELL.GT.200.0D0.AND.URSELL.LE.400.0D0) THEN
+         A0 = 3.9904E-1
+         A1 = -2.1609E-2
+         A2 = 1.5767E-3
+         A3 = -3.8946E-4
+         A4 = -1.4773E-4
+         A5 = 1.3648E-4
+         MU = 300.25
+         GAM= 57.807
+      ELSEIF (URSELL.GT.400.0D0.AND.URSELL.LE.600.0D0) THEN
+         A0 = 3.3751E-1 
+         A1 = -1.4282E-2
+         A2 = 9.9248E-4
+         A3 = -2.4393E-4
+         A4 = -5.5042E-5
+         A5 = 5.732E-5
+         MU = 500.25
+         GAM= 57.807
+      ELSEIF (URSELL.GT.600.0D0.AND.URSELL.LE.843.0D0) THEN
+         A0 = 2.9175E-1
+         A1 = -1.2498E-2
+         A2 = 6.4769E-4
+         A3 = 3.8943E-4
+         A4 = 2.0522E-5
+         A5 = -8.9579E-5
+         MU = 721.75
+         GAM= 70.22
+      ELSEIF (URSELL.GT.843.0D0.AND.URSELL.LE.1000.0D0) THEN
+         A0 = 2.6299E-1
+         A1 = -6.1774E-3
+         A2 = 3.8208E-4
+         A3 = 3.6931E-4
+         A4 = -1.5269E-5
+         A5 = -6.543E-5
+         MU = 921.75
+         GAM= 45.394
+      ENDIF
+
+      URSELLHAT = (URSELL-MU)/GAM
+      F3 = A0+A1*URSELLHAT+A2*URSELLHAT**2.0D0+
+     +      A3*URSELLHAT**3.0D0+
+     +      A4*URSELLHAT**4.0D0 + A5*URSELLHAT**5.0D0
+      HV2HTOMEME=(F1/SINH(H2H)-1.0D0)*F3/
+     +              (F2/SINH(HV2HMODIFIED)-1.0D0)
+      END
+c     #26##################### END OF SUBROUTINE FINDHV2HTOMEME ##############################
+
+
+c     #27##################### SUBROUTINE DISPERSION ##############################
+      SUBROUTINE DISPERSION(DEPTH, PERIOD, WKZ)
+C     
+      DOUBLE PRECISION DEPTH, PERIOD, WAVENUMTMP, SEGMA, FK, WKZ
+      DOUBLE PRECISION PI, GRAV
+      PI = 3.1415926D0
+      GRAV=9.81D0
+      SEGMA  = 2.0D0*PI / PERIOD
+      WAVENUMTMP = 0.1D0
+1276        FK = GRAV*WAVENUMTMP*DTANH(WAVENUMTMP*DEPTH)-SEGMA**2.0D0
+       
+          IF (DABS(FK).GT.1.0e-7) THEN 
+            FKDIF=GRAV*WAVENUMTMP*DEPTH*(1.0D0-DTANH(WAVENUMTMP*DEPTH)
+     +              **2.0D0)+GRAV*DTANH(WAVENUMTMP*DEPTH)
+            WAVENUMTMP = WAVENUMTMP-FK/FKDIF
+            GOTO 1276
+          ENDIF
+
+          WKZ = WAVENUMTMP 
+      END
+
+c #28######################## SUBROUTINE PHASEAVEFV #############################
+c This subroutine calculates the phase-averaged drag force Fv 
+c   For submerged vegetation, the parametric model is used
+c   For emergent vegetation, two models are used:
+c     (1) parametric model with hv/h = 0.9 and different sets of Cd
+c     (2) hybrid model with Fv = Fv(SF, hv/h = 0.55) + Fv(LWT)
+ 
+      SUBROUTINE PHASEAVEFV(J,L,WHRMS,D,STREAMSTRESSSTA, FVCWLWT)
+c
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      PARAMETER (NN=5000,NL=100,NFR=500,NNZ=50)
+C     NFR=maximum number of frequency beams for JONSWAP spectrum
+
+      COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
+     +  ISEDAV,IWTRAN,IVWALL(NL),ILAB,INFILT,IPOND,ITIDE,ILINE,IQYDY,
+     +  IVEG,ICLAY,IDISS,IFV,IWEIBULL
+      COMMON /PERIOD/ TP, WKPO, ANGLE, WT(NN),FREQMIN,FREQMAX,FREQNUM
+      COMMON /CONSTA/ GRAV, SQR2, SRQ8,PI,TWOPI,SQRG1,SQRG2
+      COMMON /LINEAR/ WKP,CP(NN),WN(NN),WKPSIN,STHETA(NN),CTHETA(NN),
+     +   FSX, FSY, FE, QWX, QWY 
+      COMMON /VEGETA/VEGCD,VEGCDM,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
+     + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
+     + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
+      COMMON /VEGDISS/ DVEGSTA(NN)
+      COMMON /ENERGY/ EFSTA(NN),DFSTA(NN)
+      
+      DOUBLE PRECISION URSELL, H2H, HV2H, MMOD, HV2HTOMEME
+c IFV = 1: original code
+c IFV = 2: parametric model of Fv
+c IFV = 3: hybrid model of Fv
+
+      IF (IFV.EQ.1) THEN
+        STREAMSTRESSSTA = FSX*(DFSTA(J)+DVEGSTA(J))/(WN(J)*CP(J))
+      ELSEIF (IFV.EQ.2) THEN
+        STREAMSTRESSSTA = 0.0D0 
+        IF (VEGN(J,L).GT.0.0D0) THEN
+           TMEAN = WT(J)
+c                       /1.35D0 
+           CALL DISPERSION(D, TMEAN , WKMEAN)
+           OMEGAMEAN = 2.0D0*PI/TMEAN
+           WVLENMEAN = 2.0D0*PI/WKMEAN
+           URSELL= WHRMS*DSQRT(2.0D0) * WVLENMEAN**2.0D0/D**3.0D0
+           HS2H  = WHRMS*DSQRT(2.0D0) / D 
+           HV2H  = VEGD(J,L)/D
+
+           CALL FINDHV2HTOMEME(MIN(URSELL,1000.0D0),HS2H,HV2H,HV2HTOM)
+    
+           STREAMSTRESSSTA = 0.5D0*VEGCD*VEGB(J,L)*VEGN(J,L)*
+     +              OMEGAMEAN**2.0D0*WHRMS**3.0D0*
+     +              DCOSH(WKMEAN*D*MIN(HV2H, 1.0D0))**2.0D0/
+     +              DSINH(WKMEAN*D)**2.0D0*
+     +              HV2HTOM/DSQRT(PI)/8.0D0/GRAV
+        ENDIF
+      ELSEIF (IFV.EQ.3) THEN
+        STREAMSTRESSSTA = 0.0D0 
+        IF (VEGN(J,L).GT.0.0D0) THEN
+          IF(VEGD(J,L).LT.D) THEN
+            TMEAN = WT(J)
+c/1.35D0 
+            CALL DISPERSION(D, TMEAN , WKMEAN)
+            OMEGAMEAN = 2.0D0*PI/TMEAN
+            WVLENMEAN = 2.0D0*PI/WKMEAN
+            URSELL= WHRMS*DSQRT(2.0D0) * WVLENMEAN**2.0D0/D**3.0D0
+            HS2H  = WHRMS*DSQRT(2.0D0) / D
+            HV2H  = VEGD(J,L)/D
+            CALL FINDHV2HTOMEME(MIN(URSELL,1000.0D0),HS2H,HV2H,HV2HTOM)
+
+            STREAMSTRESSSTA = 0.5D0*VEGCD*VEGB(J,L)*VEGN(J,L)*
+     +                   OMEGAMEAN**2.0D0*WHRMS**3.0D0*
+     +                   DCOSH(WKMEAN*D*MIN(HV2H, 1.0D0))**2.0D0/
+     +                   DSINH(WKMEAN*D)**2.0D0*
+     +                   HV2HTOM/DSQRT(PI)/8.0D0/GRAV
+         ELSE
+            TMEAN = WT(J)
+c/1.35D0 
+            CALL DISPERSION(D, TMEAN , WKMEAN)
+            OMEGAMEAN = 2.0D0*PI/TMEAN
+            WVLENMEAN = 2.0D0*PI/WKMEAN
+            URSELL= WHRMS*DSQRT(2.0D0) * WVLENMEAN**2.0D0/D**3.0D0
+            HS2H  = WHRMS*DSQRT(2.0D0) / D
+            HV2H = 0.55D0
+            CALL FINDHV2HTOMEME(MIN(URSELL,1000.0D0),HS2H,HV2H,HV2HTOM)
+
+            STREAMSTRESSSTA = 0.5D0*VEGCD*VEGB(J,L)*VEGN(J,L)*
+     +                     OMEGAMEAN**2.0D0*WHRMS**3.0D0*
+     +                     DCOSH(WKMEAN*D*MIN(HV2H, 1.0D0))**2.0D0/
+     +                     DSINH(WKMEAN*D)**2.0D0*
+     +                     HV2HTOM/DSQRT(PI)/8.0D0/GRAV
+C For emergent vegetation, Fv_LWT is from Dean and Bener (2006) Eq. 12
+            STREAMSTRSTALWT = VEGCD*VEGB(J,L)*VEGN(J,L)*
+     +                       (3.0D0*DSQRT(PI)/4.0D0)*WHRMS**3.0D0
+     +                       *WKP/12.0D0/PI/DTANH(WKP*D)
+            STREAMSTRESSSTA = STREAMSTRESSSTA + STREAMSTRSTALWT
+          ENDIF
+        ENDIF
+      ENDIF
+
+c Fv_cw from LWT
+      FVCWLWT     = 0.5D0*VEGCDM*VEGB(J,L)*VEGN(J,L)*
+     +              2.0D0*(USIGT*SIGT)*OMEGA*0.5D0*
+     +              (WHRMS*DSQRT(PI)*0.5D0)*
+     +              2.0D0/PI*DSINH(WKP*MIN(D, VEGD(J,L)))/
+     +              DSINH(WKP*D) / WKP /GRAV
+
+      RETURN
+      END
+
+C     -28-----------------  END OF SUBROUTINE PHASEAVEFV  ---------------------
+
+

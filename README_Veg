@@ -1,11 +1,13 @@
-1. New parameters (NFR) and new variables (IWEIBULL, FREQMIN, FREQMAX, FREQNUM, FREQMINBC, VEGCDM, DIKETOE, TZ, RUNUPKAPPA, RUNUPPHI, VMEASOMEG, VMEASSE, VMEASWNUM, NMEASSPEC) are added.
+1. New parameters (NFR) and new variables (IDISS, IFV, IWEIBULL, FREQMIN, FREQMAX, FREQNUM, FREQMINBC, VEGCDM, DIKETOE, TZ, RUNUPKAPPA, RUNUPPHI, VMEASOMEG, VMEASSE, VMEASWNUM, NMEASSPEC) are added.
    NFR       = maximum number of frequency beams for JONSWAP spectrum
+   IDISS     = controls energy dissipation model (due to vegetation) 
+   IFV       = controls phase-averaged depth-integrated drag model
    IWEIBULL  = IWEIBULL = 1: the runup formula based on the Weibull distribution is used. IWEIBULL = 0: the original CSHORE 
    FREQMIN   = the minimum cutoff frequency 
    FREQMAX   = the maximum cutoff frequency
    FREQNUM   = the number of frequency components 
    FREQMINBC = the cutoff frequency at the offshore BC 
-   VEGCDM    = the second set of drag coefficient if IVEG = 6, 7, 8 (Phase-averaged depth-integrated drag computed from the parametric model)
+   VEGCDM    = the second set of drag coefficient if IFV = 2
    VMEASOMEG = the frequencies of the measured wave spectrum
    VMEASSE   = the spectral density of the measured wave spectrum
    VMEASWNUM = the wave numbers corresponding to the frequencies (VMEASOMEG) 
@@ -17,34 +19,21 @@
 
 2. New subroutines are added:
    subroutine DVEG:  compute the energy dissipation due to vegetation (DVEGSTA). Three different models are used: 
-                     (1): Mendez and Losada (2004)  
-                     (2): Chen and Zhao (2012) with JONSWAP spectrum
-                     (3): Chen and Zhao (2012) with measured spectrum    
+                     IDISS=1: Mendez and Losada (2004)  
+                     IDISS=2: Chen and Zhao (2012) with JONSWAP spectrum
+                     IDISS=3: Chen and Zhao (2012) with measured spectrum    
 
    subroutine INTERP1: doing interpolation.
    subroutine FINDHV2HTOMEME: compute the parameter (HV2HTOMEME) used in subroutine PHASEAVEFV().
    subroutine DISPERSION: compute wavenumber with given water depth and wave period.
    subroutine PHASEAVEFV: compute the phase-averaged depth-integrated drag (STREAMSTRESSSTA) due to vegetation. Three different models are used:
-                     (1): original CSHORE 
-                     (2): parametric model. This model is originally designed for submerged vegetation; therefore, a different Cd value (Cdm) may be needed to account for the uncertainties in the phase-averaged drag in the case of emergent vegetation.
-                     (3): hybrid model. The submerged part is computed with parametric model and the canopy part is computed with the formula based on linear wave theory (Dean and Bender 2006, a regular wave version). About determining the submerged part in random waves, we found that 55% of the water depth works for all 7 USDA flume experiments. No second set of Cd is needed. 
+                     IFV = 1: original CSHORE 
+                     IFV = 2: parametric model. This model is originally designed for submerged vegetation; therefore, a different Cd value (Cdm) may be needed to account for the uncertainties in the phase-averaged drag in the case of emergent vegetation.
+                     IFV = 3: hybrid model. The submerged part is computed with parametric model and the canopy part is computed with the formula based on linear wave theory (Dean and Bender 2006, a regular wave version). About determining the submerged part in random waves, we found that 55% of the water depth works for all 7 USDA flume experiments. No second set of Cd is needed. 
 
-2. Expanded parameter IVEG.
-   IVEG = 0-2: current vegetation implementation
-   IVEG = 3  : vegetation mode on (veg properties are specified as input) + energy dissipation model from Mendez and Losada (2004) + Phase-averaged depth-integrated drag computed as in the current version of CSHORE
-   IVEG = 4 :  vegetation mode on (veg properties are specified as input) + energy dissipation model from Chen and Zhao (2012) with JONSWAP spectrum + Phase-averaged depth-integrated drag computed as in the current version of CSHORE
-   IVEG = 5 :  vegetation mode on (veg properties are specified as input) + energy dissipation model from Chen and Zhao (2012) with measured spectrum + Phase-averaged depth-integrated drag computed as in the current version of CSHORE
 
-   IVEG = 6 :  vegetation mode on (veg properties are specified as input) + energy dissipation model from Mendez and Losada (2004) + Phase-averaged depth-integrated drag computed from the parametric model
-   IVEG = 7 :  vegetation mode on (veg properties are specified as input) + energy dissipation model from Chen and Zhao (2012) with JONSWAP spectrum + Phase-averaged depth-integrated drag computed from the parametric model
-   IVEG = 8 :  vegetation mode on (veg properties are specified as input) + energy dissipation model from Chen and Zhao (2012) with measured spectrum + Phase-averaged depth-integrated drag computed from the parametric model
+3. If IDISS = 3 (use energy dissipation model by Chen and Zhao (2012) together with measured wave spectrum), the measured wave spectrum is read in the main code and stored in VMEASOMEG, VMEASSE and VMEASWNUM. The format of the measured spectrum file is: three columns representing frequency, spectral density, wave number, respectively.
 
-   IVEG = 9 :  vegetation mode on (veg properties are specified as input) + energy dissipation model from Mendez and Losada (2004) + Phase-averaged depth-integrated drag computed from the hybrid model
-   IVEG = 10 : vegetation mode on (veg properties are specified as input) + energy dissipation model from Chen and Zhao (2012) with JONSWAP spectrum + Phase-averaged depth-integrated drag computed from the hybrid model
-   IVEG = 11 :  vegetation mode on (veg properties are specified as input) + energy dissipation model from Chen and Zhao (2012) with measured spectrum + Phase-averaged depth-integrated drag computed from the hybrid model 
+4. The phase-averaged depth-integrated drag (STREAMSTRESSSTA) is applied in the cross-shore momentum equation. The lines for calculating "WSETUP" are revised.
 
-4. If IVEG = 5, 8, 11 (use energy dissipation model by Chen and Zhao (2012) together with measured wave spectrum), the measured wave spectrum is read in the main code and stored in VMEASOMEG, VMEASSE and VMEASWNUM. The format of the measured spectrum file is: three columns representing frequency, spectral density, wave number, respectively.
-
-5. The phase-averaged depth-integrated drag (STREAMSTRESSSTA) is applied in the cross-shore momentum equation. The lines for calculating "WSETUP" are revised.
-
-6. Two example cases are added in /usace_distribute_bundle/example_veg
+5. Two example cases are added in /usace_distribute_bundle/example_veg

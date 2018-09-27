@@ -2,12 +2,12 @@
 clear 
 
 % global figID
-addpath ../mfiles
+addpath ../../mfiles
+addpath ./USDA_data/wave_setup
 
 % load lab data
-DIR = ['/Users/lzhu/Desktop/OngoingProjects/5_ERDC/Documents/DataFromDing/SERRI_NSL_DATA_2_LSU/wave_setup/']; 
-DIRplot = ['/Users/lzhu/Desktop/OngoingProjects/5_ERDC/Documents/DataFromDing/SERRI_NSL_DATA_2_LSU/'] ; 
-% cases=dir([DIR, 'REGULAR*.dat']) ; 
+DIR = ['./USDA_data/wave_setup/']; 
+
 cases=dir([DIR, 'RANDOM*.dat']) ; 
 
 % offshore w/ veg
@@ -16,6 +16,7 @@ mwl_offshore_veg = [0.25*1e-3, 0.1*1e-3, 0*1e-3, 0*1e-3, -.5*1e-3, -.5*1e-3, -.3
 % offshore w/o veg
 % mwl_offshore_noveg = [0.25*1e-3, 0.1*1e-3, 0*1e-3, 0*1e-3, -.5*1e-3, -.5*1e-3, -.3*1e-3] ; 
 mwl_offshore_noveg = [0.25*1e-3, 0.1*1e-3, 0*1e-3, 0*1e-3, -.5*1e-3, -.5e-3, -.3*1e-3] ; 
+
 CDs  =   [2.3, 2.0,  2.0, 2.0,  1.7,  1.6,  1.6]; 
 CDMs = [1.9, 2.0,  1.6, 2.0,  1.2,  1.5,  0.9]; 
 khs  = [1.3, 0.89, 1.3, 0.77, 0.89, 0.55, 0.77];
@@ -63,22 +64,25 @@ for icase = 1 : length(cases)
     in.iwind  = 0;          % 0 = no wind effect
     in.itide  = 0;          % 0 = no tidal effect on currents
     in.iweibull = 0 ;
-    in.iveg   = 1;          % vegitation effect
+    in.iveg   = 3;          % vegitation effect
                             % 0: no vegetation or vegetation represented by increased
                             % 1: veg. density, width, height and root depth are 
                             %    specified as input. The height and root depth 
                             %    vary with the bottom elevation change
                             % 2: veg. with constant density, width and height
+    in.veg_Cd = CDs(icase);        % vegitation drag coeff   
+    in.veg_Cdm = in.veg_Cd ;    % for iFv ==2, Cdm is specified by CDMs                            
+if in.iveg==3                        
     in.idiss  = 1;          % energy dissipation due to vegitation 
                             % (0: veg is accounted in bottom friction (original)
                             %  1: mendez, 2: chen_zhao)  
-    in.iFv = 3 ;
-    in.veg_Cd = CDs(icase);        % vegitation drag coeff   
+    in.iFv = 2 ;
     if (in.iFv == 2)
         in.veg_Cdm = CDMs(icase);    
-    elseif (in.iFv == 3)
-        in.veg_Cdm = in.veg_Cd ;    
     end
+    
+end
+    
     in.veg_n  = 3150;       % vegitation density
     in.veg_dia= 3.175e-3;       % vegitation diam
     in.veg_ht = 0.2;         % vegitation height
@@ -133,14 +137,10 @@ for icase = 1 : length(cases)
     
     in.angle = 0*dum;    % constant incident wave angle at seaward boundary in
     anguphase = 2*pi./in.Tp ; 
-    in.freqmin= 0.1*anguphase ; 
-    in.freqmax= 8.0*anguphase ; 
-    if in.idiss==2 
+    if in.iveg==3   && in.idiss==2 
+        in.freqmin= 0.1*anguphase ; 
+        in.freqmax= 8.0*anguphase ; 
         in.numfreq= 500*ones(size(in.freqmax)) ; 
-    elseif in.idiss==3
-        spectrumdata = load ('Jadhav_Omeg_Se.txt') ;
-        [row, col] = size(spectrumdata)  ;
-        in.numfreq = col *ones(size(in.freqmax)) ; 
     end
     
     % Idealized numerical tank
@@ -182,7 +182,7 @@ for icase = 1 : length(cases)
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%prepare input file for cshore%%%%%%%%%%%%%%%%%%%%
     makeinfile_usace_vegfeature(in) ;
-    unix(['./../../src-repo/updatedveg']) ;  
+    unix(['./../../../src-repo/updatedveg']) ;  
     
     results = load_results_usace;
     if results.run_success==1;
@@ -201,7 +201,7 @@ for icase = 1 : length(cases)
     else
         errorbar (labdata{1}, labdata{8}/sqrt(2)./in.Hrms, labdata{9}/sqrt(2)./in.Hrms, 'ok')    
     end
-    plot (results.hydro.x,results.hydro.Hrms./in.Hrms, 'r', 'linewidth',2) 
+    plot (results.hydro.x,results.hydro.Hrms./in.Hrms, 'k', 'linewidth',2) 
 %     legend ('measurements', 'modeled')
     if (in.iveg==1)
         plot (in.veg_extent(1)*Lx*ones(1,2), linspace(0, 1.5, 2), ':k', 'linewidth', 2)
@@ -224,7 +224,7 @@ for icase = 1 : length(cases)
     else
         errorbar (labdata{1}, labdata{6}*0.001./in.Hrms, labdata{7}*0.001./in.Hrms, 'ok')    
     end
-    plot (results.hydro.x, results.hydro.setup./in.Hrms, '-r', 'linewidth', 2)
+    plot (results.hydro.x, results.hydro.setup./in.Hrms, '-k', 'linewidth', 2)
 %     legend ('measurements', 'modeled')
     if (in.iveg==1)
         plot (in.veg_extent(1)*Lx*ones(1,2), linspace(-0.1, 0.5, 2), ':k', 'linewidth', 2)
@@ -262,7 +262,7 @@ for icase = 1 : length(cases)
     end
         
     figure(1124); hold on; box on
-    hh = herrorbar (MWL_lab, MWL_model, -MWL_lab_STD, MWL_lab_STD, 'or')  ; 
+    hh = herrorbar (MWL_lab, MWL_model, -MWL_lab_STD, MWL_lab_STD, 'ok')  ; 
     axis square
     
 %     fprintf (fid, '%10.10e ', MWL_model, MWL_model)
@@ -280,7 +280,7 @@ for icase = 1 : length(cases)
     end
     
     figure(1125); hold on; box on
-    hh = herrorbar (H_model, H_lab, -H_lab_STD, H_lab_STD, 'or')  ; 
+    hh = herrorbar (H_model, H_lab, -H_lab_STD, H_lab_STD, 'ok')  ; 
     axis square
 
     unix('rm -f O*') ; 
@@ -307,7 +307,7 @@ set (gca, 'fontsize', 15)
 axis square
 
 
+addpath ../../mfiles
+addpath ./USDA_data/wave_setup
 
-rmpath ../mfiles
-
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

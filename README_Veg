@@ -36,4 +36,8 @@
 
 4. The phase-averaged depth-integrated drag (STREAMSTRESSSTA) is applied in the cross-shore momentum equation. The lines for calculating "WSETUP" are revised.
 
-5. Two example cases are added in /usace_distribute_bundle/example_veg
+5. Two example cases are added in /usace_distribute_bundle/application
+
+6. The CSHORE source code remains the same when IVEG=0-2. The vegetation advances developed by Dr. Qin J. Chen's research team are activated only when IVEG=3. A new makeinfile matlab script has been added: /usace_distribute_bundle/mfiles/makeinfile_usace_vegfeature.m
+
+

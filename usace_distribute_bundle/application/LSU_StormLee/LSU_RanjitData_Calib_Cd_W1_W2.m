@@ -1,23 +1,13 @@
 clear 
 
 % global figID
-addpath ../mfiles
-addpath /Users/lzhu/Desktop/OngoingProjects/5_ERDC/Documents/DataFromRanjit/TS_Lee_wave_data/
+addpath ../../mfiles
+addpath ./LSU_data
 
 %% load data
-fprintf ('Run pre-process code (for Storm Lee data) before this code!\n') ; 
-fprintf ('Dir: /Users/lzhu/Desktop/OngoingProjects/5_ERDC/Documents/DataFromRanjit/TS_Lee_matlab_codes \n') ;
 load ('beta_kc.mat') ;
-%
-fidH = fopen('Results/H_W1_W2.txt', 'w') ; 
 
-% figure;hold on
-% plot (wavetime1, Rebz1)
-% plot (wavetime1, Rebz2)
-% plot (wavetime1, Rebz3)
-% datetick('x','yyyy-mm-dd HH:MM:SS')
-% xlabel ('time')
-% ylabel ('Re')
+fidH = fopen('Results/H_W1_W2.txt', 'w') ; 
 
 % script params
 iplotbc     = 0;                  % 1 to plot the applied boundary conditions
@@ -53,12 +43,14 @@ in.iveg   = 1;          % vegitation effect
                         %    specified as input. The height and root depth 
                         %    vary with the bottom elevation change
                         % 2: veg. with constant density, width and height
-in.iFv = 2 ; 
-in.idiss  = 3;          % energy dissipation due to vegitation 
+
+if in.iveg==3                        
+    in.iFv = 1 ; 
+    in.idiss  = 1;          % energy dissipation due to vegitation 
                         % (0: veg is accounted in bottom friction (original)
                         %  1: mendez, 2: chen_zhao, 3. use measured wave spectrum)  
-                        
-% in.veg_Cd = 0.5;        % vegitation drag coeff
+end
+
 % in.veg_Cd is moved into the loop
 in.veg_n      = 424;       % vegitation density
 in.veg_dia    = 0.008;       % vegitation diam
@@ -109,7 +101,7 @@ cdre=@(re) 2*(1300./re + 0.18);
 
 for itime = 1 : Nburst
     bid    = id_notnan(itime) ; 
-    if in.idiss == 3
+    if in.iveg==3 && in.idiss == 3
        unix('rm -f Jadhav_Omeg_Se.txt') ; 
        fid = fopen ('Jadhav_Omeg_Se.txt', 'w') ; 
        fprintf (fid, '%5.5f ', omeg) ;
@@ -132,9 +124,9 @@ for itime = 1 : Nburst
     anguphase = 2*pi./in.Tp ; 
     in.freqmin= 0.1*anguphase ; 
     in.freqmax= 8.0*anguphase ; 
-    if in.idiss==2 
+    if in.iveg==3 && in.idiss==2 
         in.numfreq= 500*ones(size(in.freqmax)) ; 
-    elseif in.idiss==3
+    elseif in.iveg==3 && in.idiss==3
         spectrumdata = load ('Jadhav_Omeg_Se.txt') ;
         [row, col] = size(spectrumdata)  ;
         in.numfreq = col *ones(size(in.freqmax)) ; 
@@ -165,7 +157,7 @@ for itime = 1 : Nburst
     %%% produce input file %%%
     makeinfile_usace_vegfeature(in) ;
     
-    unix(['./../../src-repo/updatedveg']) ;  
+    unix(['./../../../src-repo/updatedveg']) ;  
 
     results = load_results_usace;
 
@@ -184,7 +176,18 @@ fprintf (fidH, '\n') ;
 fprintf (fidH, '%f ', num_H) ;
 fclose (fidH) ; 
 
-rmpath ../mfiles
-rmpath /Users/lzhu/Desktop/OngoingProjects/5_ERDC/Documents/DataFromRanjit/TS_Lee_wave_data/
+%% Plot measured and modeled wave height
+figure(124); hold on; box on
+plot (exp_H, num_H, 'xb')
+fplot (@(x) x, '-k', 'linewidth', 1)
+xlim ([0, 0.3])
+ylim ([0, 0.3])
+axis square
+xlabel ('measured H_{rms} @W2 (m)')
+ylabel ('modeled H_{rms} @W2 (m)')
+set (gca, 'fontsize', 15)
+
+rmpath ../../mfiles
+rmpath ./LSU_data
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

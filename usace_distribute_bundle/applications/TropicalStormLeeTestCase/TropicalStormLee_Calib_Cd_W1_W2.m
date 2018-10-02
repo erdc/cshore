@@ -2,7 +2,7 @@ clear
 
 % global figID
 addpath ../../mfiles
-addpath ./LSU_data
+addpath ./TropicalStormLeeData
 
 %% load data
 load ('beta_kc.mat') ;
@@ -37,7 +37,7 @@ in.iroll  = 1;          % 0 = no roller, 1 = roller
 in.iwind  = 0;          % 0 = no wind effect
 in.itide  = 0;          % 0 = no tidal effect on currents
 in.iweibull = 0 ;
-in.iveg   = 1;          % vegitation effect
+in.iveg   = 3;          % vegitation effect
                         % 0: no vegetation or vegetation represented by increased
                         % 1: veg. density, width, height and root depth are 
                         %    specified as input. The height and root depth 
@@ -188,6 +188,6 @@ ylabel ('modeled H_{rms} @W2 (m)')
 set (gca, 'fontsize', 15)
 
 rmpath ../../mfiles
-rmpath ./LSU_data
+rmpath ./TropicalStormLeeData
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

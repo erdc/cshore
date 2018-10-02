@@ -12,7 +12,9 @@ CSHORE applied to idealized planar slope
 1                                         ->IROLL 
 0                                         ->IWIND 
 0                                         ->ITIDE 
-1                                         ->IVEG  
+3                                         ->IVEG  
+1                                         ->IDISS  
+1                                         ->IFv  
      0.0500                                ->DXC
      0.8000                                ->GAMMA 
      0.0200                               ->RWH 
@@ -1023,6 +1025,7 @@ CSHORE applied to idealized planar slope
   49.950000   0.193840   0.015000
   50.000000   0.200000   0.015000
   1.783529                                ->VEGCD
+  1.783529                                ->VEGCDM
  424.000000   0.008000   0.210000   0.300000
  424.000000   0.008000   0.210000   0.300000
  424.000000   0.008000   0.210000   0.300000

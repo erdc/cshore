@@ -1,8 +1,10 @@
-1. New parameters (NFR) and new variables (IDISS, IFV, IWEIBULL, FREQMIN, FREQMAX, FREQNUM, FREQMINBC, VEGCDM, DIKETOE, TZ, RUNUPKAPPA, RUNUPPHI, VMEASOMEG, VMEASSE, VMEASWNUM, NMEASSPEC) are added.
+1. The CSHORE source code remains the same when IVEG=0-2. The vegetation advances developed by Dr. Qin J. Chen's research team are activated only when IVEG=3. A new makeinfile matlab script has been added: /usace_distribute_bundle/mfiles/makeinfile_usace_vegfeature.m
+
+
+2. When IVEG = 3, new parameters (NFR) and new variables (IDISS, IFV,FREQMIN, FREQMAX, FREQNUM, FREQMINBC, VEGCDM, TZ, VMEASOMEG, VMEASSE, VMEASWNUM, NMEASSPEC) are added.
    NFR       = maximum number of frequency beams for JONSWAP spectrum
    IDISS     = controls energy dissipation model (due to vegetation) 
    IFV       = controls phase-averaged depth-integrated drag model
-   IWEIBULL  = IWEIBULL = 1: the runup formula based on the Weibull distribution is used. IWEIBULL = 0: the original CSHORE 
    FREQMIN   = the minimum cutoff frequency 
    FREQMAX   = the maximum cutoff frequency
    FREQNUM   = the number of frequency components 
@@ -12,12 +14,9 @@
    VMEASSE   = the spectral density of the measured wave spectrum
    VMEASWNUM = the wave numbers corresponding to the frequencies (VMEASOMEG) 
    NMEASSPEC = the number of frequency components in the measured spectrum
-   Note that:
-     - DIKETOE, TZ, RUNUPKAPPA, RUNUPPHI are about wave runup. The wave runup code is still under testing.
-     - The INPUT subroutine and the makeinfile matlab code are changed accordingly.
 
 
-2. New subroutines are added:
+3. When IVEG = 3, new subroutines are added:
    subroutine DVEG:  compute the energy dissipation due to vegetation (DVEGSTA). Three different models are used: 
                      IDISS=1: Mendez and Losada (2004)  
                      IDISS=2: Chen and Zhao (2012) with JONSWAP spectrum
@@ -32,12 +31,9 @@
                      IFV = 3: hybrid model. The submerged part is computed with parametric model and the canopy part is computed with the formula based on linear wave theory (Dean and Bender 2006, a regular wave version). About determining the submerged part in random waves, we found that 55% of the water depth works for all 7 USDA flume experiments. No second set of Cd is needed. 
 
 
-3. If IDISS = 3 (use energy dissipation model by Chen and Zhao (2012) together with measured wave spectrum), the measured wave spectrum is read in the main code and stored in VMEASOMEG, VMEASSE and VMEASWNUM. The format of the measured spectrum file is: three columns representing frequency, spectral density, wave number, respectively.
+4. If IDISS = 3 (use energy dissipation model by Chen and Zhao (2012) together with measured wave spectrum), the measured wave spectrum is read in the main code and stored in VMEASOMEG, VMEASSE and VMEASWNUM. The format of the measured spectrum file is: three columns representing frequency, spectral density, wave number, respectively.
 
-4. The phase-averaged depth-integrated drag (STREAMSTRESSSTA) is applied in the cross-shore momentum equation. The lines for calculating "WSETUP" are revised.
+5. Two new models of the phase-averaged depth-integrated drag (STREAMSTRESSSTA) are implemented in the cross-shore momentum equation. The lines for calculating "WSETUP" are revised.
 
-5. Two example cases are added in /usace_distribute_bundle/application
-
-6. The CSHORE source code remains the same when IVEG=0-2. The vegetation advances developed by Dr. Qin J. Chen's research team are activated only when IVEG=3. A new makeinfile matlab script has been added: /usace_distribute_bundle/mfiles/makeinfile_usace_vegfeature.m
-
+6. Two application cases are added in /usace_distribute_bundle/applications
 

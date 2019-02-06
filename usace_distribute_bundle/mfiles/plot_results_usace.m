@@ -123,7 +123,7 @@ if iplothydro
     hh(cnt)=plot(results.hydro(i).x,results.hydro(i).Hrms,'linewidth',2);hold all
     hlabs{cnt} = [num2str(t(i)),' to ' num2str(t(i+1)), ' s'];
   end
-  legend(hh,hlabs,1)
+  legend(hh,hlabs,'Location','Northwest')
   title(vertcat('Root-mean-square wave height',dumtitle),...
         'fontname','times','fontsize',14,'fontangle','italic','interpreter','none')
   ylabel('H_{rms}[m]','fontname','times','fontsize',14,'fontangle','italic')

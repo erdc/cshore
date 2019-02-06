@@ -14,7 +14,7 @@ in.header = {'------------------------------------------------------------'
              'CSHORE applied to idealized planar slope'
              '------------------------------------------------------------'};
 in.iline  = 1;          % 1 = single line
-in.iprofl = 1.1;          % 0 = no morph, 1 = run morph, 1.1 = run morph without initial smoothing
+in.iprofl = 1;          % 0 = no morph, 1 = run morph, 1.1 = run morph without initial smoothing
 in.isedav = 0;          % 0 = unlimited sand, 1 = hard bottom
 in.iperm  = 0;          % 0 = no permeability, 1 = permeable
 in.iover  = 1;          % 0 = no overtopping , 1 = include overtopping

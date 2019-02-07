@@ -5142,8 +5142,7 @@ C     where NPFS = (2NPT+1) = number of points for smoothing
       SUBROUTINE SMOOTH(NUM,RAW,F)
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       PARAMETER (NN=5000)
-c      DIMENSION RAW(NN),F(NN)
-      DIMENSION RAW(NUM),F(NUM)
+      DIMENSION RAW(NN),F(NN)
       COMMON /COMPAR/ HWDMIN,NPT,NPE
 C     
       DO 201 J = 1,NUM

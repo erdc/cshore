@@ -46,7 +46,7 @@ in.iveg   = 3;          % vegitation effect
 
 if in.iveg==3                        
     in.iFv = 1 ; 
-    in.idiss  = 1;          % energy dissipation due to vegitation 
+    in.idiss  = 2;          % energy dissipation due to vegitation 
                         % (0: veg is accounted in bottom friction (original)
                         %  1: mendez, 2: chen_zhao, 3. use measured wave spectrum)  
 end
@@ -99,7 +99,7 @@ Nburst = length(id_notnan) ;
 cdkc=@(kc) 70.0*kc.^(-0.86);
 cdre=@(re) 2*(1300./re + 0.18);
 
-for itime = 1 : Nburst
+for itime = 1 % : Nburst
     bid    = id_notnan(itime) ; 
     if in.iveg==3 && in.idiss == 3
        unix('rm -f Jadhav_Omeg_Se.txt') ; 

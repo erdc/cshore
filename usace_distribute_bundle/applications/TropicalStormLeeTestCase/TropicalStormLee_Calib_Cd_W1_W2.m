@@ -157,7 +157,7 @@ for itime = 1 : Nburst
     in.veg_Cdm = in.veg_Cd ;    
 
     %%% produce input file %%%
-    makeinfile_usace_vegfeature_gamma(in) ;
+    makeinfile_usace_vegfeature(in) ;
     
     unix(['./../../../src-repo/updatedveg']) ;  
 
@@ -177,7 +177,7 @@ fprintf (fidH, '%f ', exp_H) ;
 fprintf (fidH, '\n') ;
 fprintf (fidH, '%f ', num_H) ;
 fclose (fidH) ; 
-return
+
 %% Plot measured and modeled wave height
 figure(124); hold on; box on
 plot (exp_H, num_H, 'xb')

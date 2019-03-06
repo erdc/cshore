@@ -99,7 +99,7 @@ Nburst = length(id_notnan) ;
 cdkc=@(kc) 70.0*kc.^(-0.86);
 cdre=@(re) 2*(1300./re + 0.18);
 
-for itime = 1 % : Nburst
+for itime = 1 : Nburst
     bid    = id_notnan(itime) ; 
     if in.iveg==3 && in.idiss == 3
        unix('rm -f Jadhav_Omeg_Se.txt') ; 
@@ -124,6 +124,8 @@ for itime = 1 % : Nburst
     anguphase = 2*pi./in.Tp ; 
     in.freqmin= 0.1*anguphase ; 
     in.freqmax= 8.0*anguphase ; 
+    in.JONSWAPgamma = 3.3 ;
+    
     if in.iveg==3 && in.idiss==2 
         in.numfreq= 500*ones(size(in.freqmax)) ; 
     elseif in.iveg==3 && in.idiss==3
@@ -155,7 +157,7 @@ for itime = 1 % : Nburst
     in.veg_Cdm = in.veg_Cd ;    
 
     %%% produce input file %%%
-    makeinfile_usace_vegfeature(in) ;
+    makeinfile_usace_vegfeature_gamma(in) ;
     
     unix(['./../../../src-repo/updatedveg']) ;  
 
@@ -175,7 +177,7 @@ fprintf (fidH, '%f ', exp_H) ;
 fprintf (fidH, '\n') ;
 fprintf (fidH, '%f ', num_H) ;
 fclose (fidH) ; 
-
+return
 %% Plot measured and modeled wave height
 figure(124); hold on; box on
 plot (exp_H, num_H, 'xb')

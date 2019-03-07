@@ -1,7 +1,7 @@
 1. The CSHORE source code remains the same when IVEG=0-2. The vegetation advances developed by Dr. Qin J. Chen's research team are activated only when IVEG=3. A new makeinfile matlab script has been added: /usace_distribute_bundle/mfiles/makeinfile_usace_vegfeature.m
 
 
-2. When IVEG = 3, new parameters (NFR) and new variables (IDISS, IFV,FREQMIN, FREQMAX, FREQNUM, FREQMINBC, VEGCDM, TZ, VMEASOMEG, VMEASSE, VMEASWNUM, NMEASSPEC) are added.
+2. When IVEG = 3, new parameters (NFR) and new variables (IDISS, IFV,FREQMIN, FREQMAX, FREQNUM, FREQMINBC, VEGCDM, TZ, VMEASOMEG, VMEASSE, VMEASWNUM, NMEASSPEC, GAMJONSWAP) are added.
    NFR       = maximum number of frequency beams for JONSWAP spectrum
    IDISS     = controls energy dissipation model (due to vegetation) 
    IFV       = controls phase-averaged depth-integrated drag model
@@ -9,6 +9,7 @@
    FREQMAX   = the maximum cutoff frequency
    FREQNUM   = the number of frequency components 
    FREQMINBC = the cutoff frequency at the offshore BC 
+   GAMJONSWAP= the gamma parameter in JONSWAP spectrum
    VEGCDM    = the second set of drag coefficient if IFV = 2
    VMEASOMEG = the frequencies of the measured wave spectrum
    VMEASSE   = the spectral density of the measured wave spectrum

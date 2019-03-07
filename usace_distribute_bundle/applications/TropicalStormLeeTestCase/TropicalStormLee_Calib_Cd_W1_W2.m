@@ -46,7 +46,7 @@ in.iveg   = 3;          % vegitation effect
 
 if in.iveg==3                        
     in.iFv = 1 ; 
-    in.idiss  = 1;          % energy dissipation due to vegitation 
+    in.idiss  = 2;          % energy dissipation due to vegitation 
                         % (0: veg is accounted in bottom friction (original)
                         %  1: mendez, 2: chen_zhao, 3. use measured wave spectrum)  
 end
@@ -124,6 +124,8 @@ for itime = 1 : Nburst
     anguphase = 2*pi./in.Tp ; 
     in.freqmin= 0.1*anguphase ; 
     in.freqmax= 8.0*anguphase ; 
+    in.JONSWAPgamma = 3.3 ;
+    
     if in.iveg==3 && in.idiss==2 
         in.numfreq= 500*ones(size(in.freqmax)) ; 
     elseif in.iveg==3 && in.idiss==3

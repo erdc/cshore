@@ -57,8 +57,11 @@ in.veg_extent = [0 0.33]; % vegitation coverage as fraction of total domain leng
                         % [xveg_start, xveg_end] ./ total domain length
 in.dx     = 0.1;       % constant dx 
 in.gamma  = .8;         % shallow water ratio of wave height to water depth
-in.sporo  = 0.5;        % sediment porosity                        
-in.d50    = 34;            % d_50 in mm
+in.sporo  = 0.01;        % sediment porosity                        
+in.stoneporo  = 0.5;  % Stone/gravel porosity in porous layer (SNP can be different from sand porosity=0.4 for ISTSAN=1)
+in.d50    = 0.01;        % d_50 in mm
+in.stonedia = 0.34 ;  % Nominal stone/gravel diameter (m)
+in.criticalstability = 1.1 ; % Critical stability number (0.6 to 1.1) for stone
 in.wf     = 0.0;            %ling changed, was: vfall(in.d50,20,0); % fall velocity
 in.sg     = 2.95;           % specific gravity
 in.effb   = 0.005;      % suspension efficiency due to breaking eB     

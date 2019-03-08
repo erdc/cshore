@@ -47,6 +47,10 @@ end
 if in.iover;
   fprintf(fid,'%11.4f                               ->RWH \n',in.rwh);
 end
+if in.iperm;
+  fprintf(fid, '%11.4f%11.4f%11.4f\n',in.stoneporo, in.stonedia, in.criticalstability )
+end
+
 fprintf(fid,'%-8i                                  ->ILAB\n',in.ilab);
 % if in.iprofl==0;
 %   fprintf(fid,'%11.4f%11.4f%11.4f%11.4f\n',[in.Tp(i), in.Hrms(i), in.Wsetup(i), in.angle(i)]);

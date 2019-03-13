@@ -14,8 +14,8 @@ for i = 1:length(in.header)
 end
 fprintf(fid,'%-8i                                  ->ILINE\n',in.iline);
 fprintf(fid,'%-8i                                  ->IPROFL\n',in.iprofl);
-if in.iprofl==1
-  fprintf(fid,'%-8i                                  ->ISEDAV\n',in.isedav);
+if floor(in.iprofl)==1
+    fprintf(fid,'%-8i                                  ->ISEDAV\n',in.isedav);
 end
 fprintf(fid,'%-8i                                  ->IPERM\n',in.iperm);
 fprintf(fid,'%-8i                                  ->IOVER\n',in.iover);
@@ -25,7 +25,7 @@ if in.iover
     fprintf(fid,'%-8i                                  ->IPOND\n',in.ipond);
   end
 end
-if in.iover==1&in.iperm==0&in.iprofl==1
+if in.iover==1&in.iperm==0&floor(in.iprofl)==1
   fprintf(fid,'%-8i                                  ->INFILT\n',in.infilt);
 end
 fprintf(fid,'%-8i                                  ->IWCINT\n',in.iwcint);
@@ -53,6 +53,10 @@ end
 if in.iover;
   fprintf(fid,'%11.4f                               ->RWH \n',in.rwh);
 end
+if in.iperm;
+  fprintf(fid, '%11.4f%11.4f%11.4f\n',in.stoneporo, in.stonedia, in.criticalstability )
+end
+
 fprintf(fid,'%-8i                                  ->ILAB\n',in.ilab);
 % if in.iprofl==0;
 %   fprintf(fid,'%11.4f%11.4f%11.4f%11.4f\n',[in.Tp(i), in.Hrms(i), in.Wsetup(i), in.angle(i)]);

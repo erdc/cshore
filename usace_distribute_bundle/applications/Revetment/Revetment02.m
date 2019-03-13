@@ -136,7 +136,7 @@ for icase = 1 : 6
     % ZPINP(J) equal to or less than ZBINP(J,L) where ZPINP(1,L)=ZBINP(1,L) imposed
     %     zb up, zp down
     Lx       = 12.0;                  % length of domain
-    in.dx     = 0.01;       % constant dx 
+    in.dx     = 0.004;       % constant dx 
     in.x_p   = 0:in.dx:Lx;
     in.x       = 0:in.dx:Lx;
     
@@ -148,14 +148,17 @@ for icase = 1 : 6
 %     zb         = [-d1,      -dt,       Rc,                       Rc,                          in.zb_p(end)] ; 
 %     in.zb     = interp1(x_b, zb, in.x); 
 
-    x_p         = [0,         6.3,      6.3+0.7,          6.3+0.7+(Rc+dt-0.7/34.4)*5] ;
-    zb_p     = [-d1,        -dt,       -dt+0.7/34.4,   Rc] ; 
+    x_p         = [0,                     6.3,      6.3+0.82,                                6.3+0.82+1.24] ;
+    zb_p     = [-dt-0.1831,        -dt,       -dt+0.02384,                            Rc-0.119] ; 
     in.zb_p = interp1(x_p, zb_p, in.x_p, 'linear', 'extrap');  
     
-    x_b       = [0,         6.3,      6.3+(Rc+dt)*5,     6.3+0.7+(Rc+dt-0.7/34.4)*5, in.x(end)] ;
-    zb         = [-d1,      -dt,       Rc,                       Rc,                          in.zb_p(end)] ; 
+    x_b       = [0,                        6.3,      6.3+0.82+1.24-0.105,             6.3+0.82+1.24] ;
+    zb         = [-dt-0.1831,                     -dt,         Rc,                                         Rc-0.119] ; 
+    in.zb     = in.zb_p; 
     in.zb     = interp1(x_b, zb, in.x); 
-    
+    idtmp    = find( isnan(in.zb) == 1); 
+    in.zb(idtmp) = in.zb_p(idtmp) ;
+
     %% friction factor
     fric_fac_smooth = .001;     % bottom friction factor for impermeable bottom
     fric_fac_rough = .06;     % bottom friction factor for permeable cobbles
@@ -210,14 +213,15 @@ y32 = in.zb(1)*ones(size(y31)) ;
 fill ([x3(1:10:end), fliplr(x3(1:10:end))], [y32(1:10:end), fliplr(y31(1:10:end))], rgb('SandyBrown'), 'HandleVisibility', 'off')
 xlim ([in.x(1), in.x(end)])
 
-plot (in.x, in.zb, 'b')
-plot (in.x_p, in.zb_p, 'm')
+% plot (in.x, in.zb, 'b')
+% plot (in.x_p, in.zb_p, 'm')
+
 x3 = in.x ;
 y31 = in.zb ;
 y32 = in.zb_p ; 
 fill ([x3(1:10:end), fliplr(x3(1:10:end))], [y32(1:10:end), fliplr(y31(1:10:end))], rgb('SlateGrey'), 'HandleVisibility', 'off')
 
-plot (in.x, results.hydro.setup, '-b', 'linewidth', 2)
+% plot (in.x, results.hydro.setup, '-b', 'linewidth', 2)
 % plot (in.x, results.hydro.Hrms, '-b', 'linewidth', 2)
 
 set (gca, 'fontsize', 15)

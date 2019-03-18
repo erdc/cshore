@@ -1,7 +1,18 @@
-function out = load_results_usace(flg)
-% function out = load_results_usace(flg)
+function out = load_results_usace(fname)
+% function out = load_results_usace(fname)
 
-fid = fopen('ODOC');
+if nargin>0
+  if isnumeric(fname)
+    fname=[num2str(fname),'.'];
+  elseif ischar(fname)
+    fname=[fname,'.'];
+  end
+else
+  fname = [];
+
+end
+
+fid = fopen([fname,'ODOC']);
 tot = textscan(fid,'%s','delimiter','\n');
 tot = tot{:};
 fclose(fid);
@@ -207,7 +218,7 @@ if ~isempty(dum_slp)
 end
 
 % %%%%%%%%%%%%Get info from the infile%%%%%%%%%%%%%%%%%%
-fid = fopen('infile');
+fid = fopen([fname,'infile']);
 tot = textscan(fid,'%s','delimiter','\n');
 tot = tot{:};
 
@@ -268,7 +279,7 @@ end
 
 fclose(fid);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-fid=fopen('OBPROF');
+fid=fopen([fname,'OBPROF']);
 cnt=0;
 while 1
   tline = fgetl(fid);
@@ -298,7 +309,7 @@ end
 fclose(fid);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-fid=fopen('OSETUP');
+fid=fopen([fname,'OSETUP']);
 %	  WRITE(22,1500) XB(J),(WSETUP(J)+SWLBC(IWAVE)),H(J),SIGMA(J)
 cnt=0;
 while 1
@@ -323,7 +334,7 @@ fclose(fid);
 num_output = cnt;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-fid=fopen('OXVELO');
+fid=fopen([fname,'OXVELO']);
 %    WRITE(27,1500) XB(J),UMEAN(J),USTD(J)
 for i = 1:num_output
   tline = fgetl(fid);
@@ -336,7 +347,7 @@ end
 fclose(fid);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-fid=fopen('OYVELO');
+fid=fopen([fname,'OYVELO']);
 %    WRITE(28,1500) XB(J),STHETA(J),VMEAN(J),VSTD(J)
 for i = 1:num_output
   tline = fgetl(fid);
@@ -355,7 +366,7 @@ fclose(fid);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 if out.params.iprofl
-  fid=fopen('OCROSS');
+  fid=fopen([fname,'OCROSS']);
   %    WRITE(32,1500) XB(J),QBX(J),QSX(J),(QBX(J)+QSX(J))
   for i = 1:num_output
     tline = fgetl(fid);
@@ -371,7 +382,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 if out.params.iprofl&0
-  fid=fopen('OLONGS')
+  fid=fopen([fname,'OLONGS'])
   %    WRITE(33,1500) XB(J),QBY(J),QSY(J),(QBY(J) + QSY(J))
   for i = 1:num_output
     tline = fgetl(fid)
@@ -387,7 +398,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 if out.params.iprofl
-  fid=fopen('OBSUSL');
+  fid=fopen([fname,'OBSUSL']);
   %        IF(IPROFL.EQ.1) WRITE(30,1500) XB(J),PB(J),PS(J),VS(J)
   for i = 1:num_output
     tline = fgetl(fid);

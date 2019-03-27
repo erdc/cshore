@@ -107,31 +107,14 @@ end
 fprintf(fid,'%-8i                             ->NBINP \n',length(in.x));
 dum = [in.x(:) in.zb(:) in.fw(:)];
 fprintf(fid,'%11.6f%11.6f%11.6f\n',dum');
-
 if in.iveg==1 || in.iveg==3 
-    % prepare veg Cd and Cdm
+    fprintf(fid,'%10.6f                                ->VEGCD\n',in.veg_Cd );
     if in.iveg==3
-        dum = zeros(length(in.x(:)),2);
-        for ii = 1 : in.vegtype
-            ind = find(in.x>=max(in.x)*in.veg_extent(ii, 1)&in.x<=max(in.x)*in.veg_extent(ii, 2));
-            dum(ind,:) = repmat([in.veg_Cd(ii) in.veg_Cdm(ii)],length(ind),1);
-        end
-        fprintf(fid,'%11.6f%11.6f\n',dum');
-    else
-        dum = zeros(length(in.x(:)),1);
-        for ii = 1 : in.vegtype
-            ind = find(in.x>=max(in.x)*in.veg_extent(ii, 1)&in.x<=max(in.x)*in.veg_extent(ii, 2));
-            dum(ind,:) = repmat([in.veg_Cd(ii)],length(ind),1);
-        end
-        fprintf(fid,'%11.6f\n',dum');
+       fprintf(fid,'%10.6f                                ->VEGCDM\n',in.veg_Cdm );
     end
-    
-    % prepare veg properties
     dum = zeros(length(in.x(:)),4);
-    for ii = 1 : in.vegtype
-        ind = find(in.x>=max(in.x)*in.veg_extent(ii, 1)&in.x<=max(in.x)*in.veg_extent(ii, 2));
-        dum(ind,:) = repmat([in.veg_n(ii) in.veg_dia(ii) in.veg_ht(ii) in.veg_rod(ii)],length(ind),1);
-    end
+    ind = find(in.x>=max(in.x)*in.veg_extent(1)&in.x<=max(in.x)*in.veg_extent(2));
+    dum(ind,:) = repmat([in.veg_n in.veg_dia in.veg_ht in.veg_rod],length(ind),1);
     fprintf(fid,'%11.6f%11.6f%11.6f%11.6f\n',dum');
 end
 

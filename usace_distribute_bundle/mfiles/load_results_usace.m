@@ -252,17 +252,19 @@ if out.params.iprofl
   col_ind = strfind(dum,'-');
   out.params.ilab = str2num(dum(1:col_ind-1));
 end
-% find vegitation extent
-if out.params.iveg
-  dum =strfind(tot,'VEGCD');
-  row_ind = find(~cellfun('isempty',dum));
-  dum = tot(row_ind+1:row_ind+out.params.nbinp);
-  dum=cell2mat(cellfun(@str2num,dum,'UniformOutput',false));
-  out.veg.n=dum(:,1);
-  out.veg.dia=dum(:,2);
-  out.veg.ht=dum(:,3);
-  out.veg.rod=dum(:,4);
-end
+
+% lzhu commented this part, because vegetation is spatially varying.
+% % find vegitation extent
+% if out.params.iveg
+%   dum =strfind(tot,'VEGCD');
+%   row_ind = find(~cellfun('isempty',dum));
+%   dum = tot(row_ind+1:row_ind+out.params.nbinp);
+%   dum=cell2mat(cellfun(@str2num,dum,'UniformOutput',false));
+%   out.veg.n=dum(:,1);
+%   out.veg.dia=dum(:,2);
+%   out.veg.ht=dum(:,3);
+%   out.veg.rod=dum(:,4);
+% end
 
 
 

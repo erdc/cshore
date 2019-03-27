@@ -4,12 +4,12 @@ clear
 addpath ../../mfiles
 
 % load lab data
-revetment1 = struct ('id', 'RS20B1', 'd1', 38.9/100, 'Tp',  2.3, 'Hrms', 11.2/100, 'dt', 20.6/100, 'Rc', 18.6/100, 'R2pmeasure', 13.31/100) ; 
-revetment2 = struct ('id', 'RS20C1', 'd1', 38.9/100, 'Tp',  3.0, 'Hrms', 7.3/100, 'dt', 20.6/100, 'Rc', 18.6/100, 'R2pmeasure', 13.59/100) ; 
-revetment3 = struct ('id', 'RS22B1', 'd1', 40.9/100, 'Tp',  2.3, 'Hrms', 11.6/100, 'dt', 22.6/100, 'Rc', 16.6/100, 'R2pmeasure', 14.07/100) ; 
-revetment4 = struct ('id', 'RS22C1', 'd1', 40.9/100, 'Tp',  2.9, 'Hrms', 7.6/100, 'dt', 22.6/100, 'Rc', 16.6/100, 'R2pmeasure', 14.60/100) ; 
-revetment5 = struct ('id', 'RS24B1', 'd1', 42.9/100, 'Tp',  2.3, 'Hrms', 11.9/100, 'dt', 24.6/100, 'Rc', 14.6/100, 'R2pmeasure', 14.12/100) ; 
-revetment6 = struct ('id', 'RS24C1', 'd1', 42.9/100, 'Tp',  2.9, 'Hrms', 7.8/100, 'dt', 24.6/100, 'Rc', 14.6/100, 'R2pmeasure', 14.98/100) ;   
+revetment1 = struct ('id', 'RS20B1', 'd1', 38.9/100, 'Tp',  2.3, 'Hrms', 11.2/100, 'dt', 20.6/100, 'Rc', 18.6/100, 'etabar', 0.28/100, 'SWL', 0, 'R2pmeasure', 13.31/100) ; 
+revetment2 = struct ('id', 'RS20C1', 'd1', 38.9/100, 'Tp',  3.0, 'Hrms', 7.3/100, 'dt', 20.6/100, 'Rc', 18.6/100, 'etabar', 0.17/100, 'SWL', 0, 'R2pmeasure', 13.59/100) ; 
+revetment3 = struct ('id', 'RS22B1', 'd1', 40.9/100, 'Tp',  2.3, 'Hrms', 11.6/100, 'dt', 22.6/100, 'Rc', 16.6/100, 'etabar', 0.11/100, 'SWL', 2/100,  'R2pmeasure', 14.07/100) ; 
+revetment4 = struct ('id', 'RS22C1', 'd1', 40.9/100, 'Tp',  2.9, 'Hrms', 7.6/100, 'dt', 22.6/100, 'Rc', 16.6/100, 'etabar', 0.13/100, 'SWL', 2/100,  'R2pmeasure', 14.60/100) ; 
+revetment5 = struct ('id', 'RS24B1', 'd1', 42.9/100, 'Tp',  2.3, 'Hrms', 11.9/100, 'dt', 24.6/100, 'Rc', 14.6/100, 'etabar', -0.27/100, 'SWL', 4/100,  'R2pmeasure', 14.12/100) ; 
+revetment6 = struct ('id', 'RS24C1', 'd1', 42.9/100, 'Tp',  2.9, 'Hrms', 7.8/100, 'dt', 24.6/100, 'Rc', 14.6/100, 'etabar', 0, 'SWL', 4/100, 'R2pmeasure', 14.98/100) ;   
 
 % script params
 iplotbc     = 0;                    % 1 to plot the applied boundary conditions
@@ -66,7 +66,7 @@ in.veg_ht     = 0.21;          % vegitation height
 in.veg_rod    = 0.3;         % vegitation erosion limit below sand for failure
 in.veg_extent = [0 0.33]; % vegitation coverage as fraction of total domain length
                                         % [xveg_start, xveg_end] ./ total domain length
-in.gamma  = .9;         % shallow water ratio of wave height to water depth
+in.gamma  = .85;         % shallow water ratio of wave height to water depth
 in.sporo  = 0.4;        % sediment porosity                        
 in.stoneporo  = 0.5;  % Stone/gravel porosity in porous layer (SNP can be different from sand porosity=0.4 for ISTSAN=1)
 in.d50    = 0.1;        % d_50 in mm
@@ -105,8 +105,6 @@ cdre=@(re) 2*(1300./re + 0.18);
 in.veg_Cd = 1.0 ;        % vegitation drag coeff
 in.veg_Cdm = in.veg_Cd ;    
 
-in.Wsetup = 0*dum ; %%labdata{6}(2)*1e-3*dum ;  % wave setup at seaward boundary in meters \bar{eta}
-in.swlbc = 0*dum;    % water level at seaward boundary in meters zb         
 in.angle = 0*dum;    % constant incident wave angle at seaward boundary in
 
 in.JONSWAPgamma = 3.3 ;
@@ -125,10 +123,17 @@ for icase = 1 : 6
     eval (['d1 = revetment', num2str(icase), '.d1 ;']) ; 
     eval (['dt = revetment', num2str(icase), '.dt ;']) ; 
     eval (['Rc = revetment', num2str(icase), '.Rc ;']) ; 
+    eval (['swl = revetment', num2str(icase), '.SWL ;']) ; 
+    eval (['etabar = revetment', num2str(icase), '.etabar ;']) ; 
 
     anguphase = 2*pi./in.Tp ; 
     in.freqmin= 0.1*anguphase ; 
     in.freqmax= 8.0*anguphase ; 
+
+    in.Wsetup = etabar*dum ; % wave setup at seaward boundary in meters \bar{eta}
+    in.swlbc = swl*dum;    % water level at seaward boundary in meters zb         
+%     in.Wsetup = 0*dum ; % wave setup at seaward boundary in meters \bar{eta}
+%     in.swlbc = 0*dum;    % water level at seaward boundary in meters zb         
     
     % Idealized numerical tank
     % ZPINP(J,L)= dimensional vertical coordinate in meters of 
@@ -136,7 +141,7 @@ for icase = 1 : 6
     % ZPINP(J) equal to or less than ZBINP(J,L) where ZPINP(1,L)=ZBINP(1,L) imposed
     %     zb up, zp down
     Lx       = 12.0;                  % length of domain
-    in.dx     = 0.004;       % constant dx 
+    in.dx     = 0.005;       % constant dx 
     in.x_p   = 0:in.dx:Lx;
     in.x       = 0:in.dx:Lx;
     
@@ -161,7 +166,7 @@ for icase = 1 : 6
 
     %% friction factor
     fric_fac_smooth = .001;     % bottom friction factor for impermeable bottom
-    fric_fac_rough = .06;     % bottom friction factor for permeable cobbles
+    fric_fac_rough = .002;     % bottom friction factor for permeable cobbles
     
     in.fw     = fric_fac_smooth*ones(size(in.x)); % cross-shore values of bot fric
     idtmp    = find (abs(in.zb-in.zb_p)>1e-5) ; 
@@ -188,11 +193,18 @@ for icase = 1 : 6
     eval (['revetment', num2str(icase), '.R2pmodel = results.hydro.runup_2_percent ;']) ;
     R2pmodel(icase) = results.hydro.runup_2_percent ;
     eval (['R2pmeasure(icase) = revetment', num2str(icase), '.R2pmeasure ;']) ; 
+    
+    idtmp = find (in.x>7) ; 
+    H_toe(icase) = results.hydro.Hrms(idtmp(1)) ;
 end
 
 figure(22); hold on; box on
-plot (R2pmeasure, R2pmodel, 'ok')
+plot (R2pmeasure, R2pmodel, 'or')
 fplot (@(x) x, '-k', 'linewidth', 2, 'HandleVisibility', 'off')
+fplot (@(x) 1.2*x, ':k', 'linewidth', 2, 'HandleVisibility', 'off')
+fplot (@(x) 0.8*x, ':k', 'linewidth', 2, 'HandleVisibility', 'off')
+text (0.1, 0.07, '-20%', 'fontsize', 15)
+text (0.05, 0.1, '+20%', 'fontsize', 15)
 axis equal
 xlim ([0, 0.2])
 ylim ([0, 0.2])
@@ -200,7 +212,7 @@ xlabel ('measured R_{2%} (m)')
 ylabel ('modeled R_{2%} (m)')
 set (gca, 'fontsize', 15)
 
-figure(33); hold on; box on
+figure(444); hold on; box on
 x3 = in.x ;
 y31 = in.zb ;
 y32 = zeros(size(y31)) ; 
@@ -231,10 +243,13 @@ xlim([0, 10])
 ylim([-0.5, 0.4])
 
 
-fid = fopen ('R2pmodel_revetment.txt', 'w') ; 
-fprintf (fid, '%f ', R2pmodel) ; 
-fclose (fid) ; 
+fid1 = fopen ('R2pmodel_revetment.txt', 'w') ; 
+fprintf (fid1, '%f ', R2pmodel) ; 
+fclose (fid1) ; 
 
+fid2 = fopen ('Htoemodel_revetment.txt', 'w') ; 
+fprintf (fid2, '%f ', H_toe) ; 
+fclose (fid2) ; 
 
 rmpath ../../mfiles
 

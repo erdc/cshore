@@ -3,7 +3,7 @@ clear
 % global figID
 addpath ../../mfiles
 
-vegtest = 2 ; % 1 for Test 1 in monthly report, 2 for Test 2 in monthly report
+vegtest = 1 ; % 1 for Test 1 in monthly report, 2 for Test 2 in monthly report
 
 % load lab data
 revetment1 = struct ('id', 'RS20B1', 'd1', 38.9/100, 'Tp',  2.3, 'Hrms', 11.2/100, 'dt', 20.6/100, 'Rc', 18.6/100, 'etabar', 0.28/100, 'SWL', 0, 'R2pmeasure', 13.31/100) ; 
@@ -212,8 +212,7 @@ for icase = 1 : 6
     unix(['./../../../src-repo/updatedveg']) ;  
     
     results = load_results_usace;
-    return
-
+    
 %     unix('rm -f O*') ; 
     
     eval (['revetment', num2str(icase), '.R2pmodel = results.hydro.runup_2_percent ;']) ;
@@ -224,6 +223,27 @@ for icase = 1 : 6
     H_toe(icase) = results.hydro.Hrms(idtmp(1)) ;
 
 end
+
+figure(22); hold on; box on; grid on;
+load R2pmodel_revetment.txt
+if vegtest ==1 
+    plot (R2pmodel_revetment, R2pmodel, 'or', 'linewidth', 2, 'markersize', 10)
+else 
+    plot (R2pmodel_revetment, R2pmodel, 'xb', 'linewidth', 2, 'markersize', 10)
+end
+fplot (@(x) x, '-k', 'linewidth', 2, 'HandleVisibility', 'off')
+% fplot (@(x) 1.2*x, ':k', 'linewidth', 2, 'HandleVisibility', 'off')
+% fplot (@(x) 0.8*x, ':k', 'linewidth', 2, 'HandleVisibility', 'off')
+% text (0.1, 0.07, '-20%', 'fontsize', 15)
+% text (0.05, 0.1, '+20%', 'fontsize', 15)
+axis equal
+xlim ([0, 0.2])
+ylim ([0, 0.2])
+xlabel ('R_{2%} using revetment (Test 0) (m)')
+ylabel ('R_{2%} using vegetation (Test 1 & 2) (m)')
+set (gca, 'fontsize', 15)
+set(gca,'linewidth',2)
+
 
 figure(44); hold on; box on
 x3 = in.x ;

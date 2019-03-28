@@ -17,7 +17,7 @@ NO wave and current interaction included
 WAVE OVERTOPPING, OVERFLOW AND SEEPAGE
 Runup wire height (m)               RWH=    0.020
 Initial crest location for L=1      JCREST=  2401
-Initial crest height (m) for L=1    RCREST=    0.798
+Initial crest height (m) for L=1    RCREST=    0.758
 Swash velocity parameter            AWD=    2.000
 Output exceedance probability       EWD=    0.015
 
@@ -33,30 +33,30 @@ INPUT WAVE AND WATER LEVEL:NTIME=     1 from TIME=0.0
 Output lines are limited to first and last    10 lines
 End Time(sec) Tp (sec)  Hrms(m) Wave Setup(m)Storm tide(m) ANGLE(deg)
 
-        0.0     2.3000     0.1120     0.0028     0.0000     0.0000
+        0.0     2.9000     0.0780     0.0000     0.0400     0.0000
 
 INPUT BEACH AND STRUCTURE GEOMETRY
 Cross-shore line number               L=    1
 Alongshore coordinate             YLINE=         0.0000
 Line angle(degrees)              AGLINE=         0.0000
-Depth at seaward boundary (m)          =       0.389100
+Depth at seaward boundary (m)          =       0.429100
 Number of input points            NBINP=      2401
 Output lines are limited to first and last 5 lines
 Node spacing (m)                    DX=       0.005000
-Shoreline location (m) of Zb=0       Xs=       8.026559
+Shoreline location (m) of Zb=0       Xs=       8.225627
 Maximum landward node              JMAX=    2401
 
 X  (m)      Zb  (m)  Fric.factor  Wire mesh
-     0.000    -0.389
-     0.005    -0.389     0.001
-     0.010    -0.389     0.001
-     0.015    -0.389     0.001
-     0.020    -0.389     0.001
-    11.980     0.794     0.001
-    11.985     0.795     0.001
-    11.990     0.796     0.001
-    11.995     0.797     0.001
-    12.000     0.798     0.001
+     0.000    -0.429
+     0.005    -0.429     0.001
+     0.010    -0.429     0.001
+     0.015    -0.429     0.001
+     0.020    -0.429     0.001
+    11.980     0.754     0.001
+    11.985     0.755     0.001
+    11.990     0.756     0.001
+    11.995     0.757     0.001
+    12.000     0.758     0.001
 
 INPUT VEGETATION CHARACTERISITCS
 X(m)  DEN.(1/m/m) WID.(m) HEI.(m) ROD.(m)
@@ -74,20 +74,20 @@ X(m)  DEN.(1/m/m) WID.(m) HEI.(m) ROD.(m)
 on input bottom profile at TIME =        0.0  Line L=  1
 
 LANDWARD WET COMPUTATION LIMIT
-Most landward node of wet zone computation    JR=    2401
-X-coordinate at JR (m)                        XR=      12.000000
-Bottom elevation at JR (m)                    ZR=       0.798385
-Mean water depth at this node (m)          H(JR)=            NaN
+Most landward node of wet zone computation    JR=    1738
+X-coordinate at JR (m)                        XR=       8.685000
+Bottom elevation at JR (m)                    ZR=       0.092304
+Mean water depth at this node (m)          H(JR)=       0.003325
 
 COMBINED WAVE OVERTOPPING AND OVERFLOW
-Still water level above Z=0 (m)              SWL=       0.000000
+Still water level above Z=0 (m)              SWL=       0.040000
 Cross-shore line number                        L=    1
-Structure or dune creat elevation (m)     RCREST=       0.798385
-Node number at SWL                          JSWL=    1607
-Wet and dry transition node                  JWD=    1607
-Mean water depth H1(m) at node JWD            H1=            NaN
-End node of wet and dry zone                JDRY=    2401
-Wave overtopping probability at JCREST      POTF=       0.999927
+Structure or dune creat elevation (m)     RCREST=       0.758385
+Node number at SWL                          JSWL=    1686
+Wet and dry transition node                  JWD=    1686
+Mean water depth H1(m) at node JWD            H1=       0.016793
+End node of wet and dry zone                JDRY=    2011
+Wave overtopping probability at JCREST      POTF=       0.000000
 Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.000000000
 Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
 Total rate (QOTF+QP)(m*m/s)                     =    0.000000000
@@ -95,10 +95,10 @@ QO iteration number                        ITEQO=    1
 
 EMPIRICAL WAVE RUNUP
 Cross-shore line number                        L=    1
-Swash zone bottome slope                  SLPRUN=       0.000000
-Mean runup elevation above Z=0 (m)        ERMEAN=            NaN
-Runup standard deviation (m)              SIGRUN=       0.000000
-Significant runup height above Z=0 (m)       R13=            NaN
-2 percent runup height above Z=0 (m)         R2P=            NaN
-1 Percent runup height above z=0 (m)         R1P=       0.000000
+Swash zone bottome slope                  SLPRUN=       0.200935
+Mean runup elevation above Z=0 (m)        ERMEAN=       0.052735
+Runup standard deviation (m)              SIGRUN=       0.017145
+Significant runup height above Z=0 (m)       R13=       0.124820
+2 percent runup height above Z=0 (m)         R2P=       0.153654
+1 Percent runup height above z=0 (m)         R1P=       0.162304
 

@@ -546,10 +546,16 @@ c The phase-averagaed depth-integrated drag (STREAMSTRESSSTA) is applied in the 
               CALL PHASEAVEFV(J,L,HRMS(J),H(J),STREAMSTRESSSTA, FVCWLWT)
            ENDIF
 
+           IF (VEGCD(J,L).LT.EPS1) THEN
+           WSETUP(JP1) = WSETUP(J)-(SXXSTA(JP1)-SXXSTA(J)+
+     +   (TBXSTA(J)+
+     +    STREAMSTRESSSTA-TWXSTA(ITIME))*DX)/H(J)
+          ELSE
            WSETUP(JP1) = WSETUP(J)-(SXXSTA(JP1)-SXXSTA(J)+
      +   ((1.D0+VEGCDM(J,L)/VEGCD(J,L)*MIN(VEGH(J,L),H(J))*VEGFB(J,L))
      +   *TBXSTA(J)+
      +   STREAMSTRESSSTA-TWXSTA(ITIME))*DX)/H(J)
+          ENDIF
         ENDIF 
 c end lzhu change 2017-09-20
 
@@ -728,6 +734,12 @@ c  and applied to the cross-shore momentum equation
                FVCWLWT        = 0.5D0*(FVCWLWTTMP1+FVCWLWTTMP2)
              ENDIF
        
+             IF (VEGCD(JP1,L).LT.EPS1.OR.VEGCD(J,L).LT.EPS1) THEN
+             WSETUP(JP1)=WSETUP(J)-(2.D0*(SXXSTA(JP1)-SXXSTA(J)) +
+     +       DX*(TBXSTA(JP1)+TBXSTA(J)
+     +       + 2.D0*STREAMSTRESSSTA -2.D0*TWXSTA(ITIME)))/
+     +       (HITE+H(J))
+             ELSE
              WSETUP(JP1)=WSETUP(J)-(2.D0*(SXXSTA(JP1)-SXXSTA(J)) +
      +       DX*((1.D0+VEGCDM(JP1,L)/VEGCD(JP1,L)*MIN(VEGH(JP1,L),HITE)
      +       *VEGFB(JP1,L))
@@ -736,6 +748,7 @@ c  and applied to the cross-shore momentum equation
      +       *VEGFB(J,L))*TBXSTA(J)
      +       + 2.D0*STREAMSTRESSSTA -2.D0*TWXSTA(ITIME)))/
      +       (HITE+H(J))
+             ENDIF
 c          WSETUP(JP1) = WSETUP(J) - (2.D0* (SXXSTA(JP1)-SXXSTA(J)) +
 c     +                  DX*(2.0*FVCWLWT +
 c     +                  2.D0*STREAMSTRESSSTA -2.D0*TWXSTA(ITIME)))/

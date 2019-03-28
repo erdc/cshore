@@ -3,7 +3,7 @@ clear
 % global figID
 addpath ../../mfiles
 
-vegtest = 1 ; % 1 for Test 1 in monthly report, 2 for Test 2 in monthly report
+vegtest = 2 ; % 1 for Test 1 in monthly report, 2 for Test 2 in monthly report
 
 % load lab data
 revetment1 = struct ('id', 'RS20B1', 'd1', 38.9/100, 'Tp',  2.3, 'Hrms', 11.2/100, 'dt', 20.6/100, 'Rc', 18.6/100, 'etabar', 0.28/100, 'SWL', 0, 'R2pmeasure', 13.31/100) ; 
@@ -75,12 +75,12 @@ in.vegtype   = 2 ;
 % in.veg_Cd = [Cd1, Cd2, ..., Cdk]  
 % in.veg_Cdm = [Cdm1, Cdm2, ..., Cdmk]
 %%%%%
-in.veg_n      = [200, 400];       % vegitation density
-in.veg_dia    = [0.05, 0.01];       % vegitation diam
+in.veg_n      = [400, 400];       % vegitation density
+in.veg_dia    = [0.01, 0.01];       % vegitation diam
 if vegtest == 1
-    in.veg_ht     = [0.07, 0.14] ; 
+    in.veg_ht     = [0.14, 0.14] ; 
 else 
-    in.veg_ht     = [0.1, 0.2] ; 
+    in.veg_ht     = [0.2, 0.2] ; 
 end
 in.veg_rod    = [0.3, 0.3];         % vegitation erosion limit below sand for failure
     
@@ -227,9 +227,9 @@ end
 figure(22); hold on; box on; grid on;
 load R2pmodel_revetment.txt
 if vegtest ==1 
-    plot (R2pmodel_revetment, R2pmodel, 'or', 'linewidth', 2, 'markersize', 10)
+    plot (R2pmodel_revetment, R2pmodel, '.r', 'linewidth', 2, 'markersize', 10)
 else 
-    plot (R2pmodel_revetment, R2pmodel, 'xb', 'linewidth', 2, 'markersize', 10)
+    plot (R2pmodel_revetment, R2pmodel, '+b', 'linewidth', 2, 'markersize', 10)
 end
 fplot (@(x) x, '-k', 'linewidth', 2, 'HandleVisibility', 'off')
 % fplot (@(x) 1.2*x, ':k', 'linewidth', 2, 'HandleVisibility', 'off')

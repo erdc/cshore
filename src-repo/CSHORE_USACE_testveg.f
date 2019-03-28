@@ -735,19 +735,19 @@ c  and applied to the cross-shore momentum equation
              ENDIF
        
              IF (VEGCD(JP1,L).LT.EPS1.OR.VEGCD(J,L).LT.EPS1) THEN
-             WSETUP(JP1)=WSETUP(J)-(2.D0*(SXXSTA(JP1)-SXXSTA(J)) +
-     +       DX*(TBXSTA(JP1)+TBXSTA(J)
-     +       + 2.D0*STREAMSTRESSSTA -2.D0*TWXSTA(ITIME)))/
-     +       (HITE+H(J))
+              WSETUP(JP1)=WSETUP(J)-(2.D0*(SXXSTA(JP1)-SXXSTA(J)) +
+     +        DX*(TBXSTA(JP1)+TBXSTA(J)
+     +        + 2.D0*STREAMSTRESSSTA -2.D0*TWXSTA(ITIME)))/
+     +        (HITE+H(J))
              ELSE
-             WSETUP(JP1)=WSETUP(J)-(2.D0*(SXXSTA(JP1)-SXXSTA(J)) +
-     +       DX*((1.D0+VEGCDM(JP1,L)/VEGCD(JP1,L)*MIN(VEGH(JP1,L),HITE)
-     +       *VEGFB(JP1,L))
-     +       *TBXSTA(JP1)+
-     +      (1.D0+VEGCDM(J,L)/VEGCD(J,L)*MIN(VEGH(J,L),H(J))
-     +       *VEGFB(J,L))*TBXSTA(J)
-     +       + 2.D0*STREAMSTRESSSTA -2.D0*TWXSTA(ITIME)))/
-     +       (HITE+H(J))
+              WSETUP(JP1)=WSETUP(J)-(2.D0*(SXXSTA(JP1)-SXXSTA(J)) +
+     +        DX*((1.D0+VEGCDM(JP1,L)/VEGCD(JP1,L)*MIN(VEGH(JP1,L),HITE)
+     +        *VEGFB(JP1,L))
+     +        *TBXSTA(JP1)+
+     +        (1.D0+VEGCDM(J,L)/VEGCD(J,L)*MIN(VEGH(J,L),H(J))
+     +        *VEGFB(J,L))*TBXSTA(J)
+     +        + 2.D0*STREAMSTRESSSTA -2.D0*TWXSTA(ITIME)))/
+     +        (HITE+H(J))
              ENDIF
 c          WSETUP(JP1) = WSETUP(J) - (2.D0* (SXXSTA(JP1)-SXXSTA(J)) +
 c     +                  DX*(2.0*FVCWLWT +

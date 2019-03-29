@@ -191,7 +191,8 @@ C
       COMMON /RRPOND/ZW,QD,QM,JXW,JX2,NOPOND
       COMMON /TIDALC/DETADY(NB),DSWLDT(NB)
       COMMON /SERIES/TSQO(NL),TSQBX(NL),TSQSX(NL)
-      COMMON /VEGETA/VEGCD,VEGCDM,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
+      COMMON /VEGETA/VEGCD(NN,NL),VEGCDM(NN,NL),
+     + VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
      + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
       COMMON /DIKERO/EDIKE(NN,NL),ZB0(NN,NL),DSTA(NN),DSUM(NN),
@@ -545,9 +546,19 @@ c The phase-averagaed depth-integrated drag (STREAMSTRESSSTA) is applied in the 
               CALL PHASEAVEFV(J,L,HRMS(J),H(J),STREAMSTRESSSTA, FVCWLWT)
            ENDIF
 
+c          lzhu changed here to allow spatially varying CD. 
+c          Note that when CD=0 and CDM=0 (no veg), CDM/CD = 1.0 instead of 0.0 (0.0 create problem).
+           IF (VEGCD(J,L).LT.EPS1) THEN
            WSETUP(JP1) = WSETUP(J)-(SXXSTA(JP1)-SXXSTA(J)+
-     +   ((1.D0+VEGCDM/VEGCD*MIN(VEGH(J,L),H(J))*VEGFB(J,L))*TBXSTA(J)+
+     +   ((1.D0+1.0D0*MIN(VEGH(J,L),H(J))*VEGFB(J,L))
+     +   *TBXSTA(J)+
      +   STREAMSTRESSSTA-TWXSTA(ITIME))*DX)/H(J)
+          ELSE
+           WSETUP(JP1) = WSETUP(J)-(SXXSTA(JP1)-SXXSTA(J)+
+     +   ((1.D0+VEGCDM(J,L)/VEGCD(J,L)*MIN(VEGH(J,L),H(J))*VEGFB(J,L))
+     +   *TBXSTA(J)+
+     +   STREAMSTRESSSTA-TWXSTA(ITIME))*DX)/H(J)
+          ENDIF
         ENDIF 
 c end lzhu change 2017-09-20
 
@@ -726,12 +737,25 @@ c  and applied to the cross-shore momentum equation
                FVCWLWT        = 0.5D0*(FVCWLWTTMP1+FVCWLWTTMP2)
              ENDIF
        
-             WSETUP(JP1)=WSETUP(J)-(2.D0*(SXXSTA(JP1)-SXXSTA(J)) +
-     +       DX*((1.D0+VEGCDM/VEGCD*MIN(VEGH(JP1,L),HITE)*VEGFB(JP1,L))
-     +       *TBXSTA(JP1)+
-     +      (1.D0+VEGCDM/VEGCD*MIN(VEGH(J,L),H(J))*VEGFB(J,L))*TBXSTA(J)
-     +       + 2.D0*STREAMSTRESSSTA -2.D0*TWXSTA(ITIME)))/
-     +       (HITE+H(J))
+             IF (VEGCD(JP1,L).LT.EPS1.OR.VEGCD(J,L).LT.EPS1) THEN
+              WSETUP(JP1)=WSETUP(J)-(2.D0*(SXXSTA(JP1)-SXXSTA(J)) +
+     +        DX*((1.D0+1.0D0*MIN(VEGH(JP1,L),HITE)
+     +        *VEGFB(JP1,L))
+     +        *TBXSTA(JP1)+
+     +        (1.D0+1.0D0*MIN(VEGH(J,L),H(J))
+     +        *VEGFB(J,L))*TBXSTA(J)
+     +        + 2.D0*STREAMSTRESSSTA -2.D0*TWXSTA(ITIME)))/
+     +        (HITE+H(J))
+             ELSE
+              WSETUP(JP1)=WSETUP(J)-(2.D0*(SXXSTA(JP1)-SXXSTA(J)) +
+     +        DX*((1.D0+VEGCDM(JP1,L)/VEGCD(JP1,L)*MIN(VEGH(JP1,L),HITE)
+     +        *VEGFB(JP1,L))
+     +        *TBXSTA(JP1)+
+     +        (1.D0+VEGCDM(J,L)/VEGCD(J,L)*MIN(VEGH(J,L),H(J))
+     +        *VEGFB(J,L))*TBXSTA(J)
+     +        + 2.D0*STREAMSTRESSSTA -2.D0*TWXSTA(ITIME)))/
+     +        (HITE+H(J))
+             ENDIF
 c          WSETUP(JP1) = WSETUP(J) - (2.D0* (SXXSTA(JP1)-SXXSTA(J)) +
 c     +                  DX*(2.0*FVCWLWT +
 c     +                  2.D0*STREAMSTRESSSTA -2.D0*TWXSTA(ITIME)))/
@@ -1420,7 +1444,8 @@ C
       COMMON /COMPAR/ HWDMIN,NPT,NPE
       COMMON /RRPOND/ ZW,QD,QM,JXW,JX2,NOPOND
       COMMON /TIDALC/ DETADY(NB),DSWLDT(NB)
-      COMMON /VEGETA/VEGCD,VEGCDM,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
+      COMMON /VEGETA/VEGCD(NN,NL),VEGCDM(NN,NL),
+     + VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
      + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
       COMMON /DIKERO/EDIKE(NN,NL),ZB0(NN,NL),DSTA(NN),DSUM(NN),
@@ -2016,7 +2041,7 @@ C             READ(11,1150) XPINP(J,L),ZPINP(J,L)
       IF(L.GT.1) DYLINE(L-1)=YLINE(L)-YLINE(L-1)
 C     
 C.....VEGETATION CHARACTERISTICS IF IVEG=1, 2, or 3
-C     VEGCD    = Vegetation drag coefficient of order of unity
+C     VEGCD(J, L)   = Vegetation drag coefficient of order of unity
 C     VEGN(J,L)= number of vegetation (1/m/m) per unit horizontal area
 C     for segment J(J=1,2,...,NBINP(L)-1) along cross-shore line L where
 c     VEGN(J,L)=0.0 if no vegetation
@@ -2029,11 +2054,24 @@ C     where uprooting occurs when erosion reaches this depth
 C     (input only for IVEG=1) where VEGRD(J,L)=0.0 if no vegetation
       IF(IVEG.GE.1) THEN
 C     READ(11,1130) VEGCD
-      READ(11,*) VEGCD
+C     lzhu commented, because VEGCD would be spatial varying. 
+C      READ(11,*) VEGCD
 
 C     lzhu comments: only when IVEG=3, Cdm is written in makeinfile and read here
-      IF (IVEG.EQ.3) READ(11,*) VEGCDM
+C     lzhu commented, because VEGCDM would be spatial varying. 
+C      IF (IVEG.EQ.3) READ(11,*) VEGCDM
 c     lzhu comments end
+
+C     lzhu updated the way to read VEGCD and VEGCDM
+      JDUM=NBINP(L)-1
+      DO 173 J=1,JDUM
+         IF (IVEG.EQ.3) THEN
+            READ(11,*) VEGCD(J,L), VEGCDM(J,L)
+         ELSE
+            READ(11,*) VEGCD(J,L)
+         ENDIF
+ 173  CONTINUE 
+C     updates ends
 
       JDUM=NBINP(L)-1
       DO 170 J=1,JDUM
@@ -2045,7 +2083,7 @@ c       iveg=3 also needs to read vegetation properties specified in input file
 C         READ(11,1150) VEGN(J,L),VEGB(J,L),VEGD(J,L)
           READ(11,*) VEGN(J,L),VEGB(J,L),VEGD(J,L)
         ENDIF
-        VEGINP(J,L)=VEGCD*VEGN(J,L)*VEGB(J,L)/FBINP(J,L)
+        VEGINP(J,L)=VEGCD(J,L)*VEGN(J,L)*VEGB(J,L)/FBINP(J,L)
         IF(VEGINP(J,L).LT.0.D0) THEN
           WRITE(*,2902) VEGINP(J,L),J,L
           STOP
@@ -2274,7 +2312,8 @@ C
      + UPSTD(NN),DPSTA(NN),QP(NN),UPMWD(NN),NPINP(NL)
       COMMON /OVERTF/ RWH,RCREST(NL),QO(NL),QOTF,SPRATE,SLPOT,JCREST(NL)
       COMMON /COMPAR/ HWDMIN,NPT,NPE
-      COMMON /VEGETA/ VEGCD,VEGCDM,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
+      COMMON /VEGETA/ VEGCD(NN,NL),VEGCDM(NN,NL),
+     + VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
      + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
       COMMON /DIKERO/EDIKE(NN,NL),ZB0(NN,NL),DSTA(NN),DSUM(NN),
@@ -2865,7 +2904,8 @@ C     NFR=maximum number of frequency beams for JONSWAP spectrum
       COMMON /CONSTA/ GRAV, SQR2, SRQ8,PI,TWOPI,SQRG1,SQRG2
       COMMON /LINEAR/ WKP,CP(NN),WN(NN),WKPSIN,STHETA(NN),CTHETA(NN),
      +   FSX, FSY, FE, QWX, QWY
-      COMMON /VEGETA/VEGCD,VEGCDM,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
+      COMMON /VEGETA/VEGCD(NN,NL),VEGCDM(NN,NL),
+     + VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
      + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
       COMMON /VEGDISS/ DVEGSTA(NN)
@@ -2896,7 +2936,8 @@ C     IDISS=2: Chen and Zhao (2012) with JONSWAP spectrum
 C     IDISS=3: Chen and Zhao (2012) with measured Se
 
       IF(IDISS.EQ.1) THEN
-        DVEGSTA(J) = (0.5/DSQRT(PI)/GRAV)*VEGCD*VEGB(J,L)*VEGN(J,L)* 
+        DVEGSTA(J) = (0.5/DSQRT(PI)/GRAV)*VEGCD(J,L)*VEGB(J,L)
+     +            *VEGN(J,L)* 
      +            (0.25*WKP*GRAV*WT(J)/PI)**3 *
      +            (DSINH(WKP*EFFVEGH)**3.0 + 3.0*DSINH(WKP*EFFVEGH)) *
      +            WHRMS**3 /
@@ -2992,7 +3033,7 @@ C          Get int(Urms*coshh^2(k(h+z))) in terms of z first
               SUMINT = SUMINT + URMSCZ(IZ)*TMP1*DZCZ
 576        CONTINUE
          
-           SDSCZ(IIFR) =(0.5*VEGCD*VEGB(J,L)*VEGN(J,L)/GRAV) * 
+           SDSCZ(IIFR) =(0.5*VEGCD(J,L)*VEGB(J,L)*VEGN(J,L)/GRAV) * 
      +                  (FREQ(IIFR)/DSINH(WNUM(IIFR)*D))**2.0 * 
      +                  SUMINT * EJONSPEC(IIFR)
 566     CONTINUE
@@ -3037,7 +3078,7 @@ C          Get int(Urms*coshh^2(k(h+z))) in terms of z first
               SUMINT = SUMINT + URMSCZ(IZ)*TMP1*DZCZ
 5761        CONTINUE
 
-           SDSCZ(IIFR) =(0.5*VEGCD*VEGB(J,L)*VEGN(J,L)/GRAV) *
+           SDSCZ(IIFR) =(0.5*VEGCD(J,L)*VEGB(J,L)*VEGN(J,L)/GRAV) *
      +             (VMEASOMEG(IIFR)/DSINH(VMEASWNUM(IIFR)*D))**2.0 *
      +             SUMINT * VMEASSE(IIFR)
 5661    CONTINUE
@@ -3191,7 +3232,8 @@ C
       COMMON /RRPOND/ ZW,QD,QM,JXW,JX2,NOPOND
       COMMON /TIDALC/ DETADY(NB),DSWLDT(NB)
       COMMON /SERIES/TSQO(NL),TSQBX(NL),TSQSX(NL)
-      COMMON /VEGETA/VEGCD,VEGCDM,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
+      COMMON /VEGETA/VEGCD(NN,NL),VEGCDM(NN,NL),
+     + VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
      + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
       COMMON /DIKERO/EDIKE(NN,NL),ZB0(NN,NL),DSTA(NN),DSUM(NN),
@@ -3301,11 +3343,13 @@ C
      +     'Number of wind speed and direction input =',I4/)
 C     
         IF(IVEG.EQ.0) WRITE(20,955)
-        IF(IVEG.EQ.1) WRITE(20,956) VEGCD
-        IF(IVEG.EQ.2) WRITE(20,957) VEGCD
+C       lzhu commented, because VEGCD is no longer a constant. 
+C        IF(IVEG.EQ.1) WRITE(20,956) VEGCD
+C        IF(IVEG.EQ.2) WRITE(20,957) VEGCD
 c       lzhu added
-        IF(IVEG.EQ.3) WRITE(20,956) VEGCD
+C        IF(IVEG.EQ.3) WRITE(20,956) VEGCD
 c       lzhu edits ends
+C       lzhu commented ends
 
  955    FORMAT('NO vegetation in computation domain'/)
  956    FORMAT('VEGETATION whose density, width, height and root depth 
@@ -4246,7 +4290,8 @@ C
       COMMON /WATRAN/ SWLAND(NB),ISWLSL,JSL,JSL1,IOFLOW
       COMMON /COMPAR/ HWDMIN,NPT,NPE
       COMMON /RRPOND/ ZW,QD,QM,JXW,JX2,NOPOND
-      COMMON /VEGETA/ VEGCD,VEGCDM,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
+      COMMON /VEGETA/ VEGCD(NN,NL),VEGCDM(NN,NL),
+     + VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
      + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
       COMMON /WIMESH/WMINP(NN,NL),WMNODE(NN,NL),ZMESH(NN,NL)
@@ -5251,7 +5296,8 @@ C
       COMMON /WATRAN/ SWLAND(NB),ISWLSL,JSL,JSL1,IOFLOW
       COMMON /COMPAR/ HWDMIN,NPT,NPE
       COMMON /RRPOND/ ZW,QD,QM,JXW,JX2,NOPOND
-      COMMON /VEGETA/ VEGCD,VEGCDM,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
+      COMMON /VEGETA/ VEGCD(NN,NL),VEGCDM(NN,NL),
+     + VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
      + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
 C     
@@ -6666,7 +6712,8 @@ C     NFR=maximum number of frequency beams for JONSWAP spectrum
       COMMON /CONSTA/ GRAV, SQR2, SRQ8,PI,TWOPI,SQRG1,SQRG2
       COMMON /LINEAR/ WKP,CP(NN),WN(NN),WKPSIN,STHETA(NN),CTHETA(NN),
      +   FSX, FSY, FE, QWX, QWY 
-      COMMON /VEGETA/VEGCD,VEGCDM,VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
+      COMMON /VEGETA/VEGCD(NN,NL),VEGCDM(NN,NL),
+     + VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
      + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
       COMMON /VEGDISS/ DVEGSTA(NN)
@@ -6693,7 +6740,7 @@ c                       /1.35D0
 
            CALL FINDHV2HTOMEME(MIN(URSELL,1000.0D0),HS2H,HV2H,HV2HTOM)
     
-           STREAMSTRESSSTA = 0.5D0*VEGCD*VEGB(J,L)*VEGN(J,L)*
+           STREAMSTRESSSTA = 0.5D0*VEGCD(J,L)*VEGB(J,L)*VEGN(J,L)*
      +              OMEGAMEAN**2.0D0*WHRMS**3.0D0*
      +              DCOSH(WKMEAN*D*MIN(HV2H, 1.0D0))**2.0D0/
      +              DSINH(WKMEAN*D)**2.0D0*
@@ -6713,7 +6760,7 @@ c/1.35D0
             HV2H  = VEGD(J,L)/D
             CALL FINDHV2HTOMEME(MIN(URSELL,1000.0D0),HS2H,HV2H,HV2HTOM)
 
-            STREAMSTRESSSTA = 0.5D0*VEGCD*VEGB(J,L)*VEGN(J,L)*
+            STREAMSTRESSSTA = 0.5D0*VEGCD(J,L)*VEGB(J,L)*VEGN(J,L)*
      +                   OMEGAMEAN**2.0D0*WHRMS**3.0D0*
      +                   DCOSH(WKMEAN*D*MIN(HV2H, 1.0D0))**2.0D0/
      +                   DSINH(WKMEAN*D)**2.0D0*
@@ -6729,13 +6776,13 @@ c/1.35D0
             HV2H = 0.55D0
             CALL FINDHV2HTOMEME(MIN(URSELL,1000.0D0),HS2H,HV2H,HV2HTOM)
 
-            STREAMSTRESSSTA = 0.5D0*VEGCD*VEGB(J,L)*VEGN(J,L)*
+            STREAMSTRESSSTA = 0.5D0*VEGCD(J,L)*VEGB(J,L)*VEGN(J,L)*
      +                     OMEGAMEAN**2.0D0*WHRMS**3.0D0*
      +                     DCOSH(WKMEAN*D*MIN(HV2H, 1.0D0))**2.0D0/
      +                     DSINH(WKMEAN*D)**2.0D0*
      +                     HV2HTOM/DSQRT(PI)/8.0D0/GRAV
 C For emergent vegetation, Fv_LWT is from Dean and Bener (2006) Eq. 12
-            STREAMSTRSTALWT = VEGCD*VEGB(J,L)*VEGN(J,L)*
+            STREAMSTRSTALWT = VEGCD(J,L)*VEGB(J,L)*VEGN(J,L)*
      +                       (3.0D0*DSQRT(PI)/4.0D0)*WHRMS**3.0D0
      +                       *WKP/12.0D0/PI/DTANH(WKP*D)
             STREAMSTRESSSTA = STREAMSTRESSSTA + STREAMSTRSTALWT
@@ -6744,7 +6791,7 @@ C For emergent vegetation, Fv_LWT is from Dean and Bener (2006) Eq. 12
       ENDIF
 
 c Fv_cw from LWT
-      FVCWLWT     = 0.5D0*VEGCDM*VEGB(J,L)*VEGN(J,L)*
+      FVCWLWT     = 0.5D0*VEGCDM(J,L)*VEGB(J,L)*VEGN(J,L)*
      +              2.0D0*(USIGT*SIGT)*OMEGA*0.5D0*
      +              (WHRMS*DSQRT(PI)*0.5D0)*
      +              2.0D0/PI*DSINH(WKP*MIN(D, VEGD(J,L)))/

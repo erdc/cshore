@@ -22,7 +22,7 @@ isave       = 1;                    % 1 to save the computed results
 
 unix('rm -f infile') ;
 unix('rm -f O*') ; 
-unix('rm -f SETUP_ori.DAT') ; 
+unix('rm -f SETUP_new.DAT') ; 
 
 % CSHORE execution and physical params
 in.header = {'------------------------------------------------------------'
@@ -62,6 +62,20 @@ if in.iveg==3
                         %  1: mendez, 2: chen_zhao, 3. use measured wave spectrum)  
 end
 
+in.vegtype   = 1 ; 
+%%%%%
+% for in.vegtype =k (k>1)
+% in.veg_n = [n1, n2, ..., nk] ; 
+% in.veg_dia = [bv1, bv2, ..., bvk] ; 
+% same for in.veg_ht, in.veg_rod.
+% in.extent = [start1, end1;
+%                    start2, end2; 
+%                    start3, end3;
+%                        :
+%                    startk, endk] ;
+% in.veg_Cd = [Cd1, Cd2, ..., Cdk]  
+% in.veg_Cdm = [Cdm1, Cdm2, ..., Cdmk]
+%%%%%
 in.veg_n      = 400;       % vegitation density
 in.veg_dia    = 0.01;       % vegitation diam
 if vegtest == 1
@@ -69,7 +83,8 @@ if vegtest == 1
 else 
     in.veg_ht     = 0.2 ; 
 end
-in.veg_rod    = 0.3;         % vegitation erosion limit below sand for failure
+in.veg_rod    = 0.3 ;         % vegitation erosion limit below sand for failure
+    
 in.gamma  = .85;         % shallow water ratio of wave height to water depth
 in.sporo  = 0.4;        % sediment porosity                        
 in.stoneporo  = 0.5;  % Stone/gravel porosity in porous layer (SNP can be different from sand porosity=0.4 for ISTSAN=1)
@@ -184,19 +199,20 @@ for icase = 1  : 6
     omega             = 2*pi / in.Tp(1) ; 
     Uwbase           = Awbase*omega ;
     Rebase            = in.veg_dia * Uwbase / 1e-6 ;
-    KC_jadhav       = Uwbase * (in.Tp/1.35) / 8e-3 ; 
-    Cd_jadhav       = .36 + (2600 / Rebase) ; 
+%     KC_jadhav       = Uwbase * (in.Tp/1.35) / 8e-3 ; 
+    Cd_jadhav       = .36 + (2600 ./ Rebase) ; 
 
     in.veg_Cd = Cd_jadhav ;        % vegitation drag coeff
     in.veg_Cdm = in.veg_Cd ;    
 
     %%% produce input file %%%
-    makeinfile_usace_vegfeature_ori(in) ;
+    makeinfile_usace_vegfeature(in) ;
 
-    unix(['./../../../src-repo/updatedveg_ori']) ;  
+    unix(['./../../../src-repo/updatedveg']) ;  
+    
     results = load_results_usace;
-
-    unix('rm -f O*') ; 
+    
+%     unix('rm -f O*') ; 
     
     eval (['revetment', num2str(icase), '.R2pmodel = results.hydro.runup_2_percent ;']) ;
     R2pmodel(icase) = results.hydro.runup_2_percent ;
@@ -210,9 +226,9 @@ end
 figure(22); hold on; box on; grid on;
 load R2pmodel_revetment.txt
 if vegtest ==1 
-    plot (R2pmodel_revetment, R2pmodel, 'or', 'linewidth', 2, 'markersize', 10)
+    plot (R2pmodel_revetment, R2pmodel, '.r', 'linewidth', 2, 'markersize', 10)
 else 
-    plot (R2pmodel_revetment, R2pmodel, 'xk', 'linewidth', 2, 'markersize', 10)
+    plot (R2pmodel_revetment, R2pmodel, '+b', 'linewidth', 2, 'markersize', 10)
 end
 fplot (@(x) x, '-k', 'linewidth', 2, 'HandleVisibility', 'off')
 % fplot (@(x) 1.2*x, ':k', 'linewidth', 2, 'HandleVisibility', 'off')
@@ -230,9 +246,9 @@ set(gca,'linewidth',2)
 figure(33); hold on; box on; grid on;
 load Htoemodel_revetment.txt
 if vegtest ==1 
-    plot (Htoemodel_revetment, H_toe, 'om', 'linewidth', 2, 'markersize', 10)
+    plot (Htoemodel_revetment, H_toe, '.r', 'linewidth', 2, 'markersize', 10)
 else 
-    plot (Htoemodel_revetment, H_toe, 'xb', 'linewidth', 2, 'markersize', 10)
+    plot (Htoemodel_revetment, H_toe, '+b', 'linewidth', 2, 'markersize', 10)
 end
 fplot (@(x) x, '-k', 'linewidth', 2, 'HandleVisibility', 'off')
 axis equal
@@ -253,7 +269,7 @@ fill ([x3(1:10:end), fliplr(x3(1:10:end))], [y32(1:10:end), fliplr(y31(1:10:end)
 vegid1 = find (in.x>in.x(end)*in.veg_extent(1) & in.x<in.x(end)*in.veg_extent(2) ) ;
 x3 = in.x(vegid1) ;
 y31 = in.zb(vegid1) ;
-y32 = in.zb(vegid1)+in.veg_ht; 
+y32 = in.zb(vegid1)+in.veg_ht(1); 
 h = fill ([x3(1:10:end), fliplr(x3(1:10:end))], [y32(1:10:end), fliplr(y31(1:10:end))], rgb('green'), 'HandleVisibility', 'off') ;
 set(h,'facealpha',.5)
 

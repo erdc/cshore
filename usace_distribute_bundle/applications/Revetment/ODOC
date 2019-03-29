@@ -77,7 +77,7 @@ LANDWARD WET COMPUTATION LIMIT
 Most landward node of wet zone computation    JR=    1723
 X-coordinate at JR (m)                        XR=       8.610000
 Bottom elevation at JR (m)                    ZR=       0.077234
-Mean water depth at this node (m)          H(JR)=       0.002378
+Mean water depth at this node (m)          H(JR)=       0.002416
 
 COMBINED WAVE OVERTOPPING AND OVERFLOW
 Still water level above Z=0 (m)              SWL=       0.040000
@@ -85,8 +85,8 @@ Cross-shore line number                        L=    1
 Structure or dune creat elevation (m)     RCREST=       0.758385
 Node number at SWL                          JSWL=    1686
 Wet and dry transition node                  JWD=    1686
-Mean water depth H1(m) at node JWD            H1=       0.011258
-End node of wet and dry zone                JDRY=    1895
+Mean water depth H1(m) at node JWD            H1=       0.011334
+End node of wet and dry zone                JDRY=    1896
 Wave overtopping probability at JCREST      POTF=       0.000000
 Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.000000000
 Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
@@ -96,9 +96,9 @@ QO iteration number                        ITEQO=    1
 EMPIRICAL WAVE RUNUP
 Cross-shore line number                        L=    1
 Swash zone bottome slope                  SLPRUN=       0.200935
-Mean runup elevation above Z=0 (m)        ERMEAN=       0.045930
-Runup standard deviation (m)              SIGRUN=       0.015266
-Significant runup height above Z=0 (m)       R13=       0.105768
-2 percent runup height above Z=0 (m)         R2P=       0.129703
-1 Percent runup height above z=0 (m)         R1P=       0.136883
+Mean runup elevation above Z=0 (m)        ERMEAN=       0.046009
+Runup standard deviation (m)              SIGRUN=       0.015309
+Significant runup height above Z=0 (m)       R13=       0.106064
+2 percent runup height above Z=0 (m)         R2P=       0.130086
+1 Percent runup height above z=0 (m)         R1P=       0.137293
 

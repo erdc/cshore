@@ -3,15 +3,14 @@ clear
 % global figID
 addpath ../../mfiles
 
-vegtest = 1 ; % 1 for Test 1 in monthly report, 2 for Test 2 in monthly report
-
-% load lab data
-revetment1 = struct ('id', 'RS20B1', 'd1', 38.9/100, 'Tp',  2.3, 'Hrms', 11.2/100, 'dt', 20.6/100, 'Rc', 18.6/100, 'etabar', 0.28/100, 'SWL', 0, 'R2pmeasure', 13.31/100) ; 
-revetment2 = struct ('id', 'RS20C1', 'd1', 38.9/100, 'Tp',  3.0, 'Hrms', 7.3/100, 'dt', 20.6/100, 'Rc', 18.6/100, 'etabar', 0.17/100, 'SWL', 0, 'R2pmeasure', 13.59/100) ; 
-revetment3 = struct ('id', 'RS22B1', 'd1', 40.9/100, 'Tp',  2.3, 'Hrms', 11.6/100, 'dt', 22.6/100, 'Rc', 16.6/100, 'etabar', 0.11/100, 'SWL', 2/100,  'R2pmeasure', 14.07/100) ; 
-revetment4 = struct ('id', 'RS22C1', 'd1', 40.9/100, 'Tp',  2.9, 'Hrms', 7.6/100, 'dt', 22.6/100, 'Rc', 16.6/100, 'etabar', 0.13/100, 'SWL', 2/100,  'R2pmeasure', 14.60/100) ; 
-revetment5 = struct ('id', 'RS24B1', 'd1', 42.9/100, 'Tp',  2.3, 'Hrms', 11.9/100, 'dt', 24.6/100, 'Rc', 14.6/100, 'etabar', -0.27/100, 'SWL', 4/100,  'R2pmeasure', 14.12/100) ; 
-revetment6 = struct ('id', 'RS24C1', 'd1', 42.9/100, 'Tp',  2.9, 'Hrms', 7.8/100, 'dt', 24.6/100, 'Rc', 14.6/100, 'etabar', 0, 'SWL', 4/100, 'R2pmeasure', 14.98/100) ;   
+% % load lab data
+% % check page 36, 50 in Ali's report
+revetment1 = struct ('id', 'RO20B1', 'd1', 38.9/100, 'Tp',  2.3, 'Hrms', 11.3/100, 'dt', 20.6/100, 'Rc', 9.7/100, 'etabar', 0.25/100, 'SWL', 0, 'qosmeasure', 0.28, 'qosali', 3.22) ; 
+revetment2 = struct ('id', 'RO20C1', 'd1', 38.9/100, 'Tp',  3.0, 'Hrms', 7.3/100, 'dt', 20.6/100, 'Rc', 9.7/100,  'etabar', 0.37/100, 'SWL', 0, 'qosmeasure', 0.11, 'qosali', 1.41) ; 
+revetment3 = struct ('id', 'RO22B1', 'd1', 40.9/100, 'Tp',  2.3, 'Hrms', 11.6/100, 'dt', 22.6/100, 'Rc', 7.7/100, 'etabar', -0.10/100, 'SWL', 2/100, 'qosmeasure', 3.36, 'qosali', 5.02) ; 
+revetment4 = struct ('id', 'RO22C1', 'd1', 40.9/100, 'Tp',  2.9, 'Hrms', 7.5/100, 'dt', 22.6/100, 'Rc', 7.7/100, 'etabar', 0.06/100, 'SWL', 2/100, 'qosmeasure', 1.07, 'qosali', 1.73) ; 
+revetment5 = struct ('id', 'RO24B1', 'd1', 42.9/100, 'Tp',  2.3, 'Hrms', 11.9/100, 'dt', 24.6/100, 'Rc', 5.7/100, 'etabar', -0.74/100, 'SWL', 4/100, 'qosmeasure', 12.18, 'qosali', 4.53) ; 
+revetment6 = struct ('id', 'RO24C1', 'd1', 42.9/100, 'Tp',  2.9, 'Hrms', 7.8/100, 'dt', 24.6/100, 'Rc', 5.7/100, 'etabar', -0.30/100, 'SWL', 4/100, 'qosmeasure', 4.33, 'qosali', 2.38) ; 
 
 % script params
 iplotbc     = 0;                    % 1 to plot the applied boundary conditions
@@ -35,7 +34,7 @@ in.isedav = 1;          % 0 = unlimited sand, 1 = hard bottom
 % from the makeinfile file, there are variables in.x_p and in.zb_p for the
 % profile of the permeable rubble bed.
 % Also, when in.iperm = 1, CSHORE read stone diameter, porosity, stability, etc
-in.iperm  = 0;          % 0 = no permeability, 1 = permeable
+in.iperm  = 1;          % 0 = no permeability, 1 = permeable
 
 in.iover  = 1;          % 0 = no overtopping , 1 = include overtopping
 in.infilt = 0;          % 1 = include infiltration landward of dune crest
@@ -47,7 +46,7 @@ in.iroll  = 1;          % 0 = no roller, 1 = roller
 in.iwind  = 0;          % 0 = no wind effect
 in.itide  = 0;          % 0 = no tidal effect on currents
 in.iweibull = 0 ;
-in.iveg   = 3;          % vegitation effect
+in.iveg   = 0;          % vegitation effect
                         % 0: no vegetation or vegetation represented by increased
                         % 1: veg. density, width, height and root depth are 
                         %    specified as input. The height and root depth 
@@ -56,35 +55,19 @@ in.iveg   = 3;          % vegitation effect
 
 if in.iveg==3                        
     in.iFv = 1 ; 
-    in.idiss  = 1;          % energy dissipation due to vegitation 
+    in.idiss  = 2;          % energy dissipation due to vegitation 
                         % (0: veg is accounted in bottom friction (original)
                         %  1: mendez, 2: chen_zhao, 3. use measured wave spectrum)  
 end
 
-in.vegtype   = 2 ; 
-%%%%%
-% for in.vegtype =k (k>1)
-% in.veg_n = [n1, n2, ..., nk] ; 
-% in.veg_dia = [bv1, bv2, ..., bvk] ; 
-% same for in.veg_ht, in.veg_rod.
-% in.extent = [start1, end1;
-%                    start2, end2; 
-%                    start3, end3;
-%                        :
-%                    startk, endk] ;
-% in.veg_Cd = [Cd1, Cd2, ..., Cdk]  
-% in.veg_Cdm = [Cdm1, Cdm2, ..., Cdmk]
-%%%%%
-in.veg_n      = [400, 400];       % vegitation density
-in.veg_dia    = [0.01, 0.01];       % vegitation diam
-if vegtest == 1
-    in.veg_ht     = [0.14, 0.14] ; 
-else 
-    in.veg_ht     = [0.2, 0.2] ; 
-end
-in.veg_rod    = [0.3, 0.3];         % vegitation erosion limit below sand for failure
-    
-in.gamma  = .85;         % shallow water ratio of wave height to water depth
+% in.veg_Cd is moved into the loop
+in.veg_n      = 424;       % vegitation density
+in.veg_dia    = 0.008;       % vegitation diam
+in.veg_ht     = 0.21;          % vegitation height
+in.veg_rod    = 0.3;         % vegitation erosion limit below sand for failure
+in.veg_extent = [0 0.33]; % vegitation coverage as fraction of total domain length
+                                        % [xveg_start, xveg_end] ./ total domain length
+in.gamma  = .8;         % shallow water ratio of wave height to water depth
 in.sporo  = 0.4;        % sediment porosity                        
 in.stoneporo  = 0.5;  % Stone/gravel porosity in porous layer (SNP can be different from sand porosity=0.4 for ISTSAN=1)
 in.d50    = 0.1;        % d_50 in mm
@@ -117,6 +100,12 @@ in.timebc_surg = in.timebc_wave;
 in.nwave = length(in.timebc_wave); 
 in.nsurg = in.nwave; dum = ones(1,in.nwave);
 
+%%% Cd curves from Ranjit
+cdkc=@(kc) 70.0*kc.^(-0.86);
+cdre=@(re) 2*(1300./re + 0.18);
+in.veg_Cd = 1.0 ;        % vegitation drag coeff
+in.veg_Cdm = in.veg_Cd ;    
+
 in.angle = 0*dum;    % constant incident wave angle at seaward boundary in
 
 in.JONSWAPgamma = 3.3 ;
@@ -144,45 +133,37 @@ for icase = 1 : 6
 
     in.Wsetup = etabar*dum ; % wave setup at seaward boundary in meters \bar{eta}
     in.swlbc = swl*dum;    % water level at seaward boundary in meters zb         
+%     in.Wsetup = 0*dum ; % wave setup at seaward boundary in meters \bar{eta}
+%     in.swlbc = 0*dum;    % water level at seaward boundary in meters zb         
     
     % Idealized numerical tank
     % ZPINP(J,L)= dimensional vertical coordinate in meters of 
     % porous layer bottom or hard or clay bottom at point (J) with 
     % ZPINP(J) equal to or less than ZBINP(J,L) where ZPINP(1,L)=ZBINP(1,L) imposed
     %     zb up, zp down
-    Lx       = 12.0;                  % length of domain
-    in.dx     = 0.005;       % constant dx 
+    Lx       = 8.36;                  % length of domain
+    in.dx     = 0.002;       % constant dx 
     in.x_p   = 0:in.dx:Lx;
     in.x       = 0:in.dx:Lx;
     
-%     x_p         = [0,         6.3,      6.3+0.7,      6.3+0.7+(Rc+dt)*5] ;
-%     zb_p     = [-d1, -dt,  -dt,  Rc] ; 
-%     in.zb_p = interp1(x_p, zb_p, in.x_p, 'linear', 'extrap');  
-%     
-%     x_b       = [0,         6.3,      6.3+(Rc+dt)*5,     6.3+0.7+(Rc+dt)*5, in.x(end)] ;
-%     zb         = [-d1,      -dt,       Rc,                       Rc,                          in.zb_p(end)] ; 
-%     in.zb     = interp1(x_b, zb, in.x); 
-
-     x_p         = [0,                     6.3,      6.3+0.82,                                6.3+0.82+1.24] ;
-    zb_p     = [-dt-0.1831,        -dt,       -dt+0.02384,                            Rc-0.119] ; 
-    in.zb_p = interp1(x_p, zb_p, in.x_p, 'linear', 'extrap');  
+    x_p         = [0,                     6.3,      6.3+0.82,                                6.3+0.82+1.24] ;
+    zb_p     = [-dt-6.3/34.4,       -dt,       -dt+0.82/34.4,                            Rc-0.03] ; 
+    in.zb_p = interp1(x_p, zb_p, in.x_p);  
     
-    in.zb     = in.zb_p; 
-    
-    if vegtest ==1
-        in.veg_extent = [6.3/Lx, (6.3+0.82)/Lx; ...
-                                  (6.3+0.82)/Lx, (6.3+0.82+1.24)/Lx] ;
-    else 
-        in.veg_extent = [1.96/Lx, (6.3+0.82)/Lx; ...
-                                  (6.3+0.82)/Lx, (6.3+0.82+1.24)/Lx] ;
-    end 
+    x_b       = [0,                        6.3,      6.3+0.82+1.24-0.55,             6.3+0.82+1.24] ;
+    zb         = [-dt-6.3/34.4,        -dt,         Rc,                                         Rc] ; 
+    in.zb     = interp1(x_b, zb, in.x); 
+    idtmp    = find( isnan(in.zb) == 1); 
+    in.zb(idtmp) = in.zb_p(idtmp) ;
 
     %% friction factor
-    fric_fac_smooth = .001;     % bottom friction factor for impermeable bottom
-    fric_fac_rough = .002;     % bottom friction factor for permeable cobbles
-    
+    fric_fac_smooth = .15;     % bottom friction factor for impermeable bottom
+    fric_fac_rough = .5;     % bottom friction factor for permeable cobbles
+%     fric_fac_smooth = .002;     % bottom friction factor for impermeable bottom
+%     fric_fac_rough = .01;     % bottom friction factor for permeable cobbles
+%     
     in.fw     = fric_fac_smooth*ones(size(in.x)); % cross-shore values of bot fric
-    idtmp    = find (abs(in.zb-in.zb_p)>1e-5) ; 
+    idtmp    = find (abs(in.zb-in.zb_p)>1e-10) ; 
     in.fw(idtmp)     = fric_fac_rough; % cross-shore values of bot fric
     
     % note that hp = zb-zp; vertical thickness of the stone layer
@@ -195,81 +176,84 @@ for icase = 1 : 6
     wvlength = 2*pi/(kh/abs(in.zb(1))) ; 
     hv2h  = in.veg_ht /abs(in.zb(1));
 
-    %%% Cd curves from Ranjit
-    Awbase           = in.Hrms * cosh(0)/ 2 / sinh(kh) ; % Uw at base of canopy
-    omega             = 2*pi / in.Tp(1) ; 
-    Uwbase           = Awbase*omega ;
-    Rebase            = in.veg_dia * Uwbase / 1e-6 ;
-%     KC_jadhav       = Uwbase * (in.Tp/1.35) / 8e-3 ; 
-    Cd_jadhav       = .36 + (2600 ./ Rebase) ; 
-
-    in.veg_Cd = Cd_jadhav ;        % vegitation drag coeff
-    in.veg_Cdm = in.veg_Cd ;    
-
     %%% produce input file %%%
-    makeinfile_usace_vegfeature(in) ;
+    makeinfile_usace(in) ;
 
     unix(['./../../../src-repo/updatedveg']) ;  
-    
-    results = load_results_usace;
-    
+%     results = load_results_usace;
 %     unix('rm -f O*') ; 
     
-    eval (['revetment', num2str(icase), '.R2pmodel = results.hydro.runup_2_percent ;']) ;
-    R2pmodel(icase) = results.hydro.runup_2_percent ;
-    eval (['R2pmeasure(icase) = revetment', num2str(icase), '.R2pmeasure ;']) ; 
-    
-    idtmp = find (in.x>7) ; 
-    H_toe(icase) = results.hydro.Hrms(idtmp(1)) ;
+    fid = fopen('ODOC');
+    tot = textscan(fid,'%s','delimiter','\n');
+    tot = tot{:};
+    fclose(fid);
 
+    tmo =strfind(tot,'Total rate (QOTF+QP)')';
+    row_ind = find(~cellfun('isempty',tmo));
+    row = tot(row_ind);
+    col_ind = find(cell2mat(row(1))=='=');
+    row = cell2mat(row);
+    qosmodel (icase) =str2num(row(:,col_ind+1:end))*1e4;
+    eval (['revetment', num2str(icase), '.qosmodel = qosmodel (icase) ;']) ;
+
+    eval (['qosmeasure(icase) = revetment', num2str(icase), '.qosmeasure ;']) ; 
+    eval (['qosali(icase) = revetment', num2str(icase), '.qosali ;']) ; 
 end
 
-figure(22); hold on; box on; grid on;
-load R2pmodel_revetment.txt
-if vegtest ==1 
-    plot (R2pmodel_revetment, R2pmodel, '.r', 'linewidth', 2, 'markersize', 10)
-else 
-    plot (R2pmodel_revetment, R2pmodel, '+b', 'linewidth', 2, 'markersize', 10)
-end
+[qosmodel', qosmeasure']
+
+figure(99); hold on; box on
+plot (qosmeasure, qosmodel, '.r', 'markersize', 10, 'linewidth', 2)
+plot (qosmeasure, qosali, 'sb', 'markersize', 10, 'linewidth', 2)
 fplot (@(x) x, '-k', 'linewidth', 2, 'HandleVisibility', 'off')
-% fplot (@(x) 1.2*x, ':k', 'linewidth', 2, 'HandleVisibility', 'off')
-% fplot (@(x) 0.8*x, ':k', 'linewidth', 2, 'HandleVisibility', 'off')
-% text (0.1, 0.07, '-20%', 'fontsize', 15)
-% text (0.05, 0.1, '+20%', 'fontsize', 15)
+fplot (@(x) 1.2*x, ':k', 'linewidth', 2, 'HandleVisibility', 'off')
+fplot (@(x) 0.8*x, ':k', 'linewidth', 2, 'HandleVisibility', 'off')
+legend ('our results', 'Ali''s results', 'fontsize', 15)
 axis equal
-xlim ([0, 0.2])
-ylim ([0, 0.2])
-xlabel ('R_{2%} using revetment (Test 0) (m)')
-ylabel ('R_{2%} using vegetation (Test 1 & 2) (m)')
+xlim ([0, 35])
+ylim ([0, 35])
+xlabel ('measured q_{os} (cm^2/s)')
+ylabel ('modeled q_{os} (cm^2/s)')
 set (gca, 'fontsize', 15)
-set(gca,'linewidth',2)
 
-
-figure(44); hold on; box on
+figure(221); hold on; box on
 x3 = in.x ;
 y31 = in.zb ;
 y32 = zeros(size(y31)) ; 
 fill ([x3(1:10:end), fliplr(x3(1:10:end))], [y32(1:10:end), fliplr(y31(1:10:end))], rgb('SkyBlue'), 'HandleVisibility', 'off')
 
-% plot veg
-vegid1 = find (in.x>in.x(end)*in.veg_extent(1) & in.x<in.x(end)*in.veg_extent(2) ) ;
-x3 = in.x(vegid1) ;
-y31 = in.zb(vegid1) ;
-y32 = in.zb(vegid1)+in.veg_ht(1); 
-h = fill ([x3(1:10:end), fliplr(x3(1:10:end))], [y32(1:10:end), fliplr(y31(1:10:end))], rgb('green'), 'HandleVisibility', 'off') ;
-set(h,'facealpha',.5)
-
-% plot (in.x, in.zb, '-.k', 'linewidth', 2, 'HandleVisibility', 'off')
+% plot (in.x_p, in.zb_p, '-.k', 'linewidth', 2, 'HandleVisibility', 'off')
 x3 = in.x ;
 y31 = in.zb ;
 y32 = in.zb(1)*ones(size(y31)) ; 
 fill ([x3(1:10:end), fliplr(x3(1:10:end))], [y32(1:10:end), fliplr(y31(1:10:end))], rgb('SandyBrown'), 'HandleVisibility', 'off')
-xlim([0, 10])
+xlim ([in.x(1), in.x(end)])
+
+% plot (in.x, in.zb, 'b')
+% plot (in.x_p, in.zb_p, 'm')
+
+x3 = in.x ;
+y31 = in.zb ;
+y32 = in.zb_p ; 
+fill ([x3(1:10:end), fliplr(x3(1:10:end))], [y32(1:10:end), fliplr(y31(1:10:end))], rgb('SlateGrey'), 'HandleVisibility', 'off')
+
+% plot (in.x, results.hydro.setup, '-b', 'linewidth', 2)
+% plot (in.x, results.hydro.Hrms, '-b', 'linewidth', 2)
+
 set (gca, 'fontsize', 15)
 xlabel ('x (m)')
 ylabel ('elevation (m)')
 xlim([0, 10])
 ylim([-0.5, 0.4])
+
+
+% fid1 = fopen ('R2pmodel_revetment.txt', 'w') ; 
+% fprintf (fid1, '%f ', R2pmodel) ; 
+% fclose (fid1) ; 
+% 
+% fid2 = fopen ('Htoemodel_revetment.txt', 'w') ; 
+% fprintf (fid2, '%f ', H_toe) ; 
+% fclose (fid2) ; 
 
 rmpath ../../mfiles
 

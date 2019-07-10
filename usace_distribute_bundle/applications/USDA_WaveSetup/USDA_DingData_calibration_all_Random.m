@@ -307,7 +307,7 @@ set (gca, 'fontsize', 15)
 axis square
 
 
-addpath ../../mfiles
-addpath ./USDA_data/wave_setup
+rmpath ../../mfiles
+rmpath ./USDA_data/wave_setup
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -34,8 +34,6 @@ else
   out.params.isedav=0;
 end
 
-
-
 % find IPERM
 dum =strfind(tot,'IMPERMEABLE');
 row_ind = find(~cellfun('isempty',dum));

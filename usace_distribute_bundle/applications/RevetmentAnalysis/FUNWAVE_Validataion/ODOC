@@ -1,0 +1,104 @@
+ CSHORE USACE version, 2014 last edit 2019-02-08                       
+ ------------------------------------------------------------          
+ CSHORE applied to idealized planar slope                              
+ ------------------------------------------------------------          
+COMPUTATION OPTION ILINE=  1
+Alongshore gradient IQYDY=  0
+ILINE cross-shore lines are computed together
+
+COMPUTATION OPTION IPROFL =  0
+Bottom profile is fixed and No sediment transport                is computed
+
+ROLLER is included in computation
+ROLLER slope Betazero =    0.100
+
+NO wave and current interaction included
+
+WAVE OVERTOPPING, OVERFLOW AND SEEPAGE
+Runup wire height (m)               RWH=    0.020
+Initial crest location for L=1      JCREST= 13647
+Initial crest height (m) for L=1    RCREST=    1.139
+Swash velocity parameter            AWD=    2.000
+Output exceedance probability       EWD=    0.015
+
+IMPERMEABLE BOTTOM assumed
+
+NO wind shear stresses included
+
+BREAKER RATIO PARAMETER
+Input Gamma = 0.90
+
+
+INPUT WAVE AND WATER LEVEL:NTIME=     1 from TIME=0.0
+Output lines are limited to first and last    10 lines
+End Time(sec) Tp (sec)  Hrms(m) Wave Setup(m)Storm tide(m) ANGLE(deg)
+
+        0.0     2.5000     0.0520     0.0000     0.0000     0.0000
+
+INPUT BEACH AND STRUCTURE GEOMETRY
+Cross-shore line number               L=    1
+Alongshore coordinate             YLINE=         0.0000
+Line angle(degrees)              AGLINE=         0.0000
+Depth at seaward boundary (m)          =       0.429200
+Number of input points            NBINP=     13647
+Output lines are limited to first and last 5 lines
+Node spacing (m)                    DX=       0.004500
+Shoreline location (m) of Zb=0       Xs=      49.451434
+Maximum landward node              JMAX=   13647
+
+X  (m)      Zb  (m)  Fric.factor  Wire mesh
+     0.000    -0.429
+     0.004    -0.429     0.002
+     0.009    -0.429     0.002
+     0.013    -0.429     0.002
+     0.018    -0.429     0.002
+    61.389     1.138     0.002
+    61.394     1.138     0.002
+    61.398     1.138     0.002
+    61.403     1.139     0.002
+    61.407     1.139     0.002
+
+INPUT VEGETATION CHARACTERISITCS
+X(m)  DEN.(1/m/m) WID.(m) HEI.(m) ROD.(m)
+   0.004   0.000   0.000   0.000   0.000
+   0.009   0.000   0.000   0.000   0.000
+   0.013   0.000   0.000   0.000   0.000
+   0.018   0.000   0.000   0.000   0.000
+  61.389   0.000   0.000   0.000   0.000
+  61.394   0.000   0.000   0.000   0.000
+  61.398   0.000   0.000   0.000   0.000
+  61.403   0.000   0.000   0.000   0.000
+  61.407   0.000   0.000   0.000   0.000
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =        0.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=   11084
+X-coordinate at JR (m)                        XR=      49.873500
+Bottom elevation at JR (m)                    ZR=       0.040222
+Mean water depth at this node (m)          H(JR)=       0.002155
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=       0.000000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.139245
+Node number at SWL                          JSWL=   10991
+Wet and dry transition node                  JWD=   10991
+Mean water depth H1(m) at node JWD            H1=       0.012283
+End node of wet and dry zone                JDRY=   11518
+Wave overtopping probability at JCREST      POTF=       0.000000
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.000000000
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.000000000
+QO iteration number                        ITEQO=    1
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.095282
+Mean runup elevation above Z=0 (m)        ERMEAN=       0.002281
+Runup standard deviation (m)              SIGRUN=       0.018549
+Significant runup height above Z=0 (m)       R13=       0.054388
+2 percent runup height above Z=0 (m)         R2P=       0.075230
+1 Percent runup height above z=0 (m)         R1P=       0.081483
+

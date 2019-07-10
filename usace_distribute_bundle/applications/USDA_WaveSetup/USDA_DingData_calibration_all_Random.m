@@ -18,17 +18,22 @@ mwl_offshore_veg = [0.25*1e-3, 0.1*1e-3, 0*1e-3, 0*1e-3, -.5*1e-3, -.5*1e-3, -.3
 mwl_offshore_noveg = [0.25*1e-3, 0.1*1e-3, 0*1e-3, 0*1e-3, -.5*1e-3, -.5e-3, -.3*1e-3] ; 
 
 CDs  =   [2.3, 2.0,  2.0, 2.0,  1.7,  1.6,  1.6]; 
-CDMs = [1.9, 2.0,  1.6, 2.0,  1.2,  1.5,  0.9]; 
+CDMs = [2.3, 2.0,  1.6, 2.0,  1.3,  1.6,  1.2]; 
 khs  = [1.3, 0.89, 1.3, 0.77, 0.89, 0.55, 0.77];
+
+H_model_all = [];
+MWL_model_all = [];
+H_lab_all = [];
+MWL_lab_all = [];
 
 for icase = 1 : length(cases) 
     
     filename = cases(icase).name 
     
-    text   = fileread([DIR, filename]) ; 
-    id1 = strfind (text, '(s)') ; 
-    id2 = strfind (text, 'Water Depth') ;
-    PeakPer = text(id1+6:id2-1) ; 
+    content   = fileread([DIR, filename]) ; 
+    id1 = strfind (content, '(s)') ; 
+    id2 = strfind (content, 'Water Depth') ;
+    PeakPer = content(id1+6:id2-1) ; 
     PeakPer = strrep (PeakPer, ' ', '') ;
     
     fid = fopen ([DIR, filename], 'rt')  ;
@@ -64,6 +69,7 @@ for icase = 1 : length(cases)
     in.iwind  = 0;          % 0 = no wind effect
     in.itide  = 0;          % 0 = no tidal effect on currents
     in.iweibull = 0 ;
+    in.vegtype = 1 ; 
     in.iveg   = 3;          % vegitation effect
                             % 0: no vegetation or vegetation represented by increased
                             % 1: veg. density, width, height and root depth are 
@@ -76,7 +82,7 @@ if in.iveg==3
     in.idiss  = 1;          % energy dissipation due to vegitation 
                             % (0: veg is accounted in bottom friction (original)
                             %  1: mendez, 2: chen_zhao)  
-    in.iFv = 2 ;
+    in.iFv = 3 ;
     if (in.iFv == 2)
         in.veg_Cdm = CDMs(icase);    
     end
@@ -108,7 +114,7 @@ end
     % Data input is stopped because the start time for 
     % offshore wave conditions and water level is NOT ZERO
 
-    in.fric_fac = .02;     % bottom friction factor
+    in.fric_fac = .002;     % bottom friction factor
     
     
     % boundary conditions and timing
@@ -201,7 +207,12 @@ end
     else
         errorbar (labdata{1}, labdata{8}/sqrt(2)./in.Hrms, labdata{9}/sqrt(2)./in.Hrms, 'ok')    
     end
-    plot (results.hydro.x,results.hydro.Hrms./in.Hrms, 'k', 'linewidth',2) 
+    if in.iFv  == 2
+        plot (results.hydro.x,results.hydro.Hrms./in.Hrms, 'r', 'linewidth',2) 
+    else 
+        plot (results.hydro.x,results.hydro.Hrms./in.Hrms, 'b', 'linewidth',2) 
+    end
+    
 %     legend ('measurements', 'modeled')
     if (in.iveg==1)
         plot (in.veg_extent(1)*Lx*ones(1,2), linspace(0, 1.5, 2), ':k', 'linewidth', 2)
@@ -224,7 +235,11 @@ end
     else
         errorbar (labdata{1}, labdata{6}*0.001./in.Hrms, labdata{7}*0.001./in.Hrms, 'ok')    
     end
-    plot (results.hydro.x, results.hydro.setup./in.Hrms, '-k', 'linewidth', 2)
+    if in.iFv  == 2
+        plot (results.hydro.x, results.hydro.setup./in.Hrms, '-r', 'linewidth', 2)
+    else
+        plot (results.hydro.x, results.hydro.setup./in.Hrms, '-b', 'linewidth', 2)
+    end
 %     legend ('measurements', 'modeled')
     if (in.iveg==1)
         plot (in.veg_extent(1)*Lx*ones(1,2), linspace(-0.1, 0.5, 2), ':k', 'linewidth', 2)
@@ -247,7 +262,7 @@ end
         num_mwl(ii) = results.hydro.setup(id1(end))*1000 ; 
     end
         
-    error = sqrt(sum((num_mwl - exp_mwl').^2) ./ sum(exp_mwl.^2))  
+    error = sqrt(sum((num_mwl - exp_mwl').^2) ./ sum(exp_mwl.^2))  ;
     
     %% Plot MWL_measure VS MWL_model
     idx1     = find (labdata{1}>=in.veg_extent(1)*Lx & labdata{1}<=in.veg_extent(2)*Lx) ; 
@@ -260,12 +275,33 @@ end
         [val1, id1]  = min(abs(results.hydro.x-xgage(ii))) ;
         MWL_model(ii)    = results.hydro.setup(id1) * 1000 ; 
     end
-        
-    figure(1124); hold on; box on
+    MWL_model_all = [MWL_model_all; MWL_model] ;    
+    MWL_lab_all = [MWL_lab_all; MWL_lab] ;
+
+    if in.iFv  == 2
+        figure(1124); hold on; box on
+        subplot (221); hold on; box on
+    else
+        figure(1124); hold on; box on
+        subplot (223); hold on; box on
+    end
     hh = herrorbar (MWL_lab, MWL_model, -MWL_lab_STD, MWL_lab_STD, 'ok')  ; 
+    set (hh, 'linewidth', 2)
+    set (hh, 'markersize', 12)
+    if in.iFv  == 2
+        set (hh, 'markerfacecolor', 'r')  ;     
+    else
+        set (hh, 'markerfacecolor', 'b')  ;     
+    end
     axis square
-    
-%     fprintf (fid, '%10.10e ', MWL_model, MWL_model)
+    fplot (@(x) x, 'k', 'linewidth', 2, 'HandleVisibility','off')
+%     xlabel ('$$\mbox{measured}\;\overline{\eta}/H_{rms, 0}$$', 'Interpreter', 'latex')
+%     ylabel ('$$\mbox{modeled}\;\overline{\eta}/H_{rms, 0}$$', 'Interpreter', 'latex')
+    xlabel ('$$\mbox{measured}\;\overline{\eta}\mbox{ (mm)}$$', 'Interpreter', 'latex')
+    ylabel ('$$\mbox{modeled}\;\overline{\eta}\mbox{ (mm)}$$', 'Interpreter', 'latex')
+    xlim ([-4, 3])
+    ylim ([-4, 3])
+    set (gca, 'fontsize', 18)
     
     %% Plot H_measure VS H_model
     idx1     = find (labdata{1}>=in.veg_extent(1)*Lx & labdata{1}<=in.veg_extent(2)*Lx) ; 
@@ -278,34 +314,69 @@ end
         [val1, id1]  = min(abs(results.hydro.x-xgage(ii))) ;
         H_model(ii)  = results.hydro.Hrms(id1)*100 ; 
     end
+    H_model_all = [H_model_all; H_model] ;
+    H_lab_all = [H_lab_all; H_lab] ;
     
-    figure(1125); hold on; box on
-    hh = herrorbar (H_model, H_lab, -H_lab_STD, H_lab_STD, 'ok')  ; 
+    if in.iFv  == 2
+        figure(1124); hold on; box on
+        subplot (222); hold on; box on       
+    else
+        figure(1124); hold on; box on
+        subplot (224); hold on; box on
+    end
+    hh = herrorbar (H_lab, H_model,  -H_lab_STD, H_lab_STD, 'sk')  ; 
+    set (hh, 'linewidth', 2)
+    set (hh, 'markersize', 12)
+    if in.iFv  == 2
+        set (hh, 'markerfacecolor', 'r')  ;     
+    else
+        set (hh, 'markerfacecolor', 'b')  ;             
+    end
     axis square
+    fplot (@(x) x, 'k', 'linewidth', 2, 'HandleVisibility','off')
+%     xlabel ('$$\mbox{measured}\;H_{rms}/H_{rms, 0}$$', 'Interpreter', 'latex')
+%     ylabel ('$$\mbox{modeled}\;H_{rms}/H_{rms, 0}$$', 'Interpreter', 'latex')
+    xlabel ('$$\mbox{measured}\;H_{rms}\mbox{ (cm)}$$', 'Interpreter', 'latex')
+    ylabel ('$$\mbox{modeled}\;H_{rms}\mbox{ (cm)}$$', 'Interpreter', 'latex')
+    xlim ([0, 7])
+    ylim ([0, 7])
+    set (gca, 'fontsize', 18)   
 
     unix('rm -f O*') ; 
-%     unix('rm -f *.DAT') ; 
-
+    
 end
 
-figure(1124);
-fplot (@(x) x, 'k', 'linewidth', 1)
-xlabel ('measured MWL (mm)')
-ylabel ('modeled MWL (mm)')
-xlim ([-3, 4])
-ylim ([-3, 4])
-set (gca, 'fontsize', 15)
-axis square
+MWL_lab_norm = max(MWL_lab_all) - min(MWL_lab_all) ;
+NRMSE_MWL = sqrt( mean(( MWL_model_all/MWL_lab_norm - MWL_lab_all/MWL_lab_norm).^2) )
 
-figure(1125);
-fplot (@(x) x, 'k', 'linewidth', 1)
-xlabel ('measured H_{rms} (cm)')
-ylabel ('modeled H_{rms} (cm)')
-xlim ([0, 8])
-ylim ([0, 8])
-set (gca, 'fontsize', 15)
-axis square
+H_lab_norm = max(H_lab_all) - min(H_lab_all) ;
+NRMSE_H = sqrt( mean(( H_model_all/H_lab_norm - H_lab_all/H_lab_norm).^2) )
 
+%% Put NRMSE_MWL to this figure
+in.iFv 
+if in.iFv  == 2
+    figure(1124); hold on; box on
+    subplot (221); hold on; box on
+    text (-3.5, 2.5, ['$$\mbox{Parametric Model of } \overline{F_v}$$'], 'Interpreter', 'latex', 'fontsize', 18)
+else
+    figure(1124); hold on; box on
+    subplot (223); hold on; box on
+    text (-3.5, 2.5, ['$$\mbox{Hybrid Model of } \overline{F_v}$$'], 'Interpreter', 'latex', 'fontsize', 18)
+end
+text (-3.5, 2, ['$$\mbox{NRMSE of } {\overline{\eta}}=', num2str(NRMSE_MWL, 2), '$$'], 'Interpreter', 'latex', 'fontsize', 18)
+
+%% Put NRMSE_H to this figure
+if in.iFv  == 2
+    figure(1124); hold on; box on
+    subplot (222); hold on; box on
+    text (0.5, 6.5, ['$$\mbox{Parametric Model of } \overline{F_v}$$'], 'Interpreter', 'latex', 'fontsize', 18)
+else
+    figure(1124); hold on; box on
+    subplot (224); hold on; box on
+    text (0.5, 6.5, ['$$\mbox{Hybrid Model of } \overline{F_v}$$'], 'Interpreter', 'latex', 'fontsize', 18)
+end
+text (0.5, 6, ['$$\mbox{NRMSE of } H=', num2str(NRMSE_H, 1), '$$'], 'Interpreter', 'latex', 'fontsize', 18)
+set (gcf, 'position', [1814        -179        1312         984])
 
 rmpath ../../mfiles
 rmpath ./USDA_data/wave_setup

@@ -24,17 +24,17 @@
                      IDISS=3: Chen and Zhao (2012) with measured spectrum    
 
    subroutine INTERP1: doing interpolation.
-   subroutine FINDHV2HTOMEME: compute the parameter (HV2HTOMEME) used in subroutine PHASEAVEFV().
+   subroutine FINDHV2HTOMTABLE: compute the parameter (HV2HTOM) used in subroutine PHASEAVEFV().
    subroutine DISPERSION: compute wavenumber with given water depth and wave period.
    subroutine PHASEAVEFV: compute the phase-averaged depth-integrated drag (STREAMSTRESSSTA) due to vegetation. Three different models are used:
                      IFV = 1: original CSHORE 
-                     IFV = 2: parametric model. This model is originally designed for submerged vegetation; therefore, a different Cd value (Cdm) may be needed to account for the uncertainties in the phase-averaged drag in the case of emergent vegetation.
-                     IFV = 3: hybrid model. The submerged part is computed with parametric model and the canopy part is computed with the formula based on linear wave theory (Dean and Bender 2006, a regular wave version). About determining the submerged part in random waves, we found that 55% of the water depth works for all 7 USDA flume experiments. No second set of Cd is needed. 
+                     IFV = 2: parametric model. This model follows the parametric model in Zhu and Chen (2019) for both submerged and emergent vegetation. For waves with large nonlinearity, a different Cdm value may be needed to compensate for the overestimated mean current (Stokes drift).
+                     IFV = 3: hybrid model. The submerged part is computed with parametric model and the canopy part is computed with the formula based on linear wave theory (Dean and Bender 2006, a regular wave version). About determining the submerged part in random waves, we found that 95% of the water depth works for all 7 USDA flume experiments. No second set of Cdm is needed. 
 
 
 4. If IDISS = 3 (use energy dissipation model by Chen and Zhao (2012) together with measured wave spectrum), the measured wave spectrum is read in the main code and stored in VMEASOMEG, VMEASSE and VMEASWNUM. The format of the measured spectrum file is: three columns representing frequency, spectral density, wave number, respectively.
 
 5. Two new models of the phase-averaged depth-integrated drag (STREAMSTRESSSTA) are implemented in the cross-shore momentum equation. The lines for calculating "WSETUP" are revised.
 
-6. Two application cases are added in /usace_distribute_bundle/applications
+6. Four application cases are added in /usace_distribute_bundle/applications
 

@@ -97,7 +97,8 @@ C     NL=maximum number of cross-shore lines
 c     lzhu added a new parameter NFR
 C     NFR=maximum number of frequency beams for JONSWAP spectrum
       
-      PARAMETER (NN=15000, NB=30000, NL=100,NURM=1408,NSPECTRUM=5000)
+      PARAMETER (NN=15000, NB=30000, NL=100,NURM=1408,NSPECTRUM=5000,
+     +           NDBROW=7344,NDBCOL=5)
       REAL YVAL
       CHARACTER FINMIN*100, VER*70, BASENAME*90 !bdj
       DIMENSION DUMVEC(NN),QTIDE(NB),SMDEDY(NB)
@@ -194,7 +195,7 @@ C
       COMMON /VEGETA/VEGCD(NN,NL),VEGCDM(NN,NL),
      + VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
-     + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
+     + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL),FADB(NDBROW,NDBCOL)
       COMMON /DIKERO/EDIKE(NN,NL),ZB0(NN,NL),DSTA(NN),DSUM(NN),
      + GDINP(NN,NL),GRINP(NN,NL),GRDINP(NN,NL),GRSD(NN,NL),GRSR(NN,NL),
      + GRSRD(NN,NL), DEEB, DEEF
@@ -265,7 +266,16 @@ c     IF IDISS = 3: read the measured wave spectrum
 1152     CONTINUE
       ENDIF
 
-C     
+C     lzhu added:
+c     IF IVEG=3: read fa database 
+      IF(IVEG.EQ.3) THEN
+         OPEN(UNIT=929,FILE='fa_database_noheadline.txt',    
+     +        STATUS='OLD',ACCESS='SEQUENTIAL')
+         DO 1153 IROW = 1,NDBROW
+           READ (929, *, IOSTAT=N) (FADB(IROW, ICOL), ICOL=1,NDBCOL)
+1153     CONTINUE
+      ENDIF
+
 C     Subr. 3 BOTTOM computes initial bathymetry at each node.
       CALL BOTTOM
 C     Subr. 4 PARAM  calculates constants.
@@ -543,7 +553,12 @@ c The phase-averagaed depth-integrated drag (STREAMSTRESSSTA) is applied in the 
            STREAMSTRESSSTA = 0.0D0
            FVCWLWT         = 0.0D0
            IF (VEGN(J,L).GT.0.0D0) THEN
-              CALL PHASEAVEFV(J,L,HRMS(J),H(J),STREAMSTRESSSTA, FVCWLWT)
+              CALL PHASEAVEFV(J,L,HRMS(J),H(J),STREAMSTRESSSTA)
+
+              FVCWLWT    = 0.5D0*VEGCDM(J,L)*VEGB(J,L)*VEGN(J,L)*
+     +            (0.25D0/PI)*(3.0D0*DSQRT(PI)/4.0D0)*HRMS(J)**3.0D0*
+     +            DSINH(WKP*MIN(H(J), VEGD(J,L)))
+     +            /DSINH(WKP*H(J))/H(J)  
            ENDIF
 
 c          lzhu changed here to allow spatially varying CD. 
@@ -555,10 +570,10 @@ c          Note that when CD=0 and CDM=0 (no veg), CDM/CD = 1.0 instead of 0.0 (
      +   STREAMSTRESSSTA-TWXSTA(ITIME))*DX)/H(J)
           ELSE
            WSETUP(JP1) = WSETUP(J)-(SXXSTA(JP1)-SXXSTA(J)+
-     +   ((1.D0+VEGCDM(J,L)/VEGCD(J,L)*MIN(VEGH(J,L),H(J))*VEGFB(J,L))
-     +   *TBXSTA(J)+
+     +   (TBXSTA(J)-FVCWLWT+
      +   STREAMSTRESSSTA-TWXSTA(ITIME))*DX)/H(J)
           ENDIF
+
         ENDIF 
 c end lzhu change 2017-09-20
 
@@ -728,13 +743,22 @@ c  and applied to the cross-shore momentum equation
              STREAMSTRESSSTA = 0.0D0
              FVCWLWT         = 0.0D0 
              IF (VEGN(J,L).GT.0.0D0) THEN
-               CALL PHASEAVEFV(J,L,HRMS(J),H(J),STREAMSTRESSSTATMP1,
-     +                   FVCWLWTTMP1)
-               CALL PHASEAVEFV(JP1,L,HRMITE,HITE,STREAMSTRESSSTATMP2,
-     +                   FVCWLWTTMP2)
+               CALL PHASEAVEFV(J,L,HRMS(J),H(J),STREAMSTRESSSTATMP1)
+               CALL PHASEAVEFV(JP1,L,HRMITE,HITE,STREAMSTRESSSTATMP2)
                STREAMSTRESSSTA=0.5*(STREAMSTRESSSTATMP1+
      +                    STREAMSTRESSSTATMP2)
-               FVCWLWT        = 0.5D0*(FVCWLWTTMP1+FVCWLWTTMP2)
+
+              FVCWLWTTMP1  = 0.5D0*VEGCDM(J,L)*VEGB(J,L)*VEGN(J,L)*
+     +            (0.25D0/PI)*(3.0D0*DSQRT(PI)/4.0D0)*HRMS(J)**3.0D0*
+     +            DSINH(WKP*MIN(H(J), VEGD(J,L)))
+     +            /DSINH(WKP*H(J))/H(J)  
+ 
+              FVCWLWTTMP2  = 0.5D0*VEGCDM(J,L)*VEGB(J,L)*VEGN(J,L)*
+     +            (0.25D0/PI)*(3.0D0*DSQRT(PI)/4.0D0)*HRMITE**3.0D0*
+     +            DSINH(WKP*MIN(HITE, VEGD(J,L)))
+     +            /DSINH(WKP*HITE)/HITE  
+ 
+               FVCWLWT     = 0.5D0*(FVCWLWTTMP1+FVCWLWTTMP2)
              ENDIF
        
              IF (VEGCD(JP1,L).LT.EPS1.OR.VEGCD(J,L).LT.EPS1) THEN
@@ -748,18 +772,10 @@ c  and applied to the cross-shore momentum equation
      +        (HITE+H(J))
              ELSE
               WSETUP(JP1)=WSETUP(J)-(2.D0*(SXXSTA(JP1)-SXXSTA(J)) +
-     +        DX*((1.D0+VEGCDM(JP1,L)/VEGCD(JP1,L)*MIN(VEGH(JP1,L),HITE)
-     +        *VEGFB(JP1,L))
-     +        *TBXSTA(JP1)+
-     +        (1.D0+VEGCDM(J,L)/VEGCD(J,L)*MIN(VEGH(J,L),H(J))
-     +        *VEGFB(J,L))*TBXSTA(J)
+     +        DX*(TBXSTA(JP1)+TBXSTA(J) - 2.0D0*FVCWLWT
      +        + 2.D0*STREAMSTRESSSTA -2.D0*TWXSTA(ITIME)))/
      +        (HITE+H(J))
              ENDIF
-c          WSETUP(JP1) = WSETUP(J) - (2.D0* (SXXSTA(JP1)-SXXSTA(J)) +
-c     +                  DX*(2.0*FVCWLWT +
-c     +                  2.D0*STREAMSTRESSSTA -2.D0*TWXSTA(ITIME)))/
-c     +                  (HITE+H(J))
 c end lzhu change 2017-09-21
           ENDIF
 
@@ -1409,7 +1425,8 @@ C
       SUBROUTINE INPUT(VER)
 C     
       IMPLICIT  DOUBLE PRECISION (A-H,O-Z)
-      PARAMETER (NN=15000, NB=30000, NL=100,NSPECTRUM=5000)
+      PARAMETER (NN=15000, NB=30000, NL=100,NSPECTRUM=5000,NDBROW=7344,
+     +           NDBCOL=5)
       CHARACTER COMMEN*70, VER*70 !bdj
       DIMENSION TWAVE(NB),TPIN(NB),HRMSIN(NB),WANGIN(NB),TSURG(NB),
      +     SWLIN(NB),TWIND(NB),WIND10(NB),WINDAN(NB),TSLAND(NB),
@@ -1447,7 +1464,7 @@ C
       COMMON /VEGETA/VEGCD(NN,NL),VEGCDM(NN,NL),
      + VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
-     + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
+     + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL),FADB(NDBROW,NDBCOL)
       COMMON /DIKERO/EDIKE(NN,NL),ZB0(NN,NL),DSTA(NN),DSUM(NN),
      +  GDINP(NN,NL),GRINP(NN,NL),GRDINP(NN,NL),GRSD(NN,NL),GRSR(NN,NL),
      +  GRSRD(NN,NL),DEEB,DEEF
@@ -2288,7 +2305,7 @@ C
       SUBROUTINE BOTTOM
 C     
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
-      PARAMETER (NN=15000, NB=30000, NL=100)
+      PARAMETER (NN=15000, NB=30000, NL=100,NDBROW=7344,NDBCOL=5)
       DIMENSION SLOPE(NN), PSLOPE(NN), ZBRAW(NN), ZPRAW(NN)
 C     
       COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
@@ -2315,7 +2332,7 @@ C
       COMMON /VEGETA/ VEGCD(NN,NL),VEGCDM(NN,NL),
      + VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
-     + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
+     + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL),FADB(NDBROW,NDBCOL)
       COMMON /DIKERO/EDIKE(NN,NL),ZB0(NN,NL),DSTA(NN),DSUM(NN),
      + GDINP(NN,NL),GRINP(NN,NL),GRDINP(NN,NL),GRSD(NN,NL),GRSR(NN,NL),
      + GRSRD(NN,NL),DEEB,DEEF
@@ -2894,7 +2911,8 @@ C
       SUBROUTINE DVEG(J, L, WHRMS, D)
 C     
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
-      PARAMETER (NN=15000,NL=100,NFR=500,NNZ=50,NSPECTRUM=5000)
+      PARAMETER (NN=15000,NL=100,NFR=500,NNZ=50,NSPECTRUM=5000,
+     +           NDBROW=7344,NDBCOL=5)
 C     NFR=maximum number of frequency beams for JONSWAP spectrum
 
       DIMENSION FREQ(NFR),WNUM(NFR),EJONSPEC(NFR),SDSCZ(NFR)
@@ -2907,7 +2925,7 @@ C     NFR=maximum number of frequency beams for JONSWAP spectrum
       COMMON /VEGETA/VEGCD(NN,NL),VEGCDM(NN,NL),
      + VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
-     + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
+     + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL),FADB(NDBROW,NDBCOL)
       COMMON /VEGDISS/ DVEGSTA(NN)
       COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
      +  ISEDAV,IWTRAN,IVWALL(NL),ILAB,INFILT,IPOND,ITIDE,ILINE,IQYDY,
@@ -3182,7 +3200,7 @@ C
       SUBROUTINE OUTPUT(ITIME,L,ITEQO,ICONV)
 C     
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
-      PARAMETER (NN=15000, NB=30000,NL=100)
+      PARAMETER (NN=15000, NB=30000,NL=100,NDBROW=7344,NDBCOL=5)
       DIMENSION DUMVEC(NN),EDEPTH(NN)
 C     
       COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
@@ -3235,7 +3253,7 @@ C
       COMMON /VEGETA/VEGCD(NN,NL),VEGCDM(NN,NL),
      + VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
-     + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
+     + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL),FADB(NDBROW,NDBCOL)
       COMMON /DIKERO/EDIKE(NN,NL),ZB0(NN,NL),DSTA(NN),DSUM(NN),
      +  GDINP(NN,NL),GRINP(NN,NL),GRDINP(NN,NL),GRSD(NN,NL),GRSR(NN,NL),
      +  GRSRD(NN,NL),DEEB,DEEF
@@ -4251,7 +4269,7 @@ C
       SUBROUTINE SEDTRA(L)
 C     
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
-      PARAMETER (NN=15000,NB=30000,NL=100)
+      PARAMETER (NN=15000,NB=30000,NL=100,NDBROW=7344,NDBCOL=5)
       DIMENSION QRAW(NN),GSLRAW(NN),ASLRAW(NN),ASLOPE(NN),RS(NN),RB(NN),
      +   PBWD(NN),PSWD(NN),VSWD(NN),QSXWD(NN),QBXWD(NN),QRAWD(NN),
      +   HDIP(NN),QSYWD(NN),QBYWD(NN)
@@ -4293,7 +4311,7 @@ C
       COMMON /VEGETA/ VEGCD(NN,NL),VEGCDM(NN,NL),
      + VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
-     + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
+     + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL),FADB(NDBROW,NDBCOL)
       COMMON /WIMESH/WMINP(NN,NL),WMNODE(NN,NL),ZMESH(NN,NL)
       COMMON /STONES/ZBSTON(NN,NL),ZPSTON(NN,NL),HPSTON(NN,NL),
      + VDSAND(NN),CPSTON,ISTSAN
@@ -5267,7 +5285,7 @@ C
       SUBROUTINE WETDRY(ITIME,L,ITEQO)
 C     
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
-      PARAMETER (NN=15000,NB=30000,NL=100)
+      PARAMETER (NN=15000,NB=30000,NL=100,NDBROW=7344,NDBCOL=5)
       DIMENSION G(NN), DG(NN), ETA(NN),ETAP(NN)
 C     
       COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
@@ -5299,7 +5317,7 @@ C
       COMMON /VEGETA/ VEGCD(NN,NL),VEGCDM(NN,NL),
      + VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
-     + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
+     + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL),FADB(NDBROW,NDBCOL)
 C     
 C     Compute swash variables for node J=JWD to JDRY
 C     JWD= wet and dry transition node
@@ -6516,11 +6534,10 @@ c
 c      END
 
 c     #26##################### SUBROUTINE FINDHV2HTOMEME ##############################
-
+c     THIS SUBROUTINE IS OUTDATED. USE FINDHV2HTOMTABLE INSTEAD
       SUBROUTINE FINDHV2HTOMEME(URSELL,H2H,HV2H,HV2HTOMEME)
 
-      DOUBLE PRECISION URSELL, H2H, HV2H, MMOD, HV2HTOMEME
-      
+      DOUBLE PRECISION URSELL, H2H, HV2H, MMOD, HV2HTOMEME, FAOUT
 c     For emergent veg, use hv/h = 0.99 for now. 
       HV2HMODIFIED = MIN(HV2H, 0.90D0);
       
@@ -6666,9 +6683,191 @@ CC  Note here that as a first try, hv/h is set as 0.95 for emergent vegetation
      +      A4*URSELLHAT**4.0D0 + A5*URSELLHAT**5.0D0
       HV2HTOMEME=(F1/SINH(H2H)-1.0D0)*F3/
      +              (F2/SINH(HV2HMODIFIED)-1.0D0)
+
+c      WRITE(*,*) URSELL,H2H,HV2H, HV2HTOMEME, FAOUT
       END
 c     #26##################### END OF SUBROUTINE FINDHV2HTOMEME ##############################
 
+
+c     #26a##################### SUBROUTINE FINDHV2HToMTABLE ##############################
+      SUBROUTINE FINDHV2HTOMTABLE(URSELL,H2H,HV2H,FAOUT)
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      PARAMETER (NN=15000, NB=30000, NL=100,NDBROW=7344,NDBCOL=5)
+
+      COMMON /VEGETA/VEGCD(NN,NL),VEGCDM(NN,NL),
+     + VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
+     + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
+     + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL),FADB(NDBROW,NDBCOL)
+      DOUBLE PRECISION URSELL, H2H, HV2H, FAOUT
+      DOUBLE PRECISION HV2HTOTAL(18),HEIT2H(24),TS(17)
+      DOUBLE PRECISION CHUNK(20, NDBCOL), CHUNKUR(20), CHUNK_0001(2,4), 
+     +                 CHUNK_0101(2,4),CHUNK_1001(2,4),CHUNK_1101(2,4)
+      INTEGER LHV2H, LHEIT2H, LTS              
+      INTEGER ITMP(1)
+
+c     define array length
+      LHV2H = 18
+      LHEIT2H = 24
+      LTS = 17 
+
+c     declare HV2HTOTAL, HEIT2H, and TS
+      DO 1011 IHV2H = 1,8
+         HV2HTOTAL (IHV2H) = IHV2H*0.1D0
+1011  CONTINUE
+      DO 1012 IHV2H = 9,12
+         HV2HTOTAL (IHV2H) = 0.8D0 + 0.05D0*(IHV2H*1.0D0-8.0D0)
+1012  CONTINUE
+      DO 1013 IHV2H = 13,17
+         HV2HTOTAL (IHV2H) = 1.0D0 + 0.1D0*(IHV2H*1.0D0-12.0D0)
+1013  CONTINUE
+      HV2HTOTAL(18) = 2.0D0
+
+      HEIT2H(1) = 0.005D0
+      DO 1014 IHEIT2H = 2,10
+         HEIT2H (IHEIT2H) = (IHEIT2H*1.0D0-1.0D0)*0.01D0
+1014  CONTINUE
+      DO 1015 IHEIT2H = 11,24
+         HEIT2H (IHEIT2H) = 0.1D0 + 0.05D0*(IHEIT2H*1.0D0-11.0D0)
+1015  CONTINUE
+
+      TS(1) = 0.6D0
+      TS(2) = 0.8D0
+      DO 1016 ITS = 3,9
+         TS (ITS) = 1.0D0 + (ITS*1.0D0-3.0D0)*0.5D0
+1016  CONTINUE
+      DO 1017 ITS = 10,17
+         TS (ITS) = 5.0D0 + (ITS*1.0D0-10.0D0)*1.0D0
+1017  CONTINUE
+
+c     find location of hv2h in hv2h_total array
+      IF (HV2H>HV2HTOTAL(SIZE(HV2HTOTAL))) THEN
+         HV2H=HV2HTOTAL(SIZE(HV2HTOTAL))
+      ENDIF
+      ITMP  = MINLOC(HV2HTOTAL, MASK=HV2HTOTAL.GE.HV2H)
+      IHV2H_1 = ITMP(1)
+      IF (IHV2H_1.EQ.1) THEN
+         IHV2H_1 = 2
+      ENDIF
+      IHV2H_0 = IHV2H_1 - 1
+c      WRITE (*,*) 'hv/h:', HV2HTOTAL(IHV2H_0), HV2H, HV2HTOTAL(IHV2H_1)
+      
+c     find location of Hs/h in HEIT2H array
+      ITMP  = MINLOC(HEIT2H, MASK=HEIT2H.GE.H2H)
+      IHEIT2H_1 = ITMP(1)  
+      IF (IHEIT2H_1.EQ.1) THEN
+         IHEIT2H_1 = 2
+      ENDIF
+      IHEIT2H_0 = IHEIT2H_1 - 1
+c      WRITE (*,*) 'H/h:', HEIT2H(IHEIT2H_0), H2H, HEIT2H(IHEIT2H_1)
+
+c     Take out chunk of ihv2h_0 - ihv2h_1 and iH2h_0 - iH2h_1
+c     1. ihv2h_0, iH2h_0
+      CHUNK = FADB ((IHV2H_0-1)*LHEIT2H*LTS+1+(IHEIT2H_0-1)*LTS : 
+     +              (IHV2H_0-1)*LHEIT2H*LTS+1+(IHEIT2H_0)*LTS-1, :)  
+      CHUNKUR = CHUNK (:, 4)
+      ITMP    = MINLOC(CHUNKUR, MASK=CHUNKUR.GE.URSELL)
+      ICHUNKUR_1 = ITMP(1) 
+      ICHUNKUR_0 = ICHUNKUR_1 - 1
+c      WRITE (*,*) 'Ur:',CHUNKUR(ICHUNKUR_0),URSELL,CHUNKUR(ICHUNKUR_1)
+      CHUNK_0001 = FADB ((IHV2H_0-1)*LHEIT2H*LTS+1+(IHEIT2H_0-1)*LTS+
+     +                   (ICHUNKUR_0-1):(IHV2H_0-1)*LHEIT2H*LTS+1+
+     +                   (IHEIT2H_0-1)*LTS+(ICHUNKUR_0), (/1,2,4,5/))
+
+c     2. ihv2h_0, iH2h_1
+c      clear CHUNK first
+      CHUNK = 0.0D0
+      CHUNKUR = 0.0D0
+      CHUNK = FADB ((IHV2H_0-1)*LHEIT2H*LTS+1+(IHEIT2H_0)*LTS : 
+     +              (IHV2H_0-1)*LHEIT2H*LTS+1+(IHEIT2H_1)*LTS-1, :)  
+      CHUNKUR = CHUNK (:, 4)
+      ITMP    = MINLOC(CHUNKUR, MASK=CHUNKUR.GE.URSELL)
+      ICHUNKUR_1 = ITMP(1)
+      ICHUNKUR_0 = ICHUNKUR_1 - 1
+c      WRITE (*,*) 'Ur:',CHUNKUR(ICHUNKUR_0),URSELL,CHUNKUR(ICHUNKUR_1)
+      CHUNK_0101 = FADB ((IHV2H_0-1)*LHEIT2H*LTS+1+(IHEIT2H_0)*LTS+
+     +                   (ICHUNKUR_0-1):(IHV2H_0-1)*LHEIT2H*LTS+1+
+     +                   (IHEIT2H_0)*LTS+ICHUNKUR_0, (/1,2,4,5/))
+
+c     3.  ihv2h_1, iH2h_0
+      CHUNK = 0.0D0
+      CHUNKUR = 0.0D0
+      CHUNK = FADB ((IHV2H_0)*LHEIT2H*LTS+1+(IHEIT2H_0-1)*LTS : 
+     +              (IHV2H_0)*LHEIT2H*LTS+1+(IHEIT2H_0)*LTS-1, :)  
+      CHUNKUR = CHUNK (:, 4)
+      ITMP    = MINLOC(CHUNKUR, MASK=CHUNKUR.GE.URSELL)
+      ICHUNKUR_1 = ITMP(1)
+      ICHUNKUR_0 = ICHUNKUR_1 - 1
+c      WRITE (*,*) 'Ur:',CHUNKUR(ICHUNKUR_0),URSELL,CHUNKUR(ICHUNKUR_1)
+      CHUNK_1001 = FADB ((IHV2H_0)*LHEIT2H*LTS+1+(IHEIT2H_0-1)*LTS+
+     +                   (ICHUNKUR_0-1):(IHV2H_0)*LHEIT2H*LTS+1+
+     +                   (IHEIT2H_0-1)*LTS+ICHUNKUR_0, (/1,2,4,5/))
+
+
+c     4. ihv2h_1, iH2h_1
+      CHUNK = 0.0D0
+      CHUNKUR = 0.0D0
+      CHUNK = FADB ((IHV2H_0)*LHEIT2H*LTS+1+(IHEIT2H_0)*LTS : 
+     +              (IHV2H_0)*LHEIT2H*LTS+1+(IHEIT2H_1)*LTS-1, :)  
+      CHUNKUR = CHUNK (:, 4)
+      ITMP    = MINLOC(CHUNKUR, MASK=CHUNKUR.GE.URSELL)
+      ICHUNKUR_1 = ITMP(1)
+      ICHUNKUR_0 = ICHUNKUR_1 - 1
+c      WRITE (*,*) 'Ur:',CHUNKUR(ICHUNKUR_0),URSELL,CHUNKUR(ICHUNKUR_1)
+      CHUNK_1101 = FADB ((IHV2H_0)*LHEIT2H*LTS+1+(IHEIT2H_0)*LTS+
+     +                   (ICHUNKUR_0-1):(IHV2H_0)*LHEIT2H*LTS+1+
+     +                   (IHEIT2H_0)*LTS+ICHUNKUR_0, (/1,2,4,5/))
+
+
+C     gather together and interpolate step by step
+c     We cannot do trilinear interpolation, but we can interpolate 
+c        Ursell first and then perform bilinear interpolation 
+      X0 = CHUNK_0001(1, 3)
+      X1 = CHUNK_0001(2, 3)
+      Y0 = CHUNK_0001(1, 4) 
+      Y1 = CHUNK_0001(2, 4) 
+      FA00 = Y0 + ((URSELL-X0)/(X1-X0))*(Y1-Y0)
+
+      X0 = CHUNK_0101(1, 3)
+      X1 = CHUNK_0101(2, 3)
+      Y0 = CHUNK_0101(1, 4) 
+      Y1 = CHUNK_0101(2, 4) 
+      FA01 = Y0 + ((URSELL-X0)/(X1-X0))*(Y1-Y0)
+
+      X0 = CHUNK_1001(1, 3)
+      X1 = CHUNK_1001(2, 3)
+      Y0 = CHUNK_1001(1, 4) 
+      Y1 = CHUNK_1001(2, 4) 
+      FA10 = Y0 + ((URSELL-X0)/(X1-X0))*(Y1-Y0)
+
+      X0 = CHUNK_1101(1, 3)
+      X1 = CHUNK_1101(2, 3)
+      Y0 = CHUNK_1101(1, 4) 
+      Y1 = CHUNK_1101(2, 4) 
+      FA11 = Y0 + ((URSELL-X0)/(X1-X0))*(Y1-Y0)
+
+c     bilinear interpolation
+      X0 = HV2HTOTAL(IHV2H_0)
+      X1 = HV2HTOTAL(IHV2H_1)
+      Y0 = HEIT2H(IHEIT2H_0)
+      Y1 = HEIT2H(IHEIT2H_1)
+      
+      FAOUT = FA00 + (FA10-FA00)*(HV2H-X0)/(X1-X0) +
+     +                  (FA01-FA00)*(H2H-Y0)/(Y1-Y0) + 
+     +           (FA11-FA01-FA10+FA00)*((HV2H-X0)/(X1-X0)) 
+     +           *((H2H-Y0)/(Y1-Y0))
+
+      END
+c     #26a##################### END OF SUBROUTINE FINDHV2HToMTABLE #######################
+
+c     #26b##################### SUBROUTINE TESTFA ##############################
+      SUBROUTINE TESTFA
+      
+      DOUBLE PRECISION FAOUT
+       
+      CALL FINDHV2HTOMTABLE(100.86D0, 0.75D0, 0.6D0, FAOUT)
+      WRITE (*,*) FAOUT
+      END
+c     #26b##################### END OF SUBROUTINE TESTFA #######################
 
 c     #27##################### SUBROUTINE DISPERSION ##############################
       SUBROUTINE DISPERSION(DEPTH, PERIOD, WKZ)
@@ -6693,15 +6892,15 @@ C
 
 c #28######################## SUBROUTINE PHASEAVEFV #############################
 c This subroutine calculates the phase-averaged drag force Fv 
-c   For submerged vegetation, the parametric model is used
-c   For emergent vegetation, two models are used:
-c     (1) parametric model with hv/h = 0.9 and different sets of Cd
-c     (2) hybrid model with Fv = Fv(SF, hv/h = 0.55) + Fv(LWT)
+c   two models are used:
+c     (1) parametric model (Zhu and Chen 2019) and different values of Cd and Cdm
+c     (2) hybrid model with Fv = Fv(SF, hv/h = 0.95) + Fv(LWT) for emergent vegetetation 
+c          and same values of Cd and Cdm
  
-      SUBROUTINE PHASEAVEFV(J,L,WHRMS,D,STREAMSTRESSSTA, FVCWLWT)
+      SUBROUTINE PHASEAVEFV(J,L,WHRMS,D,STREAMSTRESSSTA)
 c
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
-      PARAMETER (NN=15000,NL=100,NFR=500,NNZ=50)
+      PARAMETER (NN=15000,NL=100,NFR=500,NNZ=50,NDBROW=7344,NDBCOL=5)
 C     NFR=maximum number of frequency beams for JONSWAP spectrum
 
       COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
@@ -6715,7 +6914,7 @@ C     NFR=maximum number of frequency beams for JONSWAP spectrum
       COMMON /VEGETA/VEGCD(NN,NL),VEGCDM(NN,NL),
      + VEGN(NN,NL),VEGB(NN,NL),VEGD(NN,NL),
      + VEGINP(NN,NL),VEGH(NN,NL),VEGFB(NN,NL),VEGRD(NN,NL),VEGRH(NN,NL),
-     + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL)
+     + VEGZD(NN,NL),VEGZR(NN,NL),UPROOT(NN,NL),FADB(NDBROW,NDBCOL)
       COMMON /VEGDISS/ DVEGSTA(NN)
       COMMON /ENERGY/ EFSTA(NN),DFSTA(NN)
       
@@ -6729,17 +6928,17 @@ c IFV = 3: hybrid model of Fv
       ELSEIF (IFV.EQ.2) THEN
         STREAMSTRESSSTA = 0.0D0 
         IF (VEGN(J,L).GT.0.0D0) THEN
-           TMEAN = WT(J)
-c                       /1.35D0 
+           TMEAN = WT(J) / 1.35D0 
            CALL DISPERSION(D, TMEAN , WKMEAN)
            OMEGAMEAN = 2.0D0*PI/TMEAN
            WVLENMEAN = 2.0D0*PI/WKMEAN
            URSELL= WHRMS*DSQRT(2.0D0) * WVLENMEAN**2.0D0/D**3.0D0
            HS2H  = WHRMS*DSQRT(2.0D0) / D 
            HV2H  = VEGD(J,L)/D
+c      subroutine FINDHV2HTOMEME is outdated. use FINDHV2HTOMTABLE instead.
+c           CALL FINDHV2HTOMEME(URSELL,HS2H,HV2H,HV2HTOM)
 
-           CALL FINDHV2HTOMEME(MIN(URSELL,1000.0D0),HS2H,HV2H,HV2HTOM)
-    
+           CALL FINDHV2HTOMTABLE(URSELL,HS2H,HV2H, HV2HTOM)
            STREAMSTRESSSTA = 0.5D0*VEGCD(J,L)*VEGB(J,L)*VEGN(J,L)*
      +              OMEGAMEAN**2.0D0*WHRMS**3.0D0*
      +              DCOSH(WKMEAN*D*MIN(HV2H, 1.0D0))**2.0D0/
@@ -6750,32 +6949,35 @@ c                       /1.35D0
         STREAMSTRESSSTA = 0.0D0 
         IF (VEGN(J,L).GT.0.0D0) THEN
           IF(VEGD(J,L).LT.D) THEN
-            TMEAN = WT(J)
-c/1.35D0 
+            TMEAN = WT(J) / 1.35D0 
             CALL DISPERSION(D, TMEAN , WKMEAN)
             OMEGAMEAN = 2.0D0*PI/TMEAN
             WVLENMEAN = 2.0D0*PI/WKMEAN
             URSELL= WHRMS*DSQRT(2.0D0) * WVLENMEAN**2.0D0/D**3.0D0
             HS2H  = WHRMS*DSQRT(2.0D0) / D
             HV2H  = VEGD(J,L)/D
-            CALL FINDHV2HTOMEME(MIN(URSELL,1000.0D0),HS2H,HV2H,HV2HTOM)
+c      subroutine FINDHV2HTOMEME is outdated. use FINDHV2HTOMTABLE instead.
+c            CALL FINDHV2HTOMEME(MIN(URSELL,1000.0D0),HS2H,HV2H,HV2HTOM)
 
+            CALL FINDHV2HTOMTABLE(URSELL,HS2H,HV2H, HV2HTOM)
             STREAMSTRESSSTA = 0.5D0*VEGCD(J,L)*VEGB(J,L)*VEGN(J,L)*
      +                   OMEGAMEAN**2.0D0*WHRMS**3.0D0*
      +                   DCOSH(WKMEAN*D*MIN(HV2H, 1.0D0))**2.0D0/
      +                   DSINH(WKMEAN*D)**2.0D0*
      +                   HV2HTOM/DSQRT(PI)/8.0D0/GRAV
          ELSE
-            TMEAN = WT(J)
-c/1.35D0 
+            TMEAN = WT(J) / 1.35D0 
             CALL DISPERSION(D, TMEAN , WKMEAN)
             OMEGAMEAN = 2.0D0*PI/TMEAN
             WVLENMEAN = 2.0D0*PI/WKMEAN
             URSELL= WHRMS*DSQRT(2.0D0) * WVLENMEAN**2.0D0/D**3.0D0
             HS2H  = WHRMS*DSQRT(2.0D0) / D
-            HV2H = 0.55D0
-            CALL FINDHV2HTOMEME(MIN(URSELL,1000.0D0),HS2H,HV2H,HV2HTOM)
+            HV2H = 0.96D0
 
+c      subroutine FINDHV2HTOMEME is outdated. use FINDHV2HTOMTABLE instead.
+c            CALL FINDHV2HTOMEME(MIN(URSELL,1000.0D0),HS2H,HV2H,HV2HTOM)
+
+            CALL FINDHV2HTOMTABLE(URSELL,HS2H,HV2H, HV2HTOM)
             STREAMSTRESSSTA = 0.5D0*VEGCD(J,L)*VEGB(J,L)*VEGN(J,L)*
      +                     OMEGAMEAN**2.0D0*WHRMS**3.0D0*
      +                     DCOSH(WKMEAN*D*MIN(HV2H, 1.0D0))**2.0D0/
@@ -6789,13 +6991,6 @@ C For emergent vegetation, Fv_LWT is from Dean and Bener (2006) Eq. 12
           ENDIF
         ENDIF
       ENDIF
-
-c Fv_cw from LWT
-      FVCWLWT     = 0.5D0*VEGCDM(J,L)*VEGB(J,L)*VEGN(J,L)*
-     +              2.0D0*(USIGT*SIGT)*OMEGA*0.5D0*
-     +              (WHRMS*DSQRT(PI)*0.5D0)*
-     +              2.0D0/PI*DSINH(WKP*MIN(D, VEGD(J,L)))/
-     +              DSINH(WKP*D) / WKP /GRAV
 
       RETURN
       END

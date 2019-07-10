@@ -37,6 +37,7 @@ in.iroll  = 1;          % 0 = no roller, 1 = roller
 in.iwind  = 0;          % 0 = no wind effect
 in.itide  = 0;          % 0 = no tidal effect on currents
 in.iweibull = 0 ;
+in.vegtype = 1 ;
 in.iveg   = 3;          % vegitation effect
                         % 0: no vegetation or vegetation represented by increased
                         % 1: veg. density, width, height and root depth are 
@@ -45,8 +46,8 @@ in.iveg   = 3;          % vegitation effect
                         % 2: veg. with constant density, width and height
 
 if in.iveg==3                        
-    in.iFv = 1 ; 
-    in.idiss  = 2;          % energy dissipation due to vegitation 
+    in.iFv = 2 ; 
+    in.idiss  = 1;          % energy dissipation due to vegitation 
                         % (0: veg is accounted in bottom friction (original)
                         %  1: mendez, 2: chen_zhao, 3. use measured wave spectrum)  
 end

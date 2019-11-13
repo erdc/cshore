@@ -1810,7 +1810,7 @@ C         lzhu change to IVEG.EQ.3.AND.IDISS.EQ.1/2/3
              READ(11,*) TIMEBC(I+1),TPBC(I),HRMSBC(I),WSETBC(I), !lzhu
      +                  SWLBC(I),WANGBC(I),FREQMINBC(I),FREQMAXBC(I), !lzhu
      +                  FREQNUMBC(I)
-          ELSEIF (IIVEG.EQ.3.AND.DISS.EQ.3) THEN
+          ELSEIF (IVEG.EQ.3.AND.IDISS.EQ.3) THEN
              READ(11,*) TIMEBC(I+1),TPBC(I),HRMSBC(I),WSETBC(I), !lzhu
      +                  SWLBC(I),WANGBC(I),FREQMINBC(I),FREQMAXBC(I),
      +                  NMEASSPEC

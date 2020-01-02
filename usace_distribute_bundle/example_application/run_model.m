@@ -63,7 +63,7 @@ in.Tp= 8*dum;        % constant spectral peak period in seconds
 in.Hrms = 2+.1*cumsum(dum); 
 in.Wsetup = 0*dum;   % wave setup at seaward boundary in meters
 in.swlbc = 0+1*sin((2*pi/(12*3600))*in.timebc_surg); % water level at seaward boundary in meters
-in.angle = 0*dum;    % constant incident wave angle at seaward boundary in
+in.angle = 10*dum;    % constant incident wave angle at seaward boundary in
 
 % Idealized numerical tank
 Lx = 300;              % length of domain
@@ -85,7 +85,7 @@ if isunix
   clean
   !../bin/CSHORE_USACE_LINUX.out >scr.txt
 else
-  !.\bin\cshore_usace_win.out
+  !..\bin\cshore_usace_win.out
 end
 
 

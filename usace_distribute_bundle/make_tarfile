@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+
+fn0=`date +"%Y-%m-%d-%H-%M"`
+#fn1="cshore_usace-"$fn0".tar"
+fn2="cshore_usace_nosource-"$fn0".tar"
+echo $fn
+
+tar cvfh $fn2 \
+./bin/CSHORE_USACE_LINUX.out \
+./bin/cshore_usace_win.out \
+./doc \
+./mfiles \
+./example_application/infile  \
+./example_application/run_model.m 
+
+

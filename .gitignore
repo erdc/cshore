@@ -4,6 +4,7 @@ data*txt
 *.log
 #*.out
 *.dat
+*.tar
 *.cmd
 *.ele
 *.face

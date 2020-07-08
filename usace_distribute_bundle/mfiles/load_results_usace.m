@@ -353,8 +353,12 @@ for i = 1:num_output
   tline = fgetl(fid);
   if ~ischar(tline), break, end
   tline = str2num(tline);
-  [tot]=fscanf(fid,'%f %f %f %f\n',[4,tline(2)])';
-  if ~isempty(tot)&size(tot,1)>10
+  % now get next line and make sure that it has 4 columns
+  pos = ftell(fid);  tlinetest = fgetl(fid);  fseek(fid,pos,'bof');
+  if ~ischar(tlinetest), break, end
+  if length(str2num(tlinetest))==4 
+    %    disp('Reading data')
+    [tot]=fscanf(fid,'%f %f %f %f\n',[4,tline(2)])';
     out.hydro(i).x_yvelo = [tot(:,1); NaN(length(out.morpho(1).x)-size(tot,1),1)];
     out.hydro(i).stheta = [tot(:,2); NaN(length(out.morpho(1).x)-size(tot,1),1)];
     out.hydro(i).vmean = [tot(:,3); NaN(length(out.morpho(1).x)-size(tot,1),1)];

@@ -6,7 +6,7 @@ addpath('../mfiles')
 iplotbc     = 0;                  % 1 to plot the applied boundary conditions
 iplotmorpho = 1;                  % 1 to plot the computed morphology results
 iplothydro  = 1;                  % 1 to plot the computed hydrodynamic results
-iplotrunup  = 0;                  % 1 to plot the computed runup position
+iplotrunup  = 1;                  % 1 to plot the computed runup position
 isave       = 0;                  % 1 to save the computed results
 
 % CSHORE execution and physical params
@@ -46,7 +46,7 @@ in.slpot  = .1;         % overtopping suspended load parameter
 in.tanphi = .630;       % tangent (sediment friction angle)        
 in.blp    = 0.001;      % bedload parameter                        
 in.rwh = .02;           % numerical rununp wire height 
-in.ilab = 1;            % controls the boundary condition timing. Don't change
+in.ilab = 0;            % controls the boundary condition timing. Don't change
 in.fric_fac = .015;     % bottom friction factor
 
 % boundary conditions and timing

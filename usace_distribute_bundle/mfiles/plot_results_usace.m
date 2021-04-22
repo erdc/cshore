@@ -63,7 +63,8 @@ if iplotbc
   plot(results.bc.time_offshore,results.bc.strm_tide_offshore,'.');hold all
   ylabel('water level[m]','fontname','times','fontsize',14,'fontangle','italic')
   subplot(3,1,3)
-  d = results.bc.strm_tide_offshore+results.bc.strm_tide_offshore-results.morpho(1).zb(1);
+  %d = results.bc.strm_tide_offshore+results.bc.strm_tide_offshore-results.morpho(1).zb(1);
+    d = results.bc.strm_tide_offshore-results.morpho(1).zb(1);
   plot(results.bc.time_offshore,d);hold all
   plot(results.bc.time_offshore,d,'.');hold all
   ylabel('water depth[m]','fontname','times','fontsize',14,'fontangle','italic')

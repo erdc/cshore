@@ -384,19 +384,29 @@ if out.params.iprofl
   fclose(fid);
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 if out.params.iprofl&0
-  fid=fopen([fname,'OLONGS'])
+    fid=fopen([fname,'OLONGS']);
   %    WRITE(33,1500) XB(J),QBY(J),QSY(J),(QBY(J) + QSY(J))
   for i = 1:num_output
-    tline = fgetl(fid)
+    tline = fgetl(fid);
     tline = str2num(tline);
-    [tot]=fscanf(fid,'%f %f %f %f\n',[4,tline(2)])';
-    out.sed(i).x_long = [tot(:,1); NaN(length(out.morpho(1).x)-size(tot,1),1)];
-    out.sed(i).qby = [tot(:,2); NaN(length(out.morpho(1).x)-size(tot,1),1)];
-    out.sed(i).qsy = [tot(:,3); NaN(length(out.morpho(1).x)-size(tot,1),1)];
-    out.sed(i).qy = [tot(:,4); NaN(length(out.morpho(1).x)-size(tot,1),1)];
-  end
+    pos=ftell(fid);
+    dum = str2num(fgetl(fid));
+    fseek(fid, pos,-1);
+    if length(dum)==4
+      [tot]=fscanf(fid,'%f %f %f %f\n',[4,tline(2)])';
+      out.sed(i).x_long = [tot(:,1); NaN(length(out.morpho(1).x)-size(tot,1),1)];
+      out.sed(i).qby = [tot(:,2); NaN(length(out.morpho(1).x)-size(tot,1),1)];
+      out.sed(i).qsy = [tot(:,3); NaN(length(out.morpho(1).x)-size(tot,1),1)];
+      out.sed(i).qy =  [tot(:,4); NaN(length(out.morpho(1).x)-size(tot,1),1)];
+    else
+      out.sed(i).x_long =out.sed(i).x_cross;
+      out.sed(i).qby   = 0*out.sed(i).x_cross;
+      out.sed(i).qsy   = 0*out.sed(i).x_cross;
+      out.sed(i).qy    = 0*out.sed(i).x_cross;
+      
+    end
+    end
   fclose(fid);
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

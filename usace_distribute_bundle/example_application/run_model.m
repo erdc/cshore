@@ -83,7 +83,7 @@ makeinfile_usace(in);
 
 if isunix
   clean
-  !../bin/CSHORE_USACE_LINUX.out >scr.txt
+  !../bin/CSHORE_USACE_LINUX.out 
 else
   !..\bin\cshore_usace_win.out
 end

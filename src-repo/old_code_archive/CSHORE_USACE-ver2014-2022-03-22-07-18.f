@@ -217,8 +217,7 @@ C     MAXITE = 20 for maximum number of iteration
 C     
 C     Store the first line of this CSHORE program on ODOC output file
 C     ------------------------------------------------------------------
-      VER = 'CSHORE USACE version, 2014 last edit 2022-03-22  ' !bdj
-C      VER = 'CSHORE USACE version, 2014 last edit 2019-02-08 ' !bdj
+      VER = 'CSHORE USACE version, 2014 last edit 2019-02-08 ' !bdj
 C      VER = 'CSHORE USACE version, 2014 last edit 2018-08-28 ' !bdj 
 C      VER = 'CSHORE USACE version, 2014 last edit 2016-01-14' !bdj 
 C      VER = 'CSHORE USACE version, 2014 last edit 2015-07-06' !bdj 
@@ -1243,23 +1242,6 @@ C     Subr.8 OUTPUT stores computed results when IEND=1
 C     Put "c" below if no output when TIME = 0
 C       IF(TIME.EQ.0.D0) CALL OUTPUT(ITIME,L,ITEQO,ICONV)
         IF(IPROFL.GE.1) TIME=TIME+DELT
-C BDJ 2021-12-13 added to check for SWL at bonudary that exceeds profile bed elevation 
-        IF(IEND.EQ.1) THEN
-          IF(IPROFL.GT.0) THEN
-            IF((H(1)+zb(1,L))-maxval(zb(:,L)).GT.0) THEN
-c              write(*,*) 'BDJ ',time,H(1)+zb(1,L),maxval(zb(:,L)),
-c     +             (H(1)+zb(1,L))-maxval(zb(:,L))
-          write(*,*) 'Water elevation at seaward boundary'
-          write(*,*) 'exceeds maximum elevation.  Terminating'
-          write(*,*) 'run and deleting previosuly written output'
-          do i=20,40
-            close(i, status='delete')
-          enddo
-          stop
-            ENDIF
-          ENDIF
-        ENDIF
-C end BDJ 2021-12-13 added to check for SWL at bonudary that exceeds profiel bed elevation 
         IF(IEND.EQ.1) THEN
           CALL OUTPUT(ITIME,L,ITEQO,ICONV)
         ENDIF

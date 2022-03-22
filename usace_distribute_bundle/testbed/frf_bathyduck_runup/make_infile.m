@@ -1,17 +1,17 @@
 %make 5 infiles, centered around times of survey dates
 addpath ../../mfiles/
-if ~exist('lidar')|~exist('bathy')
+if ~exist('lidar_sm')|~exist('bathy')
   load ./data/summary_bathy.mat;
   load ./data/summary_waves_bc.mat;
   load ./data/summary_wl.mat;
-  load ./data/summary_lidar_science.mat
+  load ./data/summary_lidar_science_small.mat
 end
 bnd_gage_num = 1;
 for j = 2:3;% bathy ind
   g.begin_date = bathy(j).date-10/24; % start a bit previous to survey
   g.end_date = bathy(j).date+10/24;
-  run_inds = find([lidar.date]>=g.begin_date&[lidar.date]<=g.end_date);
-  [junk bestind ]=min(abs([lidar.date]-bathy(j).date));
+  run_inds = find([lidar_sm.date]>=g.begin_date&[lidar_sm.date]<=g.end_date);
+  [junk bestind ]=min(abs([lidar_sm.date]-bathy(j).date));
 
   % CSHORE execution and physical params
   in.header = {'------------------------------------------------------------'
@@ -66,7 +66,7 @@ for j = 2:3;% bathy ind
   g.x_offset =  wave(bnd_gage_num).frf_x;
   x_frf = g.x_offset:-in.dx:70;
   x = g.x_offset-x_frf;
-  zb = interp1(lidar(bestind).frf_xi,lidar(bestind).zb_full,x_frf);
+  zb = interp1(lidar_sm(bestind).frf_xi,lidar_sm(bestind).zb_full,x_frf);
 
   in.x = x;
   in.zb = zb;

@@ -1,5 +1,5 @@
 exec_cmd = '../../bin/CSHORE_USACE_LINUX.out';
-
+addpath ../../mfiles/
 cnt  = 0;
 for j = 2:3 
   cnt = cnt+1;

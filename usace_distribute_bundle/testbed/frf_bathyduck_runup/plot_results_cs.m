@@ -1,21 +1,21 @@
 close all
-if ~exist('lidar')
-  load ./data/summary_lidar_science.mat
+if ~exist('lidar_sm')
+  load ./data/summary_lidar_science_small.mat
 end
 if ~exist('allresults')
   load allresults
 end
 for j  = 1:length(allresults)
   for i = 1:length(allresults(j).results.hydro)
-    [junk ind ]=min(abs([lidar.date]-allresults(j).g.date_bc(i)));
-    allresults(j).lid_r2p(i) = lidar(ind).r2p;
-    allresults(j).lid_Hs(i,:) = lidar(ind).wg_Hs;
+    [junk ind ]=min(abs([lidar_sm.date]-allresults(j).g.date_bc(i)));
+    allresults(j).lid_r2p(i) = lidar_sm(ind).r2p;
+    allresults(j).lid_Hs(i,:) = lidar_sm(ind).wg_Hs;
   end
 end
-x  = lidar(ind).wg_x;
+x  = lidar_sm(ind).wg_x;
 xcshore = allresults(1).results(1).hydro(1).x;
 x2 = allresults(1).g.x_offset-allresults(1).results(1).hydro(1).x;
-for i  = 1:length(lidar(ind).wg_Hs);
+for i  = 1:length(lidar_sm(ind).wg_Hs);
   [ junk wginds(i)] = min(abs(x(i)-x2));
 end
 

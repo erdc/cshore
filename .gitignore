@@ -13,6 +13,7 @@ data*txt
 *.log.*
 *.png
 *.mp4
+summary_lidar_science.mat
 install_*
 config_*
 ./junk

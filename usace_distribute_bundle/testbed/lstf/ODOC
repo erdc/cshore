@@ -1,0 +1,188 @@
+ CSHORE USACE version, 2014 last edit 2019-02-08                       
+ ------------------------------------------------------------          
+ CSHORE LSTF Test 1 Case 3                                             
+ ------------------------------------------------------------          
+COMPUTATION OPTION ILINE=  1
+Alongshore gradient IQYDY=  0
+ILINE cross-shore lines are computed together
+
+COMPUTATION OPTION IPROFL =  1
+Profile evolution is computed from Time = 0.0
+to Time =        9000.0  for NTIME =    3
+
+ROLLER is included in computation
+ROLLER slope Betazero =    0.100
+
+NO wave and current interaction included
+
+WAVE OVERTOPPING, OVERFLOW AND SEEPAGE
+Runup wire height (m)               RWH=    0.020
+Initial crest location for L=1      JCREST=    51
+Initial crest height (m) for L=1    RCREST=    0.391
+Swash velocity parameter            AWD=    1.600
+Output exceedance probability       EWD=    0.015
+
+IMPERMEABLE BOTTOM assumed
+
+NO wind shear stresses included
+
+NO vegetation in computation domain
+
+BREAKER RATIO PARAMETER
+Input Gamma = 1.00
+
+SEDIMENT PARAMETERS if IPROFL=1
+Median diameter (mm)                D50=       0.15
+Fall velocity (m/s)                  Wf=    0.0165
+Specific gravity                     Sg=    2.65
+Suspension efficiency                eB=    0.002
+Suspended load parameter               =    0.50
+Tangent(friction angle)                =    0.63
+Bedload parameter                     b=    0.0030
+Susp.load para. (IOVER=1)              =    0.10
+
+
+INPUT WAVE AND WATER LEVEL:NTIME=     3 from TIME=0.0
+Output lines are limited to first and last    10 lines
+End Time(sec) Tp (sec)  Hrms(m) Wave Setup(m)Storm tide(m) ANGLE(deg)
+
+     1800.0     1.5000     0.1900     0.0000     0.0000    10.0000
+     5400.0     1.5000     0.1900     0.0000     0.0000    10.0000
+     9000.0     1.5000     0.1900     0.0000     0.0000    10.0000
+
+INPUT BEACH AND STRUCTURE GEOMETRY
+Cross-shore line number               L=    1
+Alongshore coordinate             YLINE=         0.0000
+Line angle(degrees)              AGLINE=         0.0000
+Depth at seaward boundary (m)          =       0.896100
+Number of input points            NBINP=        51
+Output lines are limited to first and last 5 lines
+Node spacing (m)                    DX=       0.500000
+Shoreline location (m) of Zb=0       Xs=      21.788187
+Maximum landward node              JMAX=      51
+
+X  (m)      Zb  (m)  Fric.factor  Wire mesh
+     0.000    -0.896
+     0.500    -0.896     0.020
+     1.000    -0.896     0.020
+     1.500    -0.896     0.020
+     2.000    -0.896     0.020
+    23.000     0.183     0.020
+    23.500     0.278     0.020
+    24.000     0.361     0.020
+    24.500     0.391     0.020
+    25.000     0.391     0.020
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on bottom profile computed at TIME (s) =      1800.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=      44
+X-coordinate at JR (m)                        XR=      21.500000
+Bottom elevation at JR (m)                    ZR=      -0.025552
+Mean water depth at this node (m)          H(JR)=       0.042747
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=       0.000000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       0.390700
+Node number at SWL                          JSWL=      45
+Wet and dry transition node                  JWD=      44
+Mean water depth H1(m) at node JWD            H1=       0.042747
+End node of wet and dry zone                JDRY=      44
+Wave overtopping probability at JCREST      POTF=       0.000000
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.000000000
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.000000000
+QO iteration number                        ITEQO=    1
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.062498
+Mean runup elevation above Z=0 (m)        ERMEAN=       0.017195
+Runup standard deviation (m)              SIGRUN=       0.015625
+Significant runup height above Z=0 (m)       R13=       0.060555
+2 percent runup height above Z=0 (m)         R2P=       0.077898
+1 Percent runup height above z=0 (m)         R1P=       0.083102
+
+LONGSHORE SUSPENDED AND BEDLOAD SAND TRANSPORT RATE
+Transport Rate (m**3/s) =      0.00004830
+CERC Formula K=      0.077
+sin(breaker angle)=    0.17365
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on bottom profile computed at TIME (s) =      5400.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=      44
+X-coordinate at JR (m)                        XR=      21.500000
+Bottom elevation at JR (m)                    ZR=      -0.026073
+Mean water depth at this node (m)          H(JR)=       0.044136
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=       0.000000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       0.390700
+Node number at SWL                          JSWL=      45
+Wet and dry transition node                  JWD=      44
+Mean water depth H1(m) at node JWD            H1=       0.044136
+End node of wet and dry zone                JDRY=      44
+Wave overtopping probability at JCREST      POTF=       0.000000
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.000000000
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.000000000
+QO iteration number                        ITEQO=    1
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.058889
+Mean runup elevation above Z=0 (m)        ERMEAN=       0.018063
+Runup standard deviation (m)              SIGRUN=       0.014722
+Significant runup height above Z=0 (m)       R13=       0.058698
+2 percent runup height above Z=0 (m)         R2P=       0.074952
+1 Percent runup height above z=0 (m)         R1P=       0.079829
+
+LONGSHORE SUSPENDED AND BEDLOAD SAND TRANSPORT RATE
+Transport Rate (m**3/s) =      0.00004842
+CERC Formula K=      0.077
+sin(breaker angle)=    0.17365
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on bottom profile computed at TIME (s) =      9000.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=      45
+X-coordinate at JR (m)                        XR=      22.000000
+Bottom elevation at JR (m)                    ZR=       0.014427
+Mean water depth at this node (m)          H(JR)=       0.019938
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=       0.000000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       0.390700
+Node number at SWL                          JSWL=      45
+Wet and dry transition node                  JWD=      45
+Mean water depth H1(m) at node JWD            H1=       0.013703
+End node of wet and dry zone                JDRY=      46
+Wave overtopping probability at JCREST      POTF=       0.000000
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.000000000
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.000000000
+QO iteration number                        ITEQO=    1
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.110170
+Mean runup elevation above Z=0 (m)        ERMEAN=       0.021749
+Runup standard deviation (m)              SIGRUN=       0.000275
+Significant runup height above Z=0 (m)       R13=       0.032127
+2 percent runup height above Z=0 (m)         R2P=       0.036279
+1 Percent runup height above z=0 (m)         R1P=       0.037524
+
+LONGSHORE SUSPENDED AND BEDLOAD SAND TRANSPORT RATE
+Transport Rate (m**3/s) =      0.00005083
+CERC Formula K=      0.081
+sin(breaker angle)=    0.17365
+

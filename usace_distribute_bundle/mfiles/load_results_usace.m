@@ -384,14 +384,18 @@ if out.params.iprofl
   fclose(fid);
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-if out.params.iprofl&0
+if out.params.iprofl&1
     fid=fopen([fname,'OLONGS']);
   %    WRITE(33,1500) XB(J),QBY(J),QSY(J),(QBY(J) + QSY(J))
   for i = 1:num_output
-    tline = fgetl(fid);
-    tline = str2num(tline);
+    tline = fgetl(fid);tline = str2num(tline);
     pos=ftell(fid);
-    dum = str2num(fgetl(fid));
+    dum = fgetl(fid);
+    if ischar(dum)
+      dum = str2num(dum);
+    else
+      dum = [];
+    end
     fseek(fid, pos,-1);
     if length(dum)==4
       [tot]=fscanf(fid,'%f %f %f %f\n',[4,tline(2)])';

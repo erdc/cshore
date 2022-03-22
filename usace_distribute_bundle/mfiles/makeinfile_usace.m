@@ -3,11 +3,14 @@ function makeinfile_usace(in)
 
 %First check for NaN
 if max(isnan([in.x(:);in.zb(:);in.Tp(:);in.Hrms(:);in.swlbc(:);in.Wsetup(:);in.angle(:)]))
-  error('The in structure contains NaN')
+  disp('The in structure contains NaN')
+  %error('The in structure contains NaN')
+  return
 end
 
+if isfield(in,'filename');fid = fopen([in.filename,'.infile'],'w');
+else; fid = fopen('infile','w');end
 
-fid = fopen('infile','w');
 fprintf(fid,'%i \n',length(in.header));
 for i = 1:length(in.header)
   fprintf(fid,'%s \n',cell2mat(in.header(i)));

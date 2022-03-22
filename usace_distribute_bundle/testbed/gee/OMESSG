@@ -1,0 +1,2313 @@
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     30Line=  1
+ TIME =        0.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     30Line=  1
+ TIME =      250.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     31Line=  1
+ TIME =      500.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     31Line=  1
+ TIME =      750.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     31Line=  1
+ TIME =      900.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     31Line=  1
+ TIME =     1150.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     31Line=  1
+ TIME =     1400.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     31Line=  1
+ TIME =     1650.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     31Line=  1
+ TIME =     1800.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     31Line=  1
+ TIME =     2050.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     31Line=  1
+ TIME =     2300.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     31Line=  1
+ TIME =     2550.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     31Line=  1
+ TIME =     2700.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     31Line=  1
+ TIME =     2950.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     31Line=  1
+ TIME =     3200.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     31Line=  1
+ TIME =     3450.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     31Line=  1
+ TIME =     3600.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     31Line=  1
+ TIME =     3850.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     31Line=  1
+ TIME =     4100.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     31Line=  1
+ TIME =     4350.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     31Line=  1
+ TIME =     4500.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     31Line=  1
+ TIME =     4750.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     31Line=  1
+ TIME =     5000.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     31Line=  1
+ TIME =     5250.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     31Line=  1
+ TIME =     5400.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     31Line=  1
+ TIME =     5650.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     31Line=  1
+ TIME =     5900.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     31Line=  1
+ TIME =     6150.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     31Line=  1
+ TIME =     6300.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     31Line=  1
+ TIME =     6550.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     31Line=  1
+ TIME =     6800.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+WARNING: Convergence was not reached after MAXITE=   20
+ iterations with relative error EPS1 =       0.10000E-02
+at node JP1 =   31 Line L=  1 TIME=      7050.000
+QO(L)=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     32Line=  1
+ TIME =     7050.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     32Line=  1
+ TIME =     7200.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+WARNING: Convergence was not reached after MAXITE=   20
+ iterations with relative error EPS1 =       0.10000E-02
+at node JP1 =   31 Line L=  1 TIME=      7362.592
+QO(L)=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     32Line=  1
+ TIME =     7362.592 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     32Line=  1
+ TIME =     7612.592 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     32Line=  1
+ TIME =     7862.592 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     32Line=  1
+ TIME =     8100.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     32Line=  1
+ TIME =     8350.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     32Line=  1
+ TIME =     8600.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     32Line=  1
+ TIME =     8850.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     32Line=  1
+ TIME =     9000.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     32Line=  1
+ TIME =     9250.000 ITEQO= 1 ITE= 2 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =     9500.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =     9750.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =     9900.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    10150.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    10400.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    10650.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    10800.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    11050.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    11300.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    11550.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    11700.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    11950.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    12200.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    12450.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    12600.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    12850.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    13100.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    13350.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    13500.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    13750.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    14000.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    14250.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    14400.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    14650.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    14900.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    15150.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    15300.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    15550.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    15800.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    16050.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    16200.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    16450.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    16700.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    16950.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    17100.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    17350.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    17600.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    17850.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    18000.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    18250.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    18500.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    18750.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    18900.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    19150.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    19400.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    19650.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    19800.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    20050.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    20300.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    20550.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    20700.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    20950.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    21200.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    21450.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    21600.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    21850.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    22100.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    22350.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    22500.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    22750.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    23000.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    23250.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    23400.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    23650.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    23900.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    24150.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    24300.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    24550.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    24800.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    25050.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    25200.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    25450.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    25700.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    25950.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    26100.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    26350.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     33Line=  1
+ TIME =    26600.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    26850.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    27000.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    27250.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    27500.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    27750.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    27900.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    28150.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    28400.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    28650.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    28800.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     33Line=  1
+ TIME =    29050.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+WARNING: Convergence was not reached after MAXITE=   20
+ iterations with relative error EPS1 =       0.10000E-02
+at node JP1 =   33 Line L=  1 TIME=     29300.000
+QO(L)=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     34Line=  1
+ TIME =    29300.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     34Line=  1
+ TIME =    29550.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     34Line=  1
+ TIME =    29700.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+WARNING: Convergence was not reached after MAXITE=   20
+ iterations with relative error EPS1 =       0.10000E-02
+at node JP1 =   33 Line L=  1 TIME=     29857.360
+QO(L)=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     34Line=  1
+ TIME =    29857.360 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     34Line=  1
+ TIME =    30107.360 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     34Line=  1
+ TIME =    30357.360 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     34Line=  1
+ TIME =    30600.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     34Line=  1
+ TIME =    30850.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     34Line=  1
+ TIME =    31100.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     34Line=  1
+ TIME =    31350.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     34Line=  1
+ TIME =    31500.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     34Line=  1
+ TIME =    31750.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     34Line=  1
+ TIME =    32000.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     34Line=  1
+ TIME =    32250.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     34Line=  1
+ TIME =    32400.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     34Line=  1
+ TIME =    32650.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     34Line=  1
+ TIME =    32900.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     34Line=  1
+ TIME =    33150.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     34Line=  1
+ TIME =    33300.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     34Line=  1
+ TIME =    33550.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     34Line=  1
+ TIME =    33800.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    34050.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    34200.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    34450.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    34700.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    34950.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    35100.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    35350.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    35600.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    35850.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    36000.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    36250.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    36500.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    36750.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    36900.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    37150.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    37400.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    37650.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    37800.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    38050.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    38300.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    38550.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    38700.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    38950.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    39200.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    39450.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    39600.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    39850.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    40100.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    40350.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    40500.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    40750.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    41000.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    41250.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    41400.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    41650.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    41900.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    42150.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    42300.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    42550.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    42800.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    43050.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    43200.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    43450.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    43700.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    43950.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    44100.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    44350.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    44600.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    44850.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    45000.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    45250.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    45500.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    45750.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    45900.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    46150.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    46400.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    46650.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    46800.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    47050.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    47300.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    47550.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    47700.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    47950.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    48200.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    48450.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    48600.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    48850.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    49100.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    49350.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    49500.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    49750.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    50000.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    50250.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    50400.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    50650.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    50900.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    51150.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    51300.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    51550.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    51800.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    52050.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    52200.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    52450.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    52700.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    52950.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    53100.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    53350.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    53600.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    53850.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    54000.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    54250.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    54500.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    54750.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     35Line=  1
+ TIME =    54900.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    55150.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    55400.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    55650.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    55800.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    56050.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    56300.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    56550.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    56700.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    56950.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     35Line=  1
+ TIME =    57200.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+WARNING: Convergence was not reached after MAXITE=   20
+ iterations with relative error EPS1 =       0.10000E-02
+at node JP1 =   35 Line L=  1 TIME=     57450.000
+QO(L)=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     36Line=  1
+ TIME =    57450.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     36Line=  1
+ TIME =    57600.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     36Line=  1
+ TIME =    57850.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     36Line=  1
+ TIME =    58100.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     36Line=  1
+ TIME =    58350.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     36Line=  1
+ TIME =    58500.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     36Line=  1
+ TIME =    58750.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     36Line=  1
+ TIME =    59000.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     36Line=  1
+ TIME =    59250.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     36Line=  1
+ TIME =    59400.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     36Line=  1
+ TIME =    59650.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     36Line=  1
+ TIME =    59900.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     36Line=  1
+ TIME =    60150.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     36Line=  1
+ TIME =    60300.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     36Line=  1
+ TIME =    60550.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     36Line=  1
+ TIME =    60800.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     36Line=  1
+ TIME =    61050.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     36Line=  1
+ TIME =    61200.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     36Line=  1
+ TIME =    61450.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     36Line=  1
+ TIME =    61700.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     36Line=  1
+ TIME =    61950.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     36Line=  1
+ TIME =    62100.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     36Line=  1
+ TIME =    62350.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     36Line=  1
+ TIME =    62600.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     36Line=  1
+ TIME =    62850.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     36Line=  1
+ TIME =    63000.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     36Line=  1
+ TIME =    63250.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     36Line=  1
+ TIME =    63500.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     36Line=  1
+ TIME =    63750.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     36Line=  1
+ TIME =    63900.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     36Line=  1
+ TIME =    64150.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     36Line=  1
+ TIME =    64400.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     36Line=  1
+ TIME =    64650.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     36Line=  1
+ TIME =    64800.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     36Line=  1
+ TIME =    65050.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     36Line=  1
+ TIME =    65300.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    65550.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    65700.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    65950.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    66200.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    66450.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    66600.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    66850.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    67100.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    67350.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    67500.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    67750.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    68000.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    68250.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    68400.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    68650.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    68900.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    69150.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    69300.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    69550.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    69800.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    70050.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    70200.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    70450.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    70700.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    70950.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    71100.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    71350.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    71600.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    71850.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    72000.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    72250.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    72500.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    72750.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    72900.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    73150.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    73400.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    73650.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    73800.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    74050.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    74300.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    74550.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    74700.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    74950.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    75200.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    75450.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    75600.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    75850.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    76100.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    76350.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    76500.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    76750.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    77000.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    77250.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    77400.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    77650.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    77900.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    78150.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    78300.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    78550.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    78800.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    79050.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    79200.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    79450.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    79700.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    79950.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    80100.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    80350.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    80600.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    80850.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     37Line=  1
+ TIME =    81000.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    81250.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    81500.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    81750.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    81900.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    82150.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    82400.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    82650.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    82800.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    83050.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    83300.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    83550.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    83700.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    83950.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    84200.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    84450.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    84600.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     37Line=  1
+ TIME =    84850.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    85100.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    85350.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    85500.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    85750.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    86000.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    86250.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    86400.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    86650.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    86900.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    87150.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    87300.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    87550.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    87800.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    88050.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    88200.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    88450.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    88700.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    88950.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    89100.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    89350.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    89600.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =    89850.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    90000.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    90250.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    90500.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    90750.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    90900.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    91150.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    91400.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    91650.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    91800.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    92050.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    92300.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    92550.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    92700.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    92950.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    93200.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    93450.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    93600.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    93850.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    94100.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    94350.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    94500.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    94750.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    95000.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    95250.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    95400.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    95650.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    95900.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    96150.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    96300.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    96550.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    96800.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    97050.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    97200.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    97450.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    97700.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    97950.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    98100.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    98350.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    98600.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    98850.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    99000.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    99250.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    99500.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    99750.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =    99900.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =   100150.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =   100400.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =   100650.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =   100800.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =   101050.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =   101300.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =   101550.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =   101700.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     38Line=  1
+ TIME =   101950.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   102200.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   102450.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   102600.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   102850.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   103100.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   103350.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   103500.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   103750.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   104000.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   104250.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   104400.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   104650.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   104900.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   105150.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   105300.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   105550.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   105800.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   106050.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   106200.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   106450.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   106700.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     38Line=  1
+ TIME =   106950.000 ITEQO= 1 ITE= 1 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   107100.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   107350.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   107600.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   107850.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   108000.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   108250.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   108500.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   108750.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   108900.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   109150.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   109400.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   109650.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   109800.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   110050.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   110300.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   110550.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   110700.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   110950.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   111200.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   111450.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   111600.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   111850.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   112100.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   112350.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   112500.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   112750.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   113000.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   113250.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   113400.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   113650.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Square of sigma SIGTIE is negative at node     39Line=  1
+ TIME =   113900.000 ITEQO= 1 ITE= 0 QO=  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   114150.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   114300.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   114550.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   114800.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   115050.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   115200.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   115450.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   115700.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   115950.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   116100.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   116350.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   116600.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   116850.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   117000.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   117250.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   117500.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   117750.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   117900.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   118150.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   118400.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   118650.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   118800.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   119050.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   119300.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   119550.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   119700.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   119950.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   120200.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   120450.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   120600.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   120850.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   121100.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   121350.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   121500.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   121750.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   122000.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   122250.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   122400.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   122650.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   122900.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   123150.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   123300.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   123550.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   123800.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   124050.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   124200.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   124450.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   124700.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   124950.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   125100.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   125350.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   125600.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   125850.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   126000.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   126250.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   126500.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   126750.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   126900.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   127150.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   127400.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   127650.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   127800.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   128050.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   128300.000 ITEQO = 1 QO =  0.000000000
+
+END OF LANDWARD MARCHING: 
+Water depth is less than EPS1 at node     39Line=  1
+ TIME =   128550.000 ITEQO = 1 QO =  0.000000000

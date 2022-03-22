@@ -1,5 +1,5 @@
 if ~exist('lidar')
-  load ./summary_lidar_science.mat
+load  /home/johnson/data/frf/bathyduck/summary_lidar_science.mat
 end
 
 for i = 1:length(lidar)

@@ -1,0 +1,289 @@
+\documentclass[11pt,oneside]{book}
+\usepackage{epsfig}
+\usepackage{color}  
+\usepackage{oldlfont}
+%\usepackage[scanall]{psfrag}
+\usepackage{graphics}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\addtolength{\topmargin}{-1cm}
+\addtolength{\textheight}{2cm}
+\addtolength{\textwidth}{4cm}
+\addtolength{\oddsidemargin}{-2cm}
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+\newcommand{\bul}{$\bullet$}
+\newcommand{\nn}{\nonumber}
+\newcommand{\vs}{\vspace*{.5cm}}
+\newcommand{\hs}{\mbox{\hspace*{1cm}}}
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\newcommand{\D}{\Delta}
+\newcommand{\ol}{\overline}
+\newcommand{\p}{\partial}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\intod}{\int^\eta_{z_b}}
+\newcommand{\intoz}{\int^\eta_{z}}
+\newcommand{\intozt}{\int^{z_t}_{z_b}}
+\newcommand{\pdv}[2]{\frac{\partial \, #1}{\partial #2}}
+\newcommand{\bs}[1]{\boldsymbol{#1}}
+\newcommand{\bm}[1]{{\mathbf #1}}
+\newcommand{\ob}[1]{\overbrace{#1}}
+\newcommand{\oa}[1]{\overrightarrow{#1}}
+\newcommand{\ph}{\phantom{\;}}
+\newcommand{\etal}{ {\it et al.} }
+\newcommand{\e}{\epsilon}
+\begin{document}
+
+\noindent The CSHORE family of models has dependencies on the following scalars:
+
+\begin{eqnarray}
+d_{50} &=& \mbox{median sediment grain size }\nonumber \\
+sg &=& \mbox{sediment specific gravity} \nonumber \\
+w_f  &=& \mbox{sediment fall velocity}\nonumber \\
+por &=& \mbox{bed porosity}\nonumber \\
+e_B &=& \mbox{breaking efficiency} \nonumber \\
+e_f &=& \mbox{bottom dissipation efficiency}\nonumber \\
+slp &=& \mbox{suspended load parameter}\nonumber \\  
+slpot &=& \mbox{suspended load parameter for over-topping}\nonumber \\  
+blp &=& \mbox{wave-related bed load parameter}\nonumber \\  
+f_w &=& \mbox{wave friction factor} \nonumber\\
+\gamma &=& \mbox{ratio of breaking wave height to water depth} \nonumber
+\end{eqnarray}
+\noindent {\bf Physical Parameters}\\ Some parameters are physical and
+are prescribed by field measurements or estimation.  The median grain
+size, $d_{50}$, for instance, is specified according to measured or
+assumed data.  Likewise the sediment fall velocity $w_f$ and porosity
+$por$ are physical attributes of the model domain.  Typical values of
+these parameters is given:
+\begin{table}[h]
+\begin{center}
+%\begin{tabular}{||p{5cm}|c|p{5cm}||}\hline
+\begin{tabular}{||c|c|c||}\hline
+Parameter& Typical Value   & Units  \\ \hline \hline
+$d_{50}$ & 0.20 & mm \\ \hline
+$w_f$ & 0.026 & m/s \\ \hline
+$sg$ & 2.65 &  \\ \hline
+$por$ & 0.40 &  \\ \hline
+\end{tabular}
+\end{center}
+\caption{Physical parameters}
+\end{table}
+\clearpage
+\noindent {\bf Empirical and Numerical Parameters}\\ The 1-D CSHORE model
+formulation includes empirical devices for estimation of nearshore
+hydrodynamics and sediment transport.  Typical values for the
+parameters is provided along with a range of acceptable values.  It
+should be noted that the breaking model in CSHORE relies on a
+user-supplied $\gamma$, the ratio of wave height to water depth in the
+saturated breaking region.  Strictly speaking, this is not an
+empirical model parameter, and data from the surf zone is usually
+available in the laboratory for guidance.  In the typical application
+with field conditions, however, it is not practical to collect surf
+zone information, and typical values are provided in Table \ref{fig1}.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{||c|c|c||}\hline
+Parameter& Typical Value   & Range  \\ \hline \hline
+$dx$ & 1 & 0.1 (lab) -- 1(field) \\ \hline
+$\gamma$ & 0.7 & 0.5 -- 0.9 \\ \hline
+$e_{B}$ & 0.005 & 0.001 -- 0.01 \\ \hline
+$e_{f}$ & 0.01 &  \\ \hline
+$slp$ & 0.5 & 0.2 -- 0.5 \\ \hline
+$slpot$ & 0.1 & 0.05 -- 0.2 \\ \hline
+$\tan \phi$ & 0.63 & 0.63 \\ \hline
+$blp$ & 0.001 & 0.0005 -- 0.002 \\ \hline
+$f_w$ & 0.015 & 0.005 -- 0.03 \\ \hline
+$rwh$ & 0.03 & 0.01 (lab) -- .05(field) \\ \hline
+\end{tabular}
+\end{center}
+\caption{Empirical  parameters}
+\label{fig1}
+\end{table}
+\clearpage
+\noindent {\bf Input file structure}\\ The CSHORE model developers,
+over time, have added capabilities and code branches to extend the
+range of application.  The optional processes are included with an
+array of logical parameters that are given below.  It is suggested, at
+present, to provide the user with a limited set of options to avoid
+unadvised application before complete scrutiny by the USACE.  The
+following four tables detail the input file structure required by
+CSHORE.  
+
+\begin{table}[h]
+\begin{center}
+%\begin{tabular}{||p{5cm}|c|p{5cm}||}\hline
+\begin{tabular}{||c|c|p{8cm}||}\hline
+Parameter& Allowed Values   & Meaning and Conditional  \\ \hline \hline
+ILINE & 1 & Single transect  \\ \hline
+IPROFL & 0, 1 &  0=no sediment transport, 1=sediment transport\\ \hline
+ISEDAV & 0 & unlimited sediment availability, Conditional on IPROFL = 1 \\ \hline
+IPERM & 0 & neglect permeability \\ \hline
+IOVER & 1 & Allow overtopping and compute runup statistics \\ \hline
+IWTRAN & 0 & No standing water in landward zone, Conditional on IOVER = 1 \\ \hline
+IPOND & 0 & No ridge and runnel, Conditional on IOVER = 1 \\ \hline
+INFILT & 0 & No inflitration landward of dune crest, Conditional on IOVER = 1 and IWTRAN=0 \\ \hline
+IWCINT & 0 & No wave-current interaction\\ \hline
+IROLL & 0 & No roller effect\\ \hline
+IWIND & 0 & No wind effect\\ \hline
+ITIDE & 0 & No pressure effect\\ \hline
+IVEG & 0 & No vegitation effect\\ \hline
+DXC & $dx$ & see above\\ \hline
+GAMMA & $\gamma$ & see above\\ \hline
+D50 \; WF \; SG & $d_{50} \; w_f \; sg$ & see above, Conditional on IPROFL = 1\\ \hline
+EFFB \; EFFF \; SLP \; SLPOT & $ e_{b} \; e_{f} \; slp \; slpot$ & see above, Conditional on IPROFL = 1\\ \hline
+TANPHI  BLP & $ \tan \phi  \; blp $ & see above, Conditional on IPROFL = 1\\ \hline
+RWH & $rwh$ & See above\\ \hline
+ILAB & 0 & Assume continuous and bounded boundary condition data\\ \hline
+NWAVE &  & Number of wave conditions. Provide $nwave+1$ conditions for interpolation with ILAB=0\\ \hline
+NSURGE &  & Number of water level conditions. Provide $nsurge+1$ conditions for interpolation with ILAB=0\\ \hline
+\end{tabular}
+\end{center}
+%% \end{table}
+%% \begin{table}[h]
+\begin{center}
+\begin{tabular}{||c|c|c|c||}\hline
+time(s) & wave period(s) & root-mean-square wave height(m)& wave setup(m)\\ \hline
+\end{tabular}
+\end{center}
+%% \end{table}
+%% \begin{table}[h]
+\begin{center}
+\begin{tabular}{||c|c||}\hline
+time(s) & water level(m)\\ \hline
+\end{tabular}
+\end{center}
+%% \end{table}
+%% \begin{table}[h]
+\begin{center}
+%\begin{tabular}{||p{5cm}|c|p{5cm}||}\hline
+\begin{tabular}{||c|c|p{8cm}||}\hline
+Parameter& Allowed Values   & Meaning and Conditional  \\ \hline \hline
+NPINP &  & Number of bottom position data points  \\ \hline
+\end{tabular}
+\end{center}
+%% \end{table}
+%% \begin{table}[h]
+\begin{center}
+\begin{tabular}{||c|c|c||}\hline
+$x$(m) & $z_b$(m) & $f_w$\\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\clearpage
+
+\noindent {\bf Sample INFILE}
+For cases of fixed bed, IPROFL=0
+\begin{verbatim}
+3 
+------------------------------------------------------------ 
+CSHORE applied to idealized planar slope 
+------------------------------------------------------------ 
+1                                         ->ILINE
+0                                         ->IPROFL
+0                                         ->IPERM
+1                                         ->IOVER
+0                                         ->IWTRAN
+0                                         ->IPOND
+0                                         ->IWCINT
+0                                         ->IROLL 
+0                                         ->IWIND 
+0                                         ->ITIDE 
+0                                         ->IVEG 
+     1.0000                                ->DXC
+     0.8000                                ->GAMMA 
+     0.0200                               ->RWH 
+0                                         ->ILAB
+5                                         ->NWAVE 
+5                                         ->NSURGE 
+       0.00     8.0000     2.1000     0.0000
+    3600.00     8.0000     2.2000     0.0000
+    7200.00     8.0000     2.3000     0.0000
+   10800.00     8.0000     2.4000     0.0000
+   14400.00     8.0000     2.5000     0.0000
+   18000.00     8.0000     2.6000     0.0000
+       0.00     0.0000
+    3600.00     0.5000
+    7200.00     0.8660
+   10800.00     1.0000
+   14400.00     0.8660
+   18000.00     0.5000
+301                                  ->NBINP 
+     0.0000    -8.0000     0.0150
+     1.0000    -8.0000     0.0150
+     2.0000    -8.0000     0.0150
+     3.0000    -8.0000     0.0150
+     4.0000    -8.0000     0.0150
+     5.0000    -8.0000     0.0150
+     .
+     .
+     .
+   297.0000     7.7600     0.0150
+   298.0000     7.8400     0.0150
+   299.0000     7.9200     0.0150
+   300.0000     8.0000     0.0150
+
+\end{verbatim}
+
+For cases including sediment transport, IPROFL=1
+\begin{verbatim}
+3 
+------------------------------------------------------------ 
+CSHORE applied to idealized planar slope 
+------------------------------------------------------------ 
+1                                         ->ILINE
+1                                         ->IPROFL
+0                                         ->ISEDAV
+0                                         ->IPERM
+1                                         ->IOVER
+0                                         ->IWTRAN
+0                                         ->IPOND
+0                                         ->INFILT
+0                                         ->IWCINT
+0                                         ->IROLL 
+0                                         ->IWIND 
+0                                         ->ITIDE 
+0                                         ->IVEG 
+     1.0000                                ->DXC
+     0.8000                                ->GAMMA 
+     0.3000     0.0448     2.6500         ->D50 WF SG
+     0.0050     0.0100     0.5000     0.1000       ->EFFB EFFF SLP  SLPOT
+     0.6300     0.0010                    ->TANPHI BLP
+     0.0200                               ->RWH 
+0                                         ->ILAB
+5                                         ->NWAVE 
+5                                         ->NSURGE 
+       0.00     8.0000     2.1000     0.0000
+    3600.00     8.0000     2.2000     0.0000
+    7200.00     8.0000     2.3000     0.0000
+   10800.00     8.0000     2.4000     0.0000
+   14400.00     8.0000     2.5000     0.0000
+   18000.00     8.0000     2.6000     0.0000
+       0.00     0.0000
+    3600.00     0.5000
+    7200.00     0.8660
+   10800.00     1.0000
+   14400.00     0.8660
+   18000.00     0.5000
+301                                  ->NBINP 
+     0.0000    -8.0000     0.0150
+     1.0000    -8.0000     0.0150
+     2.0000    -8.0000     0.0150
+     3.0000    -8.0000     0.0150
+     4.0000    -8.0000     0.0150
+     5.0000    -8.0000     0.0150
+     .
+     .
+     .
+   297.0000     7.7600     0.0150
+   298.0000     7.8400     0.0150
+   299.0000     7.9200     0.0150
+   300.0000     8.0000     0.0150
+
+\end{verbatim}
+
+
+\end{document}

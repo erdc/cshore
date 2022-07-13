@@ -46,14 +46,15 @@ in.slpot  = .1;         % overtopping suspended load parameter
 in.tanphi = .630;       % tangent (sediment friction angle)        
 in.blp    = 0.001;      % bedload parameter                        
 in.rwh = .02;           % numerical rununp wire height 
-in.ilab = 0;            % controls the boundary condition timing. Don't change
+in.ilab = 0;            % controls the boundary condition timing. 
 in.fric_fac = .015;     % bottom friction factor
 
 % boundary conditions and timing
 ftime = 3*3600;      % [sec] final time, dictates model duration
 dt = 1*3600;         % time interval in seconds for wave and water level conditions
 if in.ilab==1;
-  in.timebc_wave = [dt/2:dt:ftime];
+  %in.timebc_wave = [dt/2:dt:ftime];
+  in.timebc_wave = [dt:dt:ftime];
 else
   in.timebc_wave = [0:dt:ftime];
 end

@@ -6,7 +6,7 @@ addpath('../mfiles')
 iplotbc     = 0;                  % 1 to plot the applied boundary conditions
 iplotmorpho = 1;                  % 1 to plot the computed morphology results
 iplothydro  = 1;                  % 1 to plot the computed hydrodynamic results
-iplotrunup  = 1;                  % 1 to plot the computed runup position
+iplotrunup  = 0;                  % 1 to plot the computed runup position
 isave       = 0;                  % 1 to save the computed results
 
 % CSHORE execution and physical params

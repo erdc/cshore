@@ -1,4 +1,4 @@
-close all
+  close all
 if ~exist('lidar_sm')
   load ./data/summary_lidar_science_small.mat
 end
@@ -32,6 +32,7 @@ for j  = 1:length(allresults)
   xlabel('date','fontname','times','fontsize',fs,'interpreter','latex')
   datetick
   legend(hh,'Data','CSHORE','Water level at SB')
+  print('-dpng', ['runup_',num2str(j),'.png']);
 end 
 
 for j  = 1:length(allresults)
@@ -52,7 +53,7 @@ for j  = 1:length(allresults)
 
   end
   
-  
+    print('-dpng', ['Hs_',num2str(j),'.png']);
   %  hh(2)=plot(allresults(j).g.date_bc,[allresults(j).results.hydro.runup_2_percent],'b-','linewidth',2);hold all
   %hh(3)=plot(allresults(j).g.date_bc,[allresults(j).g.wl],'k-','linewidth',2);hold all
   

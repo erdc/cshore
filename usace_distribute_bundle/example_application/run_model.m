@@ -6,7 +6,7 @@ addpath('../mfiles')
 iplotbc     = 0;                  % 1 to plot the applied boundary conditions
 iplotmorpho = 1;                  % 1 to plot the computed morphology results
 iplothydro  = 1;                  % 1 to plot the computed hydrodynamic results
-iplotrunup  = 0;                  % 1 to plot the computed runup position
+iplotrunup  = 1;                  % 1 to plot the computed runup position
 isave       = 0;                  % 1 to save the computed results
 
 % CSHORE execution and physical params
@@ -61,7 +61,7 @@ end
 in.timebc_surg = in.timebc_wave;
 in.nwave = length(in.timebc_wave); in.nsurg = in.nwave;dum = ones(1,in.nwave);
 in.Tp= 8*dum;        % constant spectral peak period in seconds
-in.Hrms = 2+.1*cumsum(dum); 
+in.Hrms = 2+.0*cumsum(dum); 
 in.Wsetup = 0*dum;   % wave setup at seaward boundary in meters
 in.swlbc = 0+1*sin((2*pi/(12*3600))*in.timebc_surg); % water level at seaward boundary in meters
 in.angle = 10*dum;    % constant incident wave angle at seaward boundary in
@@ -76,7 +76,7 @@ zb = [zb_off zb_off zb_on]; % zb points
 in.x = 0:in.dx:Lx;
 [j1 j2] = unique(x); 
 in.zb = interp1(x(j2),zb(j2),in.x);
-in.zb = in.zb + 5*exp(-(in.x-.85*Lx).^2/15^2);
+%in.zb = in.zb + 5*exp(-(in.x-.85*Lx).^2/15^2);
 in.fw = in.fric_fac*ones(size(in.zb)); % cross-shore values of bot fric
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%run cshore%%%%%%%%%%%%%%%%%%%%

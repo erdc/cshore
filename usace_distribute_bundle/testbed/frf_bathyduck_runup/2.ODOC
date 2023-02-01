@@ -1,0 +1,739 @@
+ CSHORE USACE version, 2014 last edit 2022-03-22                       
+ ------------------------------------------------------------          
+ CSHORE applied to FRF cross-shore array for runup                     
+ ------------------------------------------------------------          
+COMPUTATION OPTION ILINE=  1
+Alongshore gradient IQYDY=  0
+ILINE cross-shore lines are computed together
+
+COMPUTATION OPTION IPROFL =  0
+Bottom profile is fixed and No sediment transport                is computed
+
+NO ROLLER is included in computation
+
+NO wave and current interaction included
+
+WAVE OVERTOPPING, OVERFLOW AND SEEPAGE
+Runup wire height (m)               RWH=    0.010
+Initial crest location for L=1      JCREST=   536
+Initial crest height (m) for L=1    RCREST=    1.943
+Swash velocity parameter            AWD=    2.000
+Output exceedance probability       EWD=    0.015
+
+IMPERMEABLE BOTTOM assumed
+
+NO wind shear stresses included
+
+NO vegetation in computation domain
+
+BREAKER RATIO PARAMETER
+Input Gamma = 0.80
+
+
+INPUT WAVE AND WATER LEVEL:NTIME=    20 from TIME=0.0
+Output lines are limited to first and last    10 lines
+End Time(sec) Tp (sec)  Hrms(m) Wave Setup(m)Storm tide(m) ANGLE(deg)
+
+        0.0     8.0267     1.0586     0.0000     0.8280   -16.7211
+     3600.0     7.8547     0.9539     0.0000     0.7280   -15.2069
+     7200.0     8.3077     0.9415     0.0000     0.4890   -15.5590
+    10800.0     8.1128     0.8558     0.0000     0.1110   -16.9382
+    14400.0     8.1822     0.8911     0.0000    -0.2670   -17.0879
+    18000.0     8.0089     0.8512     0.0000    -0.5220   -17.5328
+    21600.0     8.5054     0.9430     0.0000    -0.6160   -16.4449
+    25200.0     7.8954     0.8749     0.0000    -0.5590   -13.8826
+    28800.0     8.2370     1.0176     0.0000    -0.3670   -16.0752
+    32400.0     8.2564     0.9375     0.0000    -0.0530    -9.2232
+    36000.0     8.3603     0.8244     0.0000     0.3160   -12.6678
+    39600.0     8.5817     0.9081     0.0000     0.5630   -17.0666
+    43200.0     8.3603     0.8684     0.0000     0.6370   -14.2607
+    46800.0     8.3171     0.8216     0.0000     0.6020   -18.8013
+    50400.0     8.3086     0.7655     0.0000     0.4100   -15.2876
+    54000.0     8.8926     0.8569     0.0000     0.1610   -14.9049
+    57600.0     8.0498     0.7458     0.0000    -0.1790   -11.2028
+    61200.0     7.7504     0.8373     0.0000    -0.4200    -7.2978
+    64800.0     8.1198     1.0513     0.0000    -0.4820    -8.3995
+    68400.0     7.2280     0.9928     0.0000    -0.3980    -5.6445
+
+INPUT BEACH AND STRUCTURE GEOMETRY
+Cross-shore line number               L=    1
+Alongshore coordinate             YLINE=         0.0000
+Line angle(degrees)              AGLINE=         0.0000
+Depth at seaward boundary (m)          =       6.579100
+Number of input points            NBINP=       536
+Output lines are limited to first and last 5 lines
+Node spacing (m)                    DX=       1.000000
+Shoreline location (m) of Zb=0       Xs=     510.549601
+Maximum landward node              JMAX=     536
+
+X  (m)      Zb  (m)  Fric.factor  Wire mesh
+     0.000    -6.579
+     1.000    -6.569     0.015
+     2.000    -6.610     0.015
+     3.000    -6.600     0.015
+     4.000    -6.590     0.015
+   531.000     1.637     0.015
+   532.000     1.719     0.015
+   533.000     1.806     0.015
+   534.000     1.876     0.015
+   535.000     1.943     0.015
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =        0.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=     526
+X-coordinate at JR (m)                        XR=     525.000000
+Bottom elevation at JR (m)                    ZR=       1.046320
+Mean water depth at this node (m)          H(JR)=       0.095447
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=       0.828000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.943293
+Node number at SWL                          JSWL=     524
+Wet and dry transition node                  JWD=     524
+Mean water depth H1(m) at node JWD            H1=       0.164027
+End node of wet and dry zone                JDRY=     536
+Wave overtopping probability at JCREST      POTF=       0.466931
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.019510114
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.019510114
+QO iteration number                        ITEQO=   20
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.100648
+Mean runup elevation above Z=0 (m)        ERMEAN=       1.216602
+Runup standard deviation (m)              SIGRUN=       0.172097
+Significant runup height above Z=0 (m)       R13=       1.855813
+2 percent runup height above Z=0 (m)         R2P=       2.111497
+1 Percent runup height above z=0 (m)         R1P=       2.188202
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =     3600.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=     525
+X-coordinate at JR (m)                        XR=     524.000000
+Bottom elevation at JR (m)                    ZR=       0.953220
+Mean water depth at this node (m)          H(JR)=       0.083539
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=       0.728000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.943293
+Node number at SWL                          JSWL=     523
+Wet and dry transition node                  JWD=     523
+Mean water depth H1(m) at node JWD            H1=       0.145569
+End node of wet and dry zone                JDRY=     536
+Wave overtopping probability at JCREST      POTF=       0.311470
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.008650329
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.008650329
+QO iteration number                        ITEQO=   20
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.096612
+Mean runup elevation above Z=0 (m)        ERMEAN=       1.107239
+Runup standard deviation (m)              SIGRUN=       0.168679
+Significant runup height above Z=0 (m)       R13=       1.721526
+2 percent runup height above Z=0 (m)         R2P=       1.967241
+1 Percent runup height above z=0 (m)         R1P=       2.040955
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =     7200.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=     523
+X-coordinate at JR (m)                        XR=     522.000000
+Bottom elevation at JR (m)                    ZR=       0.781520
+Mean water depth at this node (m)          H(JR)=       0.063037
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=       0.489000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.943293
+Node number at SWL                          JSWL=     520
+Wet and dry transition node                  JWD=     520
+Mean water depth H1(m) at node JWD            H1=       0.140942
+End node of wet and dry zone                JDRY=     536
+Wave overtopping probability at JCREST      POTF=       0.166229
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.003196275
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.003196275
+QO iteration number                        ITEQO=   19
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.085536
+Mean runup elevation above Z=0 (m)        ERMEAN=       0.888864
+Runup standard deviation (m)              SIGRUN=       0.174476
+Significant runup height above Z=0 (m)       R13=       1.494019
+2 percent runup height above Z=0 (m)         R2P=       1.736081
+1 Percent runup height above z=0 (m)         R1P=       1.808700
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =    10800.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=     517
+X-coordinate at JR (m)                        XR=     516.000000
+Bottom elevation at JR (m)                    ZR=       0.357380
+Mean water depth at this node (m)          H(JR)=       0.058659
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=       0.111000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.943293
+Node number at SWL                          JSWL=     514
+Wet and dry transition node                  JWD=     514
+Mean water depth H1(m) at node JWD            H1=       0.122202
+End node of wet and dry zone                JDRY=     536
+Wave overtopping probability at JCREST      POTF=       0.021171
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.000218715
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.000218715
+QO iteration number                        ITEQO=    3
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.065637
+Mean runup elevation above Z=0 (m)        ERMEAN=       0.453327
+Runup standard deviation (m)              SIGRUN=       0.126525
+Significant runup height above Z=0 (m)       R13=       0.862691
+2 percent runup height above Z=0 (m)         R2P=       1.026437
+1 Percent runup height above z=0 (m)         R1P=       1.075561
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =    14400.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=     511
+X-coordinate at JR (m)                        XR=     510.000000
+Bottom elevation at JR (m)                    ZR=      -0.026940
+Mean water depth at this node (m)          H(JR)=       0.058005
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=      -0.267000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.943293
+Node number at SWL                          JSWL=     508
+Wet and dry transition node                  JWD=     508
+Mean water depth H1(m) at node JWD            H1=       0.121187
+End node of wet and dry zone                JDRY=     536
+Wave overtopping probability at JCREST      POTF=       0.002757
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.000050720
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.000050720
+QO iteration number                        ITEQO=    1
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.065797
+Mean runup elevation above Z=0 (m)        ERMEAN=       0.078375
+Runup standard deviation (m)              SIGRUN=       0.137219
+Significant runup height above Z=0 (m)       R13=       0.515939
+2 percent runup height above Z=0 (m)         R2P=       0.690964
+1 Percent runup height above z=0 (m)         R1P=       0.743472
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =    18000.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=     506
+X-coordinate at JR (m)                        XR=     505.000000
+Bottom elevation at JR (m)                    ZR=      -0.326480
+Mean water depth at this node (m)          H(JR)=       0.063690
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=      -0.522000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.943293
+Node number at SWL                          JSWL=     503
+Wet and dry transition node                  JWD=     503
+Mean water depth H1(m) at node JWD            H1=       0.126344
+End node of wet and dry zone                JDRY=     536
+Wave overtopping probability at JCREST      POTF=       0.001508
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.000025687
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.000025687
+QO iteration number                        ITEQO=    1
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.058468
+Mean runup elevation above Z=0 (m)        ERMEAN=      -0.200067
+Runup standard deviation (m)              SIGRUN=       0.129849
+Significant runup height above Z=0 (m)       R13=       0.195658
+2 percent runup height above Z=0 (m)         R2P=       0.353949
+1 Percent runup height above z=0 (m)         R1P=       0.401436
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =    21600.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=     505
+X-coordinate at JR (m)                        XR=     504.000000
+Bottom elevation at JR (m)                    ZR=      -0.383920
+Mean water depth at this node (m)          H(JR)=       0.056633
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=      -0.616000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.943293
+Node number at SWL                          JSWL=     502
+Wet and dry transition node                  JWD=     502
+Mean water depth H1(m) at node JWD            H1=       0.117694
+End node of wet and dry zone                JDRY=     536
+Wave overtopping probability at JCREST      POTF=       0.000724
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.000009358
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.000009358
+QO iteration number                        ITEQO=    1
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.057491
+Mean runup elevation above Z=0 (m)        ERMEAN=      -0.281823
+Runup standard deviation (m)              SIGRUN=       0.126313
+Significant runup height above Z=0 (m)       R13=       0.105746
+2 percent runup height above Z=0 (m)         R2P=       0.260774
+1 Percent runup height above z=0 (m)         R1P=       0.307282
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =    25200.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=     505
+X-coordinate at JR (m)                        XR=     504.000000
+Bottom elevation at JR (m)                    ZR=      -0.383920
+Mean water depth at this node (m)          H(JR)=       0.074622
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=      -0.559000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.943293
+Node number at SWL                          JSWL=     502
+Wet and dry transition node                  JWD=     502
+Mean water depth H1(m) at node JWD            H1=       0.140371
+End node of wet and dry zone                JDRY=     536
+Wave overtopping probability at JCREST      POTF=       0.002702
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.000061683
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.000061683
+QO iteration number                        ITEQO=    1
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.058610
+Mean runup elevation above Z=0 (m)        ERMEAN=      -0.209557
+Runup standard deviation (m)              SIGRUN=       0.158764
+Significant runup height above Z=0 (m)       R13=       0.264338
+2 percent runup height above Z=0 (m)         R2P=       0.453896
+1 Percent runup height above z=0 (m)         R1P=       0.510763
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =    28800.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=     510
+X-coordinate at JR (m)                        XR=     509.000000
+Bottom elevation at JR (m)                    ZR=      -0.093080
+Mean water depth at this node (m)          H(JR)=       0.054988
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=      -0.367000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.943293
+Node number at SWL                          JSWL=     506
+Wet and dry transition node                  JWD=     506
+Mean water depth H1(m) at node JWD            H1=       0.136908
+End node of wet and dry zone                JDRY=     536
+Wave overtopping probability at JCREST      POTF=       0.007311
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.000097138
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.000097138
+QO iteration number                        ITEQO=    2
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.064453
+Mean runup elevation above Z=0 (m)        ERMEAN=       0.008566
+Runup standard deviation (m)              SIGRUN=       0.157473
+Significant runup height above Z=0 (m)       R13=       0.501535
+2 percent runup height above Z=0 (m)         R2P=       0.698723
+1 Percent runup height above z=0 (m)         R1P=       0.757879
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =    32400.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=     514
+X-coordinate at JR (m)                        XR=     513.000000
+Bottom elevation at JR (m)                    ZR=       0.171120
+Mean water depth at this node (m)          H(JR)=       0.078891
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=      -0.053000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.943293
+Node number at SWL                          JSWL=     511
+Wet and dry transition node                  JWD=     511
+Mean water depth H1(m) at node JWD            H1=       0.150584
+End node of wet and dry zone                JDRY=     536
+Wave overtopping probability at JCREST      POTF=       0.044247
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.000609350
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.000609350
+QO iteration number                        ITEQO=    9
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.063763
+Mean runup elevation above Z=0 (m)        ERMEAN=       0.348811
+Runup standard deviation (m)              SIGRUN=       0.179073
+Significant runup height above Z=0 (m)       R13=       0.900786
+2 percent runup height above Z=0 (m)         R2P=       1.121576
+1 Percent runup height above z=0 (m)         R1P=       1.187813
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =    36000.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=     520
+X-coordinate at JR (m)                        XR=     519.000000
+Bottom elevation at JR (m)                    ZR=       0.555220
+Mean water depth at this node (m)          H(JR)=       0.070978
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=       0.316000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.943293
+Node number at SWL                          JSWL=     517
+Wet and dry transition node                  JWD=     517
+Mean water depth H1(m) at node JWD            H1=       0.142520
+End node of wet and dry zone                JDRY=     536
+Wave overtopping probability at JCREST      POTF=       0.101153
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.001629047
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.001629047
+QO iteration number                        ITEQO=   12
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.075796
+Mean runup elevation above Z=0 (m)        ERMEAN=       0.701143
+Runup standard deviation (m)              SIGRUN=       0.173742
+Significant runup height above Z=0 (m)       R13=       1.270746
+2 percent runup height above Z=0 (m)         R2P=       1.498588
+1 Percent runup height above z=0 (m)         R1P=       1.566940
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =    39600.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=     523
+X-coordinate at JR (m)                        XR=     522.000000
+Bottom elevation at JR (m)                    ZR=       0.781520
+Mean water depth at this node (m)          H(JR)=       0.085570
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=       0.563000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.943293
+Node number at SWL                          JSWL=     521
+Wet and dry transition node                  JWD=     521
+Mean water depth H1(m) at node JWD            H1=       0.142753
+End node of wet and dry zone                JDRY=     536
+Wave overtopping probability at JCREST      POTF=       0.207543
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.004524834
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.004524834
+QO iteration number                        ITEQO=   20
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.088871
+Mean runup elevation above Z=0 (m)        ERMEAN=       0.939228
+Runup standard deviation (m)              SIGRUN=       0.148294
+Significant runup height above Z=0 (m)       R13=       1.474992
+2 percent runup height above Z=0 (m)         R2P=       1.689298
+1 Percent runup height above z=0 (m)         R1P=       1.753589
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =    43200.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=     524
+X-coordinate at JR (m)                        XR=     523.000000
+Bottom elevation at JR (m)                    ZR=       0.864960
+Mean water depth at this node (m)          H(JR)=       0.081227
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=       0.637000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.943293
+Node number at SWL                          JSWL=     522
+Wet and dry transition node                  JWD=     522
+Mean water depth H1(m) at node JWD            H1=       0.139715
+End node of wet and dry zone                JDRY=     536
+Wave overtopping probability at JCREST      POTF=       0.233143
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.005211581
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.005211581
+QO iteration number                        ITEQO=   20
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.092229
+Mean runup elevation above Z=0 (m)        ERMEAN=       1.012137
+Runup standard deviation (m)              SIGRUN=       0.164281
+Significant runup height above Z=0 (m)       R13=       1.600306
+2 percent runup height above Z=0 (m)         R2P=       1.835574
+1 Percent runup height above z=0 (m)         R1P=       1.906154
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =    46800.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=     524
+X-coordinate at JR (m)                        XR=     523.000000
+Bottom elevation at JR (m)                    ZR=       0.864960
+Mean water depth at this node (m)          H(JR)=       0.065851
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=       0.602000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.943293
+Node number at SWL                          JSWL=     521
+Wet and dry transition node                  JWD=     521
+Mean water depth H1(m) at node JWD            H1=       0.148666
+End node of wet and dry zone                JDRY=     536
+Wave overtopping probability at JCREST      POTF=       0.235105
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.005802377
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.005802377
+QO iteration number                        ITEQO=   20
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.090083
+Mean runup elevation above Z=0 (m)        ERMEAN=       0.977450
+Runup standard deviation (m)              SIGRUN=       0.190618
+Significant runup height above Z=0 (m)       R13=       1.631343
+2 percent runup height above Z=0 (m)         R2P=       1.892900
+1 Percent runup height above z=0 (m)         R1P=       1.971367
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =    50400.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=     521
+X-coordinate at JR (m)                        XR=     520.000000
+Bottom elevation at JR (m)                    ZR=       0.626740
+Mean water depth at this node (m)          H(JR)=       0.074798
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=       0.410000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.943293
+Node number at SWL                          JSWL=     518
+Wet and dry transition node                  JWD=     518
+Mean water depth H1(m) at node JWD            H1=       0.150181
+End node of wet and dry zone                JDRY=     536
+Wave overtopping probability at JCREST      POTF=       0.149747
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.003021920
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.003021920
+QO iteration number                        ITEQO=   19
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.079933
+Mean runup elevation above Z=0 (m)        ERMEAN=       0.783855
+Runup standard deviation (m)              SIGRUN=       0.188944
+Significant runup height above Z=0 (m)       R13=       1.402099
+2 percent runup height above Z=0 (m)         R2P=       1.649397
+1 Percent runup height above z=0 (m)         R1P=       1.723586
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =    54000.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=     518
+X-coordinate at JR (m)                        XR=     517.000000
+Bottom elevation at JR (m)                    ZR=       0.421400
+Mean water depth at this node (m)          H(JR)=       0.069558
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=       0.161000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.943293
+Node number at SWL                          JSWL=     514
+Wet and dry transition node                  JWD=     514
+Mean water depth H1(m) at node JWD            H1=       0.158801
+End node of wet and dry zone                JDRY=     536
+Wave overtopping probability at JCREST      POTF=       0.100460
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.001885436
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.001885436
+QO iteration number                        ITEQO=   14
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.069180
+Mean runup elevation above Z=0 (m)        ERMEAN=       0.554361
+Runup standard deviation (m)              SIGRUN=       0.178603
+Significant runup height above Z=0 (m)       R13=       1.119266
+2 percent runup height above Z=0 (m)         R2P=       1.345228
+1 Percent runup height above z=0 (m)         R1P=       1.413016
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =    57600.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=     512
+X-coordinate at JR (m)                        XR=     511.000000
+Bottom elevation at JR (m)                    ZR=       0.037760
+Mean water depth at this node (m)          H(JR)=       0.064787
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=      -0.179000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.943293
+Node number at SWL                          JSWL=     509
+Wet and dry transition node                  JWD=     509
+Mean water depth H1(m) at node JWD            H1=       0.133300
+End node of wet and dry zone                JDRY=     536
+Wave overtopping probability at JCREST      POTF=       0.009951
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.000145257
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.000145257
+QO iteration number                        ITEQO=    2
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.064213
+Mean runup elevation above Z=0 (m)        ERMEAN=       0.169423
+Runup standard deviation (m)              SIGRUN=       0.154904
+Significant runup height above Z=0 (m)       R13=       0.648298
+2 percent runup height above Z=0 (m)         R2P=       0.839848
+1 Percent runup height above z=0 (m)         R1P=       0.897313
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =    61200.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=     508
+X-coordinate at JR (m)                        XR=     507.000000
+Bottom elevation at JR (m)                    ZR=      -0.210440
+Mean water depth at this node (m)          H(JR)=       0.063207
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=      -0.420000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.943293
+Node number at SWL                          JSWL=     505
+Wet and dry transition node                  JWD=     505
+Mean water depth H1(m) at node JWD            H1=       0.125164
+End node of wet and dry zone                JDRY=     536
+Wave overtopping probability at JCREST      POTF=       0.002008
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.000036033
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.000036033
+QO iteration number                        ITEQO=    1
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.061625
+Mean runup elevation above Z=0 (m)        ERMEAN=      -0.083232
+Runup standard deviation (m)              SIGRUN=       0.136179
+Significant runup height above Z=0 (m)       R13=       0.339274
+2 percent runup height above Z=0 (m)         R2P=       0.508276
+1 Percent runup height above z=0 (m)         R1P=       0.558977
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =    64800.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=     508
+X-coordinate at JR (m)                        XR=     507.000000
+Bottom elevation at JR (m)                    ZR=      -0.210440
+Mean water depth at this node (m)          H(JR)=       0.058810
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=      -0.482000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.943293
+Node number at SWL                          JSWL=     504
+Wet and dry transition node                  JWD=     504
+Mean water depth H1(m) at node JWD            H1=       0.139796
+End node of wet and dry zone                JDRY=     536
+Wave overtopping probability at JCREST      POTF=       0.003632
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.000088224
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.000088224
+QO iteration number                        ITEQO=    1
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.061300
+Mean runup elevation above Z=0 (m)        ERMEAN=      -0.098451
+Runup standard deviation (m)              SIGRUN=       0.155818
+Significant runup height above Z=0 (m)       R13=       0.383645
+2 percent runup height above Z=0 (m)         R2P=       0.576484
+1 Percent runup height above z=0 (m)         R1P=       0.634335
+
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =    68400.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=     509
+X-coordinate at JR (m)                        XR=     508.000000
+Bottom elevation at JR (m)                    ZR=      -0.154780
+Mean water depth at this node (m)          H(JR)=       0.062097
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=      -0.398000
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       1.943293
+Node number at SWL                          JSWL=     505
+Wet and dry transition node                  JWD=     505
+Mean water depth H1(m) at node JWD            H1=       0.146286
+End node of wet and dry zone                JDRY=     536
+Wave overtopping probability at JCREST      POTF=       0.009351
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.000152697
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.000152697
+QO iteration number                        ITEQO=    2
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.062965
+Mean runup elevation above Z=0 (m)        ERMEAN=      -0.025447
+Runup standard deviation (m)              SIGRUN=       0.153984
+Significant runup height above Z=0 (m)       R13=       0.453918
+2 percent runup height above Z=0 (m)         R2P=       0.645664
+1 Percent runup height above z=0 (m)         R1P=       0.703188
+

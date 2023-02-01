@@ -1,0 +1,93 @@
+ CSHORE USACE version, 2014 last edit 2022-03-22                       
+ ------------------------------------------------------------          
+ CSHORE applied to Agate, OR                                           
+ ------------------------------------------------------------          
+COMPUTATION OPTION ILINE=  1
+Alongshore gradient IQYDY=  0
+ILINE cross-shore lines are computed together
+
+COMPUTATION OPTION IPROFL =  0
+Bottom profile is fixed and No sediment transport                is computed
+
+NO ROLLER is included in computation
+
+NO wave and current interaction included
+
+WAVE OVERTOPPING, OVERFLOW AND SEEPAGE
+Runup wire height (m)               RWH=    0.020
+Initial crest location for L=1      JCREST=  1211
+Initial crest height (m) for L=1    RCREST=    4.968
+Swash velocity parameter            AWD=    2.000
+Output exceedance probability       EWD=    0.015
+
+IMPERMEABLE BOTTOM assumed
+
+NO wind shear stresses included
+
+NO vegetation in computation domain
+
+BREAKER RATIO PARAMETER
+Input Gamma = 0.50
+
+
+INPUT WAVE AND WATER LEVEL:NTIME=     1 from TIME=0.0
+Output lines are limited to first and last    10 lines
+End Time(sec) Tp (sec)  Hrms(m) Wave Setup(m)Storm tide(m) ANGLE(deg)
+
+        0.0    15.5652     3.7611     0.0000     2.1396     0.0000
+
+INPUT BEACH AND STRUCTURE GEOMETRY
+Cross-shore line number               L=    1
+Alongshore coordinate             YLINE=         0.0000
+Line angle(degrees)              AGLINE=         0.0000
+Depth at seaward boundary (m)          =      10.000000
+Number of input points            NBINP=      1213
+Output lines are limited to first and last 5 lines
+Node spacing (m)                    DX=       1.000000
+Shoreline location (m) of Zb=0       Xs=     879.930693
+Maximum landward node              JMAX=    1213
+
+X  (m)      Zb  (m)  Fric.factor  Wire mesh
+     0.000   -10.000
+     1.000    -9.990     0.015
+     2.000    -9.979     0.015
+     3.000    -9.969     0.015
+     4.000    -9.959     0.015
+  1208.000     4.831     0.015
+  1209.000     4.909     0.015
+  1210.000     4.968     0.015
+  1211.000     4.933     0.015
+  1212.000     4.898     0.015
+
+**********COMPUTED CROSS-SHORE VARIATIONS**********
+on input bottom profile at TIME =        0.0  Line L=  1
+
+LANDWARD WET COMPUTATION LIMIT
+Most landward node of wet zone computation    JR=    1080
+X-coordinate at JR (m)                        XR=    1079.000000
+Bottom elevation at JR (m)                    ZR=       2.578000
+Mean water depth at this node (m)          H(JR)=       0.154078
+
+COMBINED WAVE OVERTOPPING AND OVERFLOW
+Still water level above Z=0 (m)              SWL=       2.139600
+Cross-shore line number                        L=    1
+Structure or dune creat elevation (m)     RCREST=       4.968100
+Node number at SWL                          JSWL=    1058
+Wet and dry transition node                  JWD=    1058
+Mean water depth H1(m) at node JWD            H1=       0.379140
+End node of wet and dry zone                JDRY=    1213
+Wave overtopping probability at JCREST      POTF=       0.342916
+Comb. overtopping and overflow rate(m*m/s)  QOTF=    0.042137794
+Seepage rate(m*m/s) at JCREST                 QP=    0.000000000
+Total rate (QOTF+QP)(m*m/s)                     =    0.042137794
+QO iteration number                        ITEQO=   20
+
+EMPIRICAL WAVE RUNUP
+Cross-shore line number                        L=    1
+Swash zone bottome slope                  SLPRUN=       0.018879
+Mean runup elevation above Z=0 (m)        ERMEAN=       3.104354
+Runup standard deviation (m)              SIGRUN=       0.304608
+Significant runup height above Z=0 (m)       R13=       3.832430
+2 percent runup height above Z=0 (m)         R2P=       4.123660
+1 Percent runup height above z=0 (m)         R1P=       4.211029
+

@@ -22,3 +22,16 @@ config_*
 cshore_m
 do_not_git
 junk
+summary_lidar_science.mat
+OB*
+OX*
+OY*
+OC*
+OD*
+OE*
+OL*
+OM*
+OP*
+OR*
+OS*
+OT*

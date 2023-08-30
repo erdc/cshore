@@ -5721,6 +5721,14 @@ C       IF(HWD(JP1).LT.HWDMIN.OR.DUM.GT.1000D0) THEN
 C       IF(DUM.GT.1000D0.AND.JP1.GT.JCREST(L)) JMAX(L)=JP1
           GOTO 110
         ENDIF
+
+        IF((JP1-JWD.gt.6).and.
+     +       ((HWD(JP1)-HWD(JP1-5))/(5.*DX).GT.-1e-6).and.
+     +       (HWD(JP1).LT.1.e4*HWDMIN).and.
+     +       (ZB(JP1,L).LE.ZB(JP1-5,L)))  THEN
+          JDRY = JP1
+          GOTO 110
+        ENDIF
 C     
         IF(J.EQ.JEND) JDRY=JP1
  100  CONTINUE  

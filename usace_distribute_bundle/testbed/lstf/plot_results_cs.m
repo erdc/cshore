@@ -4,7 +4,7 @@ load ./data/summary_sedflux.mat
 load results 
 load g_in
 clear hh hlabs
-fs = 24;
+fs = 14;
 
 figure;
 plot(results.hydro(end).x,results.hydro(end).Hrms,'linewidth',2);hold all

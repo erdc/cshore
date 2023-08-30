@@ -19,7 +19,7 @@ for i  = 1:length(lidar_sm(ind).wg_Hs);
   [ junk wginds(i)] = min(abs(x(i)-x2));
 end
 
-fs = 24;
+fs = 14;
 
 for j  = 1:length(allresults)
   figure(j);clf
@@ -32,6 +32,7 @@ for j  = 1:length(allresults)
   xlabel('date','fontname','times','fontsize',fs,'interpreter','latex')
   datetick
   legend(hh,'Data','CSHORE','Water level at SB')
+    set(gcf,'position',[600 500 900 400])
   print('-dpng', ['runup_',num2str(j),'.png']);
 end 
 
@@ -40,7 +41,7 @@ for j  = 1:length(allresults)
   figure(j+length(allresults));clf;orient tall;
   for k = length(x):-1:1
     subplot(length(x),1,length(x)-k+1);
-    plot(allresults(j).g.date_bc,Hs(wginds(k),:),'b-','markerfacecolor','k');hold all
+    plot(allresults(j).g.date_bc,Hs(wginds(k),:),'b-','linewidth',2,'markerfacecolor','k');hold all
     plot(allresults(j).g.date_bc',allresults(j).lid_Hs(:,k),'rs','markerfacecolor','k');hold all
     a = axis;
     text(a(1)+.01*(a(2)-a(1)),a(4)-.2*(a(4)-a(3)),{['$x_{frf}$ = ',num2str(x(k))]; ...
@@ -60,6 +61,28 @@ for j  = 1:length(allresults)
 
   %legend(hh,'Data','CSHORE','Water level at SB')
 end 
+
+
+for j  = 1:length(allresults)
+  figure
+  x = allresults(j).g.x_offset-allresults(j).results.morpho.x;
+  x2  = lidar_sm(ind).wg_x;
+  zb = allresults(j).results.morpho.zb;
+  plot(x,zeros(size(x)),'linewidth',3);hold all
+  fill([x;x(end);x(1)],[zb; -20; -20],[.9 .9 .7])
+  plot([x2;x2],[ones(size(x2));-ones(size(x2))],'k')
+  axis([70 600 -6 2.9])
+  set(gcf,'position',[600 500 900 400])
+  title(['FRF Domain, ',datestr(allresults(j).g.begin_date)],'fontsize',fs,'interpreter','latex')
+  ylabel('$z [m]$','fontname','times','fontsize',fs,'interpreter','latex')
+  xlabel('x [m]','fontname','times','fontsize',fs,'interpreter','latex')
+  text(100,2,{'Inner Surf';'Wave Gauges'},'fontname','times','fontsize',fs,'interpreter','latex')
+    print('-dpng', ['domain_',num2str(j),'.png']);
+end
+
+  
+  
+
 
 
 

@@ -217,8 +217,7 @@ C     MAXITE = 20 for maximum number of iteration
 C     
 C     Store the first line of this CSHORE program on ODOC output file
 C     ------------------------------------------------------------------
-      VER = 'CSHORE USACE version, 2014 last edit 2024-03-14   ' !bdj
-C      VER = 'CSHORE USACE version, 2014 last edit 2022-03-22  ' !bdj
+      VER = 'CSHORE USACE version, 2014 last edit 2022-03-22  ' !bdj
 C      VER = 'CSHORE USACE version, 2014 last edit 2019-02-08 ' !bdj
 C      VER = 'CSHORE USACE version, 2014 last edit 2018-08-28 ' !bdj 
 C      VER = 'CSHORE USACE version, 2014 last edit 2016-01-14' !bdj 
@@ -4277,7 +4276,6 @@ C     QSY(J)= Longshore suspended sediment transport rate (m*m/s)
 C     Q(J)  = total cross-shore sedimet transport rate including void
 C     (m*m/s) used for beach profile change computation 
 C     
-      IGMILD = 0 !bdj 2024-03-11 
       IF(TIME.EQ.0.D0) THEN
         BSLOP1 = -TANPHI*(GSLMAX-1.D0)/GSLMAX
         BSLOP2 =  TANPHI*(GSLMAX+1.D0)/(GSLMAX+2.D0)
@@ -5150,7 +5148,6 @@ C     NUM can be even or odd integer
         NEVEN = 1
       ELSE
         NEND = NUM
-        NEVEN = 0!bdj 2024-03-11 
       ENDIF
       SE = F(2)
       SO = 0.D0

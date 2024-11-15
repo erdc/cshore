@@ -14,3 +14,6 @@ The model accounts for wave and current interaction, bedload,
 suspended load, and wave-related sediment transport. The interested
 reader is referred to Kobayashi et al. 2009 for a detailed description
 of the model formulation of these processes.
+
+# build instructions 
+`gfortran CSHORE_USACE.f -o cshore.exe`

@@ -35,6 +35,41 @@
 \newcommand{\etal}{ {\it et al.} }
 \newcommand{\e}{\epsilon}
 \begin{document}
+\section*{CSHORE Execution}
+CSHORE is distributed as \verb+FORTRAN+ code located  in the \verb+src-repo+
+directory.  Two pre-compiled executables for Windows and Linux, with
+filenames \verb+cshore_usace_win.out+ and
+\verb+CSHORE_USACE_LINUX.out+, respectively, are also included in the
+\verb+usace_distribute_bundle/bin/+ directory.
+
+Model execution is completed through either scripting or execution at
+the command line.  A Matlab script example is provided in
+\verb+usace_distribute_bundle/example_application+ as
+\verb+run_model.m+.  Command line execution is accomplished by calling
+the CSHORE executable from a directory that includes an input file
+named \verb+infile+.  For example, execution from a Windows operating system:
+\begin{verbatim}
+Z:\wes\cshore-git>cd usace_distribute_bundle\example_application
+
+Z:\wes\cshore-git\usace_distribute_bundle\example_application>..\bin\cshore_usace_win.out
+ CSHORE USACE version, 2014 last edit 2024-03-14
+ ------------------------------------------------------------
+ CSHORE applied to idealized planar slope
+ ------------------------------------------------------------
+\end{verbatim}
+
+Similarly, execution from a Linux system:
+
+\begin{verbatim}
+$ cd usace_distribute_bundle/example_application/
+$ ../bin/CSHORE_USACE_LINUX.out 
+ CSHORE USACE version, 2014 last edit 2024-03-14                       
+ ------------------------------------------------------------          
+ CSHORE applied to idealized planar slope                              
+ ------------------------------------------------------------          
+\end{verbatim}
+
+\section*{CSHORE Parameters}
 
 \noindent The CSHORE family of models has dependencies on the following scalars:
 

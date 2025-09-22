@@ -217,7 +217,8 @@ C     MAXITE = 20 for maximum number of iteration
 C     
 C     Store the first line of this CSHORE program on ODOC output file
 C     ------------------------------------------------------------------
-      VER = 'CSHORE USACE version, 2014 last edit 2024-03-14   ' !bdj
+      VER = 'CSHORE USACE version, 2014 last edit 2025-04-07   ' !bdj
+C      VER = 'CSHORE USACE version, 2014 last edit 2024-03-14   ' !bdj
 C      VER = 'CSHORE USACE version, 2014 last edit 2022-03-22  ' !bdj
 C      VER = 'CSHORE USACE version, 2014 last edit 2019-02-08 ' !bdj
 C      VER = 'CSHORE USACE version, 2014 last edit 2018-08-28 ' !bdj 

@@ -36,6 +36,34 @@
 \newcommand{\e}{\epsilon}
 \begin{document}
 \section*{CSHORE Execution}
+The CSHORE model is a combined wave, current, and sand transport model
+that operates under the assumption of longshore uniformity.  Wave and
+current estimates derive from the numerical integration of the
+depth-averaged energy, momentum, and continuity equations.
+Process-based sediment transport algorithms for a nearshore breaking
+wave environment provide distinct estimates for bedload, suspended
+load, and wave-related sediment transport.  Generally speaking, when
+applied in an appropriate manner, the CSHORE model provides more
+accurate results when compare to previously-used models.
+
+The application of CSHORE is appropriate for cases of approximately
+alongshore-uniform beaches with waves approaching with angles less
+than 80 degrees with respect to a shore normal.  The profile can be
+comprised of a mixture of sediment and hardbottom, although CSHORE is
+formulated for use with a single grain size, and so application to
+cases of wide or bimodal grain size distribution may be
+inappropriate. The CSHORE model was developed making use of the
+simplifying assumption that overtopping is wave-driven and
+intermittent.  The officially-supported CSHORE code will terminate
+execution is the water level at the seaward boundary exceeds the
+highest bed elevation point in the domain.  Users who are inclined to
+use CSHORE without his restriction can contact
+\verb+Bradley.D.Johnson@usace.army.mil+ for code without restriction, but
+advised to exercise caution in this model application.
+
+
+
+
 CSHORE is distributed as \verb+FORTRAN+ code located in the
 \verb+src-repo+ directory.  Two pre-compiled executables for Windows
 and Linux, with filenames \verb+cshore_usace_win.out+ and

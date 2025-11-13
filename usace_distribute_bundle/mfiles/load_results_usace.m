@@ -40,7 +40,7 @@ row_ind = find(~cellfun('isempty',dum));
 if ~isempty(row_ind)
   row = tot{row_ind};
   col_ind = find(row=='=');
-  out.params.isedav=str2num(row(col_ind+1:col_ind+3));
+  out.params.isedav=str2num(row(col_ind(1)+1:col_ind(1)+3));
 else
   out.params.isedav=0;
 end
@@ -275,8 +275,6 @@ if out.params.iveg
   out.veg.rod=dum(:,4);
 end
 
-
-
 fclose(fid);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 fid=fopen([fname,'OBPROF']);
@@ -296,7 +294,7 @@ while 1
   if (out.params.iveg&cnt>1)&out.params.isedav==0
     [tot]=fscanf(fid,'%f %f %f\n',[3,N])';
     out.morpho(cnt).ivegitated = tot(:,3);
-  elseif out.params.isedav==1
+  elseif abs(out.params.isedav)==1
     [tot]=fscanf(fid,'%f %f %f\n',[3,N])';
     out.morpho(cnt).zb_p = tot(:,3);
   else
@@ -332,6 +330,21 @@ while 1
 end
 fclose(fid);
 num_output = cnt;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% fid=fopen([fname,'OENERG']);
+% %     WRITE(26,1500) XB(J),EFSTA(J)/WT(J),DBSTA(J),DFSTA(J)
+% for i = 1:num_output
+%   tline = fgetl(fid);
+%   tline = str2num(tline);
+%   [tot]=fscanf(fid,'%f %f %f %f\n',[4,tline(2)])';
+%   out.hydro(i).efsta = [tot(:,2); NaN(length(out.morpho(1).x)-size(tot,1),1)];
+%   out.hydro(i).dbsta = [tot(:,3); NaN(length(out.morpho(1).x)-size(tot,1),1)];
+%   out.hydro(i).dfsta = [tot(:,4); NaN(length(out.morpho(1).x)-size(tot,1),1)];
+% end
+% fclose(fid);
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 fid=fopen([fname,'OXVELO']);

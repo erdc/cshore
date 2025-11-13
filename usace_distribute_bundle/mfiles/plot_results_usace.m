@@ -15,7 +15,8 @@ end
 if ~exist('iplotbc');iplotbc=1;end
 if ~exist('iplothydro');iplothydro=1;end
 if ~exist('iplotrunup');iplotrunup=1;end
-
+if ~exist('iplotmorpho');iplotmorpho=1;end
+lw = 2;
 
 %%%%%%%%%%%%%%%%%%%%find the indices for plotting%%%%%%%%%%%%%%%%%%%%
 
@@ -88,7 +89,7 @@ if exist('iplotmorpho')
     for j= 1:length(inds_morph)
       i = inds_morph(j);
       cnt = cnt+1;
-      hh(cnt)=plot(results.morpho(i).x,results.morpho(i).zb,'linewidth',2);hold all
+      hh(cnt)=plot(results.morpho(i).x,results.morpho(i).zb,'-','linewidth',lw);hold all
       hlabs{cnt} = [num2str(results.morpho(i).time), ' s'];
       if results.params.iveg
         if isfield(results.morpho,'ivegitated')
@@ -98,7 +99,7 @@ if exist('iplotmorpho')
           end
         end
       end
-      if results.params.isedav==1
+      if abs(results.params.isedav)==1
         if isfield(results.morpho,'zb_p')
           plot(results.morpho(i).x,results.morpho(i).zb_p,'linewidth',3,'color',[ .8  .5  .0])
         end

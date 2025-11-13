@@ -1,5 +1,6 @@
 function makeinfile_usace(in)
 % function makeinfile_usace(in)
+%if in.filename exists, will use filename as the basename
 
 %First check for NaN
 if max(isnan([in.x(:);in.zb(:);in.Tp(:);in.Hrms(:);in.swlbc(:);in.Wsetup(:);in.angle(:)]))
@@ -7,6 +8,9 @@ if max(isnan([in.x(:);in.zb(:);in.Tp(:);in.Hrms(:);in.swlbc(:);in.Wsetup(:);in.a
   %error('The in structure contains NaN')
   return
 end
+
+if floor(in.iprofl)==0;in.isedav=0;end
+
 
 if isfield(in,'filename');fid = fopen([in.filename,'.infile'],'w');
 else; fid = fopen('infile','w');end
@@ -40,7 +44,7 @@ fprintf(fid,'%-8i                                  ->IROLL \n',in.iroll);
 fprintf(fid,'%-8i                                  ->IWIND \n',in.iwind);
 fprintf(fid,'%-8i                                  ->ITIDE \n',in.itide);
 fprintf(fid,'%-8i                                  ->IVEG  \n',in.iveg);
-if in.isedav==1&in.iperm==0&in.iveg==0
+if abs(in.isedav)==1&in.iperm==0&in.iveg==0
   fprintf(fid,'%-8i                                  ->ICLAY  \n',in.iclay);
 end
 fprintf(fid,'%11.4f                                ->DXC\n',in.dx);
@@ -80,14 +84,14 @@ else
 end
 fprintf(fid,'%-8i                             ->NBINP \n',length(in.x));
 
-if in.iperm==1|in.isedav>=1
+if in.iperm==1|abs(in.isedav)>=1
   fprintf(fid,'%-8i                             ->NPINP \n',length(in.x_p));
 end
 
 dum = [in.x(:) in.zb(:) in.fw(:)];
 fprintf(fid,'%11.4f%11.4f%11.4f\n',dum');
 
-if in.iperm==1|in.isedav>=1
+if in.iperm==1|abs(in.isedav)>=1
   dum = [in.x_p(:) in.zb_p(:)];
   fprintf(fid,'%11.4f%11.4f\n',dum');
 end

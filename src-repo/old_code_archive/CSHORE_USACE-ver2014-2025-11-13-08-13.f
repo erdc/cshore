@@ -1159,8 +1159,7 @@ C
           ENDIF
           IF(ISTSAN.EQ.0) ZB(J,L)=ZB(J,L)+DELZB(J,L)
           IF(ICLAY.EQ.1) CALL EROSON(ITIME,L,IEND)
-          !IF(IPERM.EQ.1.OR.ISEDAV.GE.1) THEN !bdj2025-11-12 
-          IF(IPERM.EQ.1.OR.ABS(ISEDAV).GE.1) THEN
+          IF(IPERM.EQ.1.OR.ISEDAV.GE.1) THEN
             HP(J,L)=ZB(J,L)-ZP(J,L)
             IF(HP(J,L).LT.0.D0) THEN
               HP(J,L)=0.D0
@@ -1650,8 +1649,7 @@ C     ICLAY=0 except for eroding sand layer on erodible clay
 C     ICLAY=1 for sand layer (ISEDAV=1 and IPERM=0) above clay
 C     bottom (eroded by wave action) with no vegetation (IVEG=0)    
       ICLAY=0
-      !IF(ISEDAV.EQ.1.AND.IPERM.EQ.0) THEN!bdj 2025-11-12 
-      IF(ABS(ISEDAV).EQ.1.AND.IPERM.EQ.0) THEN
+      IF(ISEDAV.EQ.1.AND.IPERM.EQ.0) THEN
           IF(IVEG.EQ.0) THEN
               READ(11,*)DUM
               ICLAY=NINT(DUM)
@@ -1705,8 +1703,7 @@ C        SLP = 0.1D0 to 0.4D0
 C        SLPOT = 0.1D0 to 3.6D0
 c        TANPHI = 0.63D0 for sand
 c        BLP = 0.001D0 to 0.004D0
-        IF(ISEDAV.GE.1) BEDLM=1.0D0 !bdj 2025-11-10 
-        IF(ISEDAV.EQ.-1) BEDLM=0.0D0
+        IF(ISEDAV.GE.1) BEDLM=1.0D0
 C     
 C       READ (11,1150) D50,WF,SG
         READ (11,*) D50,WF,SG !bdj
@@ -1977,8 +1974,7 @@ C     READ(11,1110) NBINP(L)
       READ(11,*) DUM       !bdj
       NBINP(L) = NINT(DUM) !bdj
 C     IF(IPERM.EQ.1.OR.ISEDAV.GE.1) READ(11,1110) NPINP(L)
-      !IF(IPERM.EQ.1.OR.ISEDAV.GE.1) THEN
-      IF(IPERM.EQ.1.OR.abs(ISEDAV).GE.1) THEN !bdj 2025-11-12 
+      IF(IPERM.EQ.1.OR.ISEDAV.GE.1) THEN
         READ(11,*) DUM       !bdj
         NPINP(L) = NINT(DUM) !bdj
       ENDIF
@@ -1995,8 +1991,7 @@ C     READ (11,1150) XBINP(1,L), ZBINP(1,L)
       XBINP(1,L) = 0.D0
       DO 140 J = 2,NBINP(L)
 C       READ(11,1150) XBINP(J,L), ZBINP(J,L), FBINP(J-1,L)
-        !IF(ISEDAV.LE.1) THEN
-        IF(abs(ISEDAV).LE.1) THEN !bdj 2025-11-12 
+        IF(ISEDAV.LE.1) THEN
           READ(11,*) XBINP(J,L), ZBINP(J,L), FBINP(J-1,L) !bdj
         ELSE
           READ(11,*) XBINP(J,L), ZBINP(J,L), FBINP(J-1,L), WMINP(J-1,L)
@@ -2019,8 +2014,7 @@ C     Avoid perfect horizontal bottom for possible numerical difficulty
  2901 FORMAT(/'Bottom Friction Factor FBINP(J-1,L)=', D11.4,
      +   'for (J-1) =',I4,'and L=',I3/'For obliquely incident
      +    wave or vegetated zone, FBINP must be positive')
-      !IF(IPERM.EQ.1.OR.ISEDAV.GE.1) THEN
-      IF(IPERM.EQ.1.OR.abs(ISEDAV).GE.1) THEN !bdj 2025-11-12 
+      IF(IPERM.EQ.1.OR.ISEDAV.GE.1) THEN
         XPINP(1,L)=0.D0
         ZPINP(1,L)=ZBINP(1,L)
         DO 150 J=2,NPINP(L)
@@ -2330,8 +2324,7 @@ C
  120  CONTINUE
 C     No  vertical wall at landward end unless IVWALL=1 or 2
       IVWALL(L)=0 
-      !IF(IPERM.EQ.1.OR.ISEDAV.GE.1) THEN
-      IF(IPERM.EQ.1.OR.abs(ISEDAV).GE.1) THEN !bdj 2025-11-12 
+      IF(IPERM.EQ.1.OR.ISEDAV.GE.1) THEN
         DO 121 K=1,NPINP(L)-1
           DUM=XPINP(K+1,L)-XPINP(K,L)
           PSLOPE(K)=(ZPINP(K+1,L)-ZPINP(K,L))/DUM
@@ -2445,8 +2438,7 @@ c             lzhu change to IVEG.EQ.1.OR.IVEG.EQ.3
           RCREST(L) = ZBRAW(J)
           JCREST(L) = J
         ENDIF
-        !IF(IPERM.EQ.1.OR.ISEDAV.GE.1) THEN
-          IF(IPERM.EQ.1.OR.abs(ISEDAV).GE.1) THEN !bdj 2025-11-12 
+        IF(IPERM.EQ.1.OR.ISEDAV.GE.1) THEN
           IF(J.EQ.2) ZPRAW(1)=ZPINP(1,L)
           DO 145 K=1,NPINP(L)-1
             IF((XB(J).GT.XPINP(K,L)).AND.(XB(J).LE.XPINP(K+1,L))) THEN
@@ -2479,16 +2471,14 @@ C
 C     Smooth ZBRAW(J) and ZPRAW(J) J=1-JMAX(L) using Subr.14 SMOOTH
       JMAXL=JMAX(L)
       CALL SMOOTH(JMAXL,ZBRAW,SLOPE)
-      !IF(IPERM.EQ.1.OR.ISEDAV.GE.1) CALL SMOOTH(JMAXL,ZPRAW,PSLOPE)
-      IF(IPERM.EQ.1.OR.abs(ISEDAV).GE.1) CALL SMOOTH(JMAXL,ZPRAW,PSLOPE)!bdj 2025-11-12 
+      IF(IPERM.EQ.1.OR.ISEDAV.GE.1) CALL SMOOTH(JMAXL,ZPRAW,PSLOPE)
       DO 149 J=1,JMAX(L)
         ZB(J,L)=SLOPE(J)
 c bdj 2018-08-28  added to defeat the bottom smoothing for EMRRP model
         if(ismooth.eq.0)        ZB(J,L)=ZBRAW(J)
 c end bdj 2018-08-28  added to defeat the bottom smoothing for EMRRP model
         IF(IPROFL.GE.1) ZB0(J,L)=ZB(J,L)
-        !IF(IPERM.EQ.1.OR.ISEDAV.GE.1) ZP(J,L)=PSLOPE(J)
-        IF(IPERM.EQ.1.OR.abs(ISEDAV).GE.1) ZP(J,L)=PSLOPE(J)!bdj 2025-11-12 
+        IF(IPERM.EQ.1.OR.ISEDAV.GE.1) ZP(J,L)=PSLOPE(J)
         IF(ICLAY.EQ.1) ZP0(J,L)=ZP(J,L)
         IF(ISEDAV.EQ.2) THEN
           IF(WMNODE(J,L).LE.0.D0) THEN
@@ -2518,8 +2508,7 @@ C     smoothed ZB(J)
       ENDIF
 C     
 C     HP(J,L) = vertical thickness of porous or sediment layer
-      !IF(IPERM.EQ.1.OR.ISEDAV.GE.1) THEN
-        IF(IPERM.EQ.1.OR.abs(ISEDAV).GE.1) THEN !bdj 2025-11-12 
+      IF(IPERM.EQ.1.OR.ISEDAV.GE.1) THEN
         DO 210 J=1,JMAX(L)
           HP(J,L) = ZB(J,L) - ZP(J,L)
           IF(HP(J,L).LT.0.D0) THEN
@@ -3247,8 +3236,7 @@ C     IPROFL=2 for dike erosion computation
 C     
         IF(IPROFL.EQ.1) THEN
           WRITE(20,901) IPROFL,TIMEBC(NTIME+1),NTIME
-          !IF(ISEDAV.EQ.1.AND.ICLAY.EQ.0) WRITE(20,902) ISEDAV,BEDLM
-          IF(abs(ISEDAV).EQ.1.AND.ICLAY.EQ.0) WRITE(20,902) ISEDAV,BEDLM !bdj 2025-11-12 
+          IF(ISEDAV.EQ.1.AND.ICLAY.EQ.0) WRITE(20,902) ISEDAV,BEDLM
           IF(ICLAY.EQ.1) WRITE(20,904) ICLAY,BEDLM,DEEB,DEEF
           IF(ISEDAV.EQ.2) WRITE(20,905) ISEDAV,BEDLM
         ENDIF
@@ -3407,8 +3395,7 @@ C
         IF(NBINP(L).GT.10) NBINP4=NBINP(L)-4
         DO 140 J = 2,NBINP(L)
           IF(J.LE.5.OR.J.GE.NBINP4) THEN
-            !IF(ISEDAV.LE.1) THEN
-              IF(abs(ISEDAV).LE.1) THEN !bdj 2025-11-12 
+            IF(ISEDAV.LE.1) THEN
               WRITE (20,1200) XBINP(J,L), ZBINP(J,L), FBINP(J-1,L)
             ELSE
               WRITE (20,1202) XBINP(J,L), ZBINP(J,L), FBINP(J-1,L),
@@ -3416,8 +3403,7 @@ C
             ENDIF
           ENDIF
  140    CONTINUE
-        !IF(IPERM.EQ.1.OR.ISEDAV.GE.1) THEN
-          IF(IPERM.EQ.1.OR.abs(ISEDAV).GE.1) THEN !bdj 2025-11-12 
+        IF(IPERM.EQ.1.OR.ISEDAV.GE.1) THEN
           IF(ICLAY.EQ.0) THEN
               WRITE(20,1150) L,NPINP(L)
           ELSE
@@ -3558,8 +3544,7 @@ C
           IF(IPERM.EQ.0.AND.ISEDAV.EQ.0) THEN
             WRITE(21,1500)XB(J),ZB(J,L)
           ELSE
-            !IF(ISEDAV.EQ.1.OR.IPERM.EQ.1) THEN
-            IF(abs(ISEDAV).EQ.1.OR.IPERM.EQ.1) THEN !bdj 2025-11-12 
+            IF(ISEDAV.EQ.1.OR.IPERM.EQ.1) THEN
               WRITE(21,1500) XB(J),ZB(J,L),ZP(J,L)
             ENDIF
             IF(ISEDAV.EQ.2) THEN
@@ -3733,8 +3718,7 @@ c             lzhu change to IVEG.EQ.1.OR.IVEG.EQ.3
               IF(IVEG.EQ.1.OR.IVEG.EQ.3) THEN
                 WRITE(21,1500) XB(J),ZB(J,LL),ZP(J,LL),UPROOT(J,LL)
               ELSE
-                !IF(ISEDAV.EQ.1.OR.IPERM.EQ.1) THEN
-                IF(abs(ISEDAV).EQ.1.OR.IPERM.EQ.1) THEN !bdj 2025-11-12 
+                IF(ISEDAV.EQ.1.OR.IPERM.EQ.1) THEN
                   IF(ISTSAN.EQ.0) WRITE(21,1500) XB(J),ZB(J,LL),ZP(J,LL)
                 ENDIF
                 IF(ISEDAV.EQ.2) THEN
@@ -4236,8 +4220,7 @@ C
       PARAMETER (NN=20000,NB=30000,NL=100)
       DIMENSION QRAW(NN),GSLRAW(NN),ASLRAW(NN),ASLOPE(NN),RS(NN),RB(NN),
      +   PBWD(NN),PSWD(NN),VSWD(NN),QSXWD(NN),QBXWD(NN),QRAWD(NN),
-     +     HDIP(NN),QSYWD(NN),QBYWD(NN),HPpad1(NN),HPpad2(NN),
-     +     qbxeq(nn),qsxeq(nn)
+     +   HDIP(NN),QSYWD(NN),QBYWD(NN)
 C     
       COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
      +   ISEDAV,IWTRAN,IVWALL(NL),ILAB,INFILT,IPOND,ITIDE,ILINE,IQYDY,
@@ -4394,10 +4377,8 @@ C     BDJ added 2012-10-23
             JDECAY = NINT(DECAYL/DX)! index of decay intrusion length
 C     end BDJ added 2012-10-23             
           QBX(J) = BQ*PB(J)*GSLOPE(J)*USTD(J)**3
-          !IF(ISEDAV.GE.1.OR.ISTSAN.EQ.1) THEN
-          IF(abs(ISEDAV).GE.1.OR.ISTSAN.EQ.1) THEN !bdj
-            !IF(ISEDAV.GE.1) THEN
-            IF(abs(ISEDAV).GE.1) THEN!bdj 2025-11-12 
+          IF(ISEDAV.GE.1.OR.ISTSAN.EQ.1) THEN
+            IF(ISEDAV.GE.1) THEN
                DUM=HP(J,L)
                IF(ISEDAV.EQ.2) THEN
                   DUM=ZB(J,L)-ZMESH(J,L)
@@ -4410,7 +4391,7 @@ C     end BDJ added 2012-10-23
                ENDIF
             ELSE
                BRF=DEXP(-CPSTON*HP(J,L)/D50)
-             ENDIF
+            ENDIF
             VS(J)=BRF*VS(J)
             QBX(J)=BRF*QBX(J)
           ENDIF
@@ -4563,8 +4544,8 @@ C     are adjusted so that VS(J)=VSWD(J) and QBX(J)=QBXWD(J) at J=JWD
             ENDIF
             QBXWD(J)=QBX(J)
           ENDIF
-          IF(abs(ISEDAV).GE.1.OR.ISTSAN.EQ.1) THEN!bdj 2025-11-12 
-            IF(abs(ISEDAV).GE.1) THEN !bdj
+          IF(ISEDAV.GE.1.OR.ISTSAN.EQ.1) THEN
+            IF(ISEDAV.GE.1) THEN
               DUM=HP(J,L)
               IF(ISEDAV.EQ.2) THEN
                   DUM=ZB(J,L)-ZMESH(J,L)
@@ -4694,8 +4675,8 @@ C     VS(JSL)=VS(JSL1) and QBX(JSL)=QBX(JSL1)
             ENDIF
             QBX(J)=QBX(JSL1)
           ENDIF
-          IF(abs(ISEDAV).GE.1.OR.ISTSAN.EQ.1)THEN !bdj
-            IF(abs(ISEDAV).GE.1) THEN !bdj
+          IF(ISEDAV.GE.1.OR.ISTSAN.EQ.1)THEN
+            IF(ISEDAV.GE.1) THEN
               DUM=HP(J,L)
               IF(ISEDAV.EQ.2) THEN
                   DUM=ZB(J,L)-ZMESH(J,L)
@@ -4795,8 +4776,8 @@ C     end BDJ added 2012-10-23
           QBX(J) = DUM*GSLOPE(J)*(1.D0 + USTA(J)*VSTA2 + TWOS*VCUS)
           QBY(J) = DUM*(VSTA(J)*(1.D0 + USTA(J)*USTA(J)+ VSTA2)+
      +       TWOS*WSTA)
-          IF(abs(ISEDAV).GE.1.OR.ISTSAN.EQ.1) THEN!bdj
-            IF(abs(ISEDAV).GE.1) THEN!bdj
+          IF(ISEDAV.GE.1.OR.ISTSAN.EQ.1) THEN
+            IF(ISEDAV.GE.1) THEN
               DUM=HP(J,L)
               IF(ISEDAV.EQ.2) THEN
                    DUM=ZB(J,L)-ZMESH(J,L)
@@ -4883,42 +4864,9 @@ C     boundary condition used in subr.12 CHANGE
       QSX(JMAXL)=QSX(JMAX1)
       QBX(JMAXL)=QBX(JMAX1)
       QRAW(JMAXL)=QRAW(JMAX1)
-
-
-!2025-11-10 bdj sneak in here and limit the transport for hardbottom cases
-      if(isedav.eq.-1) then
-        !write(*,*) 'trying new hb method'
-        numx = 3
-        hmin = .01
-        HPpad1(1:jmax(l)) = [HP(numx+1:jmax(l),L),10+0*HP(1:numx,L)]
-        HPpad2(1:jmax(l)) = [10+0*HP(1:numx,L),HP(1:jmax(l)-numx,L)]
-        qbxeq = qbx;
-        qsxeq = qsx;
-        qbx(1)=qbxeq(1)
-        do j=2,jmax(l)
-          dum=minval([hppad1(j),hp(j,l),hppad2(j)])
-          if(dum.gt.hmin) then
-            qbx(j)=qbxeq(j)
-          else
-            qbx(j)=minval([qbx(j-1),qbxeq(j)])
-          endif
-        enddo
-        qsx(jmax)=qsxeq(jmax)
-        do j=jmax(l)-1,1,-1
-          dum=minval([hppad1(j),hp(j,l),hppad2(j)])
-          if(dum.gt.hmin) then
-            qsx(j)=qsxeq(j)
-          else
-            qsx(j)=maxval([qsx(j+1),qsxeq(j)])
-          endif
-          vs(j)=qsx(j)/(aslope(j)*umean(j))
-          qraw(j) = (qbx(j) + qsx(j))/sporo1
-!     QSX(J) = ASLOPE(J)*UMEAN(J)*VS(J)
-        enddo
-      endif
 C     Smoothing QRAW (before DELZB is computed) using Sub.14 SMOOTH
       CALL SMOOTH(JMAXL,QRAW,Q)
-C
+C     
       RETURN
       END
 C     
@@ -5172,7 +5120,7 @@ C         DELZBRW(J)=-AVY(LL)/DUM
       CALL SMOOTH(JMAXL,DELZBRW,DELZBJ)
       DO 270 J=1, JMAXL
         ZB(J,LL)=DELZBJ(J)+ZB(J,LL)
-        IF(IPERM.EQ.1.OR.abs(ISEDAV).GE.1) THEN!bdj 2025-11-12 
+        IF(IPERM.EQ.1.OR.ISEDAV.GE.1) THEN
           HP(J,LL)=ZB(J,LL)-ZP(J,LL)
           IF(HP(J,LL).LT.0.D0) THEN
             HP(J,LL)=0.D0

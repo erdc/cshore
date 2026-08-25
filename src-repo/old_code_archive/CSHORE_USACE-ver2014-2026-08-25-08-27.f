@@ -217,8 +217,7 @@ C     MAXITE = 20 for maximum number of iteration
 C     
 C     Store the first line of this CSHORE program on ODOC output file
 C     ------------------------------------------------------------------
-      VER = 'CSHORE USACE version, 2014 last edit 2026-08-25     ' !bdj
-C      VER = 'CSHORE USACE version, 2014 last edit 2025-11-04    ' !bdj
+      VER = 'CSHORE USACE version, 2014 last edit 2025-11-04    ' !bdj
 C      VER = 'CSHORE USACE version, 2014 last edit 2025-04-07   ' !bdj
 C      VER = 'CSHORE USACE version, 2014 last edit 2024-03-14   ' !bdj
 C      VER = 'CSHORE USACE version, 2014 last edit 2022-03-22  ' !bdj
@@ -1253,15 +1252,15 @@ C BDJ 2021-12-13 added to check for SWL at bonudary that exceeds profile bed ele
         IF(IEND.EQ.1) THEN
           IF(IPROFL.GT.0) THEN
             IF((H(1)+zb(1,L))-maxval(zb(:,L)).GT.0) THEN
-c     write(*,*) 'BDJ ',time,H(1)+zb(1,L),maxval(zb(:,L)),
+c              write(*,*) 'BDJ ',time,H(1)+zb(1,L),maxval(zb(:,L)),
 c     +             (H(1)+zb(1,L))-maxval(zb(:,L))
-              write(*,*) 'Warning:Water elevation at seaward boundary'
-              write(*,*) 'exceeds maximum elevation. '
-!write(*,*) 'run and deleting previosuly written output'
-!do i=20,40
-!  close(i, status='delete')
-!enddo
-!stop
+          write(*,*) 'Water elevation at seaward boundary'
+          write(*,*) 'exceeds maximum elevation.  Terminating'
+          write(*,*) 'run and deleting previosuly written output'
+          do i=20,40
+            close(i, status='delete')
+          enddo
+          stop
             ENDIF
           ENDIF
         ENDIF
@@ -4594,11 +4593,6 @@ C     are adjusted so that VS(J)=VSWD(J) and QBX(J)=QBXWD(J) at J=JWD
               IF(J.GE.JX2) DUMQ=QM
             ENDIF
             QSXWD(J)=QSXWD(J)+AO*VSWD(J)*DUMQ/DUM
-            if(j.gt.jcrest(l)) then !bdj 2026-08-04 
-              QSXWD(j) = QSXWD(j)*GSLOPE(J) !bdj 2026-08-04 
-!     added to reduce the height of the unrealistic dune predicted during over-wash  
-            endif               !bdj 2026-08-04 
- 
           ENDIF
 C     
 C     If IGMILD=1, adjust QBXWD as follows 

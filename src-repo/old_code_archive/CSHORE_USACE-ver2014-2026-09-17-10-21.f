@@ -217,8 +217,7 @@ C     MAXITE = 20 for maximum number of iteration
 C     
 C     Store the first line of this CSHORE program on ODOC output file
 C     ------------------------------------------------------------------
-      VER = 'CSHORE USACE version, 2014 last edit 2026-09-17     ' !bdj
-C      VER = 'CSHORE USACE version, 2014 last edit 2026-08-25     ' !bdj
+      VER = 'CSHORE USACE version, 2014 last edit 2026-08-25     ' !bdj
 C      VER = 'CSHORE USACE version, 2014 last edit 2025-11-04    ' !bdj
 C      VER = 'CSHORE USACE version, 2014 last edit 2025-04-07   ' !bdj
 C      VER = 'CSHORE USACE version, 2014 last edit 2024-03-14   ' !bdj
@@ -4239,8 +4238,7 @@ C
       DIMENSION QRAW(NN),GSLRAW(NN),ASLRAW(NN),ASLOPE(NN),RS(NN),RB(NN),
      +   PBWD(NN),PSWD(NN),VSWD(NN),QSXWD(NN),QBXWD(NN),QRAWD(NN),
      +     HDIP(NN),QSYWD(NN),QBYWD(NN),HPpad1(NN),HPpad2(NN),
-     +     qbxeq(nn),qsxeq(nn),H2(nn)
-      INTEGER, DIMENSION(10) :: hbinds0,hbinds1
+     +     qbxeq(nn),qsxeq(nn)
 C     
       COMMON /OPTION/ TIME,IPROFL,IANGLE,IROLL,IWIND,IPERM,IOVER,IWCINT,
      +   ISEDAV,IWTRAN,IVWALL(NL),ILAB,INFILT,IPOND,ITIDE,ILINE,IQYDY,
@@ -4893,68 +4891,35 @@ C     boundary condition used in subr.12 CHANGE
       QRAW(JMAXL)=QRAW(JMAX1)
 
 
-!2025-11-10 & 2026-09-17 bdj sneak in here and limit the transport for hardbottom cases
+!2025-11-10 bdj sneak in here and limit the transport for hardbottom cases
       if(isedav.eq.-1) then
-        !write(*,*) 'trying new hb method,jmax(l)',jmax(l)
+        !write(*,*) 'trying new hb method'
         numx = 3
         hmin = .01
-        H2 = HP(1:jmax(l),l)
         HPpad1(1:jmax(l)) = [HP(numx+1:jmax(l),L),10+0*HP(1:numx,L)]
         HPpad2(1:jmax(l)) = [10+0*HP(1:numx,L),HP(1:jmax(l)-numx,L)]
-        qbxeq = qbx;            !set equilibrium values to previously computed transport
+        qbxeq = qbx;
         qsxeq = qsx;
-!
-        if(h2(jmax(l)-6).le.hmin) h2(jmax(l)-6:jmax(l))=0.
-        inumseg0 = 0
-        inumseg1 = 0
-        do j=1,jmax(l)-1
-!     find seaward edge of hb sections
-          if(((h2(j).gt.hmin).or.(j.eq.1)).and.h2(j+1).le.hmin) then
-            inumseg0 = inumseg0+1
-            hbinds0(inumseg0)=j+1
-          endif
-!     find landward edge of hb sections
-          if(((h2(j+1).gt.hmin).or.(j+1.eq.jmax(l))).and.
-     +         (h2(j).le.hmin).and.(j.gt.1)) then
-            inumseg1 = inumseg1+1
-            hbinds1(inumseg1)=j
+        qbx(1)=qbxeq(1)
+        do j=2,jmax(l)
+          dum=minval([hppad1(j),hp(j,l),hppad2(j)])
+          if(dum.gt.hmin) then
+            qbx(j)=qbxeq(j)
+          else
+            qbx(j)=minval([qbx(j-1),qbxeq(j)])
           endif
         enddo
-        !write(*,*)'inumseg0,inumseg1',inumseg0,inumseg1
-        !write(*,*)'hbinds0,hbinds1',hbinds0(1:2),hbinds1(1:2)
-
-        if(hbinds0(1).eq.2.and.qbxeq(1).gt.0) qbx(1)=0
-        do i = 1,inumseg0
-!     bedload first
-          qbx(hbinds0(i):hbinds1(i))=0.
-          j = hbinds0(i);
-          do while(j.le.hbinds1(i).and.qbxeq(j).gt.0)
-            qbx(j) = minval([qbx(j-1),qbxeq(j)]);
-            j = j+1
-          enddo
-          j = hbinds1(i);
-          do while(j.ge.hbinds0(i).and.qbxeq(j).lt.0)
-            qbx(j) = maxval([qbx(j+1),qbxeq(j)])
-            j = j-1
-          enddo
-! do sus load
-          qsx(hbinds0(i):hbinds1(i))=0.
-          j = hbinds0(i);
-          do while(j.le.hbinds1(i).and.qsxeq(j).gt.0.)
-            qsx(j) = minval([qsx(j-1),qsxeq(j)]);
-            j = j+1;
-          enddo
-          j = hbinds1(i)
-          do while(j.ge.hbinds0(i).and.qsxeq(j).lt.0.)
-            qsx(j) = maxval([qsx(j+1),qsxeq(j)])
-            !qsx(j) = 0;
-            j = j-1
-          end do
-        enddo
-
-        do j = 1,jmax(l)
+        qsx(jmax)=qsxeq(jmax)
+        do j=jmax(l)-1,1,-1
+          dum=minval([hppad1(j),hp(j,l),hppad2(j)])
+          if(dum.gt.hmin) then
+            qsx(j)=qsxeq(j)
+          else
+            qsx(j)=maxval([qsx(j+1),qsxeq(j)])
+          endif
           vs(j)=qsx(j)/(aslope(j)*umean(j))
           qraw(j) = (qbx(j) + qsx(j))/sporo1
+!     QSX(J) = ASLOPE(J)*UMEAN(J)*VS(J)
         enddo
       endif
 C     Smoothing QRAW (before DELZB is computed) using Sub.14 SMOOTH

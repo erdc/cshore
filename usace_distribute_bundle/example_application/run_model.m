@@ -15,7 +15,7 @@ in.header = {'------------------------------------------------------------'
              '------------------------------------------------------------'};
 in.iline  = 1;          % 1 = single line
 in.iprofl = 1;          % 0 = no morph, 1 = run morph, 1.1 = run morph without initial smoothing
-in.isedav = -1;          % 0 = unlimited sand, 1 = hard bottom, -1=hard bottom with 2026 soln
+in.isedav = 0;          % 0 = unlimited sand, 1 = hard bottom, -1=hard bottom with 2026 soln
 in.iperm  = 0;          % 0 = no permeability, 1 = permeable
 in.iover  = 1;          % 0 = no overtopping , 1 = include overtopping
 in.infilt = 0;          % 1 = include infiltration landward of dune crest

@@ -15,7 +15,7 @@ in.header = {'------------------------------------------------------------'
              '------------------------------------------------------------'};
 in.iline  = 1;          % 1 = single line
 in.iprofl = 1;          % 0 = no morph, 1 = run morph, 1.1 = run morph without initial smoothing
-in.isedav = 0;          % 0 = unlimited sand, 1 = hard bottom
+in.isedav = -1;          % 0 = unlimited sand, 1 = hard bottom, -1=hard bottom with 2026 soln
 in.iperm  = 0;          % 0 = no permeability, 1 = permeable
 in.iover  = 1;          % 0 = no overtopping , 1 = include overtopping
 in.infilt = 0;          % 1 = include infiltration landward of dune crest
@@ -76,8 +76,13 @@ zb = [zb_off zb_off zb_on]; % zb points
 in.x = 0:in.dx:Lx;
 [j1 j2] = unique(x); 
 in.zb = interp1(x(j2),zb(j2),in.x);
-%in.zb = in.zb + 5*exp(-(in.x-.85*Lx).^2/15^2);
+in.zb = in.zb + 5*exp(-(in.x-.75*Lx).^2/15^2);% add a dune
 in.fw = in.fric_fac*ones(size(in.zb)); % cross-shore values of bot fric
+                                       
+%below needed for ISEDAV==1 or ISEDAV==-1
+in.x_p = in.x;
+in.zb_p = in.zb-.5;% elevation of hardbottom
+in.iclay = 0;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%run cshore%%%%%%%%%%%%%%%%%%%%
 makeinfile_usace(in);

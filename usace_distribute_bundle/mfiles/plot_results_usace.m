@@ -101,7 +101,7 @@ if exist('iplotmorpho')
       end
       if abs(results.params.isedav)==1
         if isfield(results.morpho,'zb_p')
-          plot(results.morpho(i).x,results.morpho(i).zb_p,'linewidth',3,'color',[ .8  .5  .0])
+          plot(results.morpho(i).x,results.morpho(i).zb_p,'linewidth',5,'color',[ .6  .6  .6]+.2)
         end
       end
     end

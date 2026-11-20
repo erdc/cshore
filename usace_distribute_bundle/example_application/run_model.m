@@ -97,12 +97,6 @@ end
 
 results = load_results_usace;
 
-if results.run_success==1;
-  disp(' CSHORE computation completed ');
-elseif results.run_success==.5;
-  disp(' CSHORE computation partially completed');
-end
-
 if isave
   save summary results
 end

@@ -27,6 +27,17 @@ if isempty(row_ind)
 end
 out.header = tot(1:row_ind-1);
 
+% find ISPARSE
+dum =strfind(tot,'ISPARSE');
+row_ind = find(~cellfun('isempty',dum));
+if ~isempty(row_ind)
+  row = tot{row_ind};
+  col_ind = find(row=='=');
+  out.params.isparse=str2num(row(col_ind(1)+1:col_ind(1)+3));
+else
+  out.params.isparse=0;
+end
+
 % find IPROFL 
 dum =strfind(tot,'OPTION IPROFL');
 row_ind = find(~cellfun('isempty',dum));
@@ -345,8 +356,10 @@ num_output = cnt;
 
 
 
+if out.params.isparse;
+  disp('sparse output')
+  return;end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 fid=fopen([fname,'OXVELO']);
 %    WRITE(27,1500) XB(J),UMEAN(J),USTD(J)
 for i = 1:num_output

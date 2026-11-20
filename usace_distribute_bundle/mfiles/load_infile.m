@@ -10,12 +10,13 @@ tot = textscan(fid,'%s','delimiter','\n');
 tot = tot{:};
 fclose(fid);
 %
-nhlines = str2num(tot{1});
+%nhlines = str2num(tot{1});
+nhlines = str2double(regexp(tot{1}, '\d', 'match'));
 in.tot = tot;
 in.header = {tot{2:1+nhlines}}';
 %
 keys = {'ILINE';'IPROFL';'ISEDAV';'IPERM';'IOVER';'IWTRAN';'IPOND';'INFILT';'IWCINT';
-        'IROLL ';'IWIND ';'ITIDE ';'IVEG  ';'DXC';'GAMMA';'RWH';'ILAB';'NWAVE';'NSURGE';'NBINP'} ;
+        'IROLL';'IWIND';'ITIDE';'IVEG';'DX';'GAMMA';'RWH';'ILAB';'NWAVE';'NSURG';'NBINP'} ;
 for i = 1:length(keys)
   row_ind = find(contains(tot,keys{i},'IgnoreCase',true));
   if ~isempty(row_ind)
@@ -23,8 +24,8 @@ for i = 1:length(keys)
     in=setfield(in,lower(keys{i}),str2num(dum{1}));
   end
 end
-in.dx=in.dxc;
-in.nsurg=in.nsurge;
+%in.dx=in.dxc;
+%in.nsurg=in.nsurge;
 if in.iprofl>0
     row_ind = find(contains(tot,'D50','IgnoreCase',true));
     dum = split(convertCharsToStrings(tot{row_ind}));
@@ -51,7 +52,7 @@ if in.ilab==0
     in.Hrms= dum(:,3)';
     in.Wsetup= zeros(size(in.Hrms));
     in.angle = dum(:,4)';
-    dum = cell2mat(cellfun(@str2num,({tot{row_ind+in.nwave+1:row_ind+in.nwave+in.nsurge+1}}'),'UniformOutput',false));
+    dum = cell2mat(cellfun(@str2num,({tot{row_ind+in.nwave+1:row_ind+in.nwave+in.nsurg+1}}'),'UniformOutput',false));
     in.timebc_surg = dum(:,1)';
     in.swlbc= dum(:,2)';
     in.nwave = in.nwave+1;
@@ -68,6 +69,9 @@ elseif in.ilab==1
 end
 
 row_ind = find(contains(tot,'NBINP','IgnoreCase',true))+1;
+if size(str2num(tot{row_ind}),2)==2
+  tot{row_ind} = [tot{row_ind} '  NaN'];
+end
 dum = cell2mat(cellfun(@str2num,({tot{row_ind:row_ind+in.nbinp-1}}'),'UniformOutput',false));
 in.x= dum(:,1)';
 in.zb= dum(:,2)';

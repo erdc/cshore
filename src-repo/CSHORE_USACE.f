@@ -1320,7 +1320,7 @@ c         lzhu added
         ENDIF
 C     NPT=integer used in Subr.14 SMOOTH
 C     NPE=integer used in Subr.15 EXTRAPO
-          NPT=1+NINT(HRMS(1)/DX)
+          NPT=1+NINT(2.D0*HRMS(1)/DX)
           NPE=1+NINT(HRMS(1)/DX2)
           IF(IPROFL.EQ.1.AND.IPERM.EQ.1) THEN
 C           NPT=NPT+NINT(HRMS(1)/DXD2)

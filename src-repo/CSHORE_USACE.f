@@ -217,15 +217,16 @@ C     MAXITE = 20 for maximum number of iteration
 C     
 C     Store the first line of this CSHORE program on ODOC output file
 C     ------------------------------------------------------------------
-      VER = 'CSHORE USACE version, 2014 last edit 2026-11-20      ' !bdj
-C      VER = 'CSHORE USACE version, 2014 last edit 2026-09-17     ' !bdj
-C      VER = 'CSHORE USACE version, 2014 last edit 2026-08-25     ' !bdj
-C      VER = 'CSHORE USACE version, 2014 last edit 2025-11-04    ' !bdj
-C      VER = 'CSHORE USACE version, 2014 last edit 2025-04-07   ' !bdj
-C      VER = 'CSHORE USACE version, 2014 last edit 2024-03-14   ' !bdj
-C      VER = 'CSHORE USACE version, 2014 last edit 2022-03-22  ' !bdj
-C      VER = 'CSHORE USACE version, 2014 last edit 2019-02-08 ' !bdj
-C      VER = 'CSHORE USACE version, 2014 last edit 2018-08-28 ' !bdj 
+      VER = 'CSHORE USACE version, 2014 last edit 2026-11-23 ' !bdj
+C      VER = 'CSHORE USACE version, 2014 last edit 2026-11-20' !bdj
+C      VER = 'CSHORE USACE version, 2014 last edit 2026-09-17' !bdj
+C      VER = 'CSHORE USACE version, 2014 last edit 2026-08-25' !bdj
+C      VER = 'CSHORE USACE version, 2014 last edit 2025-11-04' !bdj
+C      VER = 'CSHORE USACE version, 2014 last edit 2025-04-07' !bdj
+C      VER = 'CSHORE USACE version, 2014 last edit 2024-03-14' !bdj
+C      VER = 'CSHORE USACE version, 2014 last edit 2022-03-22' !bdj
+C      VER = 'CSHORE USACE version, 2014 last edit 2019-02-08' !bdj
+C      VER = 'CSHORE USACE version, 2014 last edit 2018-08-28' !bdj 
 C      VER = 'CSHORE USACE version, 2014 last edit 2016-01-14' !bdj 
 C      VER = 'CSHORE USACE version, 2014 last edit 2015-07-06' !bdj 
 C      VER = 'CSHORE USACE version, last edit 2015-03-23   ' !bdj
@@ -3131,7 +3132,8 @@ C     Compute QBREAK = fraction of breaking waves
       B = (WHRMS/HM)**2.D0
 C     IF(B.LT.0.99999D0) THEN
       IF(B.LT.0.99999D0.AND.WHRMS.GT.1.D-10) THEN !bdj
-        QBOLD = B/2.D0
+C        QBOLD = B/2.D0
+        QBOLD = MAX(DEXP(-1.D0/B),1.D-300)! implemented 2026-11-23 
  10     QBREAK(J) = QBOLD - (1.D0-QBOLD + B*DLOG(QBOLD))/(B/QBOLD-1.D0)
         IF(QBREAK(J).LE.0.D0) QBREAK(J) = QBOLD/2.D0
         IF(DABS(QBREAK(J)-QBOLD).GT.1.D-6) THEN
